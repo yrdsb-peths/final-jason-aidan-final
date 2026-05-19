@@ -15,7 +15,7 @@ public class WaterSpirit extends Spirit
     
     public WaterSpirit()
     {
-        super(20,5,"Water");
+        super(20, 10, "Water");
         setLocation(200,300);
         GreenfootImage image = new GreenfootImage("button-blue.png");
         setImage(image);
