@@ -19,12 +19,14 @@ public class Spirit extends Actor
     String type;
 
     static Class<?>[] spiritTypes = {FireSpirit.class, WaterSpirit.class, GrassSpirit.class};
+    String weakness;
     
-    public Spirit(int health, int attack, String type)
+    public Spirit(int health, int attack, String type, String weakness)
     {
         this.health = health;
         this.attack = attack;
         this.type = type;
+        this.weakness = weakness;
     }
     public void act()
     {
