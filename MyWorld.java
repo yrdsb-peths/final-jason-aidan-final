@@ -11,7 +11,8 @@ public class MyWorld extends World {
         playerSpirits = new Spirit[maxSpirits];
 
         playerSpirits[0] = new FireSpirit();
-        
+        playerSpirits[1] = new WaterSpirit();
+        playerSpirits[2] = new GrassSpirit();
     }
 
     public void chooseSpirit() {

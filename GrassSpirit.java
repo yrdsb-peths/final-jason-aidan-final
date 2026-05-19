@@ -1,23 +1,23 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class FireSpirit here.
+ * Write a description of class GrassSpirit here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class FireSpirit extends Spirit
+public class GrassSpirit extends Spirit
 {
     /**
-     * Act - do whatever the FireSpirit wants to do. This method is called whenever
+     * Act - do whatever the GrassSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    public FireSpirit()
+    public GrassSpirit()
     {
-        super(20, 5, "Fire");
-        setLocation(200, 300);
-        GreenfootImage image = new GreenfootImage("button-red.png");
+        super(20, 5, "Grass");
+        setLocation(200,300);
+        GreenfootImage image = new GreenfootImage("button-green.png");
         setImage(image);
     }
     public void act()
