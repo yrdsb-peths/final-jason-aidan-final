@@ -1,4 +1,6 @@
 import greenfoot.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class MyWorld extends World {
     
@@ -13,17 +15,21 @@ public class MyWorld extends World {
 
     }
 
-    public void displaySpirits() {
+    public void displaySpirits(){
         // Code to display the player's spirits on the screen
 
-        // for (int i = 0; i < Spirit.spiritTypes.length; i++) {
-        //     if (Spirit.spiritTypes[i] != null) {
-        //         addObject(new Spirit.spiritTypes[i].getConstructor(), 100 + i * 100, 350);
-        //     }
-        // }
-        addObject(new FireSpirit(), 100, 350);
-        addObject(new WaterSpirit(), 200, 350);
-        addObject(new GrassSpirit(), 300, 350);
+        try{
+            int x = 100;
+            for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
+
+                Spirit spirit = spiritClass.getDeclaredConstructor().newInstance();
+                addObject(spirit, x, 350);
+                x += 100;
+            }
+
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     public void chooseSpirit() {

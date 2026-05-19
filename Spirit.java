@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * Write a description of class Spirit here.
@@ -17,9 +18,16 @@ public class Spirit extends Actor
     int health;
     int attack;
     String type;
-
-    static Class<?>[] spiritTypes = {FireSpirit.class, WaterSpirit.class, GrassSpirit.class};
     String weakness;
+
+    // Creates a fixed list of spirit types that can be used to dynamically create spirit objects
+
+    static List<Class<? extends Spirit>> spiritTypes = List.of(
+        FireSpirit.class, 
+        WaterSpirit.class, 
+        GrassSpirit.class
+    );
+    
     
     public Spirit(int health, int attack, String type, String weakness)
     {
