@@ -13,12 +13,15 @@ public class Spirit extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    public Spirit(String type, String name)
+    int health;
+    int attack;
+    String type;
+    
+    public Spirit(int health, int attack, String type)
     {
-        if(type == "Fire")
-        {
-            Spirit f = new FireSpirit(name);
-        }
+        this.health = health;
+        this.attack = attack;
+        this.type = type;
     }
     public void act()
     {

@@ -13,10 +13,9 @@ public class FireSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    String name;
-    public FireSpirit(String name)
+    public FireSpirit()
     {
-        super("Fire", name);
+        super(20, 5, "Fire");
         setLocation(200, 300);
         GreenfootImage image = new GreenfootImage("button_red.png");
         setImage(image);
