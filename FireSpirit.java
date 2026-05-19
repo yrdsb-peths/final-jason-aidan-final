@@ -12,6 +12,15 @@ public class FireSpirit extends Spirit
      * Act - do whatever the FireSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    
+    String name;
+    public FireSpirit(String name)
+    {
+        super("Fire", name);
+        setLocation(200, 300);
+        GreenfootImage image = new GreenfootImage("button_red.png");
+        setImage(image);
+    }
     public void act()
     {
         // Add your action code here.
