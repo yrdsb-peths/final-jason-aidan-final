@@ -15,7 +15,7 @@ public class GrassSpirit extends Spirit
     
     public GrassSpirit()
     {
-        super(20, 10, "Grass");
+        super(20, 10, "Grass", "Fire");
         setLocation(200,300);
         GreenfootImage image = new GreenfootImage("button-green.png");
         setImage(image);

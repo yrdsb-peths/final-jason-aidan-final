@@ -15,7 +15,7 @@ public class FireSpirit extends Spirit
     
     public FireSpirit()
     {
-        super(50, 10, "Fire");
+        super(50, 10, "Fire", "Water");
         setLocation(200, 300);
         GreenfootImage image = new GreenfootImage("button-red.png");
         setImage(image);

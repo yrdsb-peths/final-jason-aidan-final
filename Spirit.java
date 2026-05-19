@@ -16,12 +16,14 @@ public class Spirit extends Actor
     int health;
     int attack;
     String type;
+    String weakness;
     
-    public Spirit(int health, int attack, String type)
+    public Spirit(int health, int attack, String type, String weakness)
     {
         this.health = health;
         this.attack = attack;
         this.type = type;
+        this.weakness = weakness;
     }
     public void act()
     {
