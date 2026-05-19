@@ -9,10 +9,21 @@ public class MyWorld extends World {
 
         super(600, 400, 1);
         playerSpirits = new Spirit[maxSpirits];
+        displaySpirits();
 
-        playerSpirits[0] = new FireSpirit();
-        playerSpirits[1] = new WaterSpirit();
-        playerSpirits[2] = new GrassSpirit();
+    }
+
+    public void displaySpirits() {
+        // Code to display the player's spirits on the screen
+
+        // for (int i = 0; i < Spirit.spiritTypes.length; i++) {
+        //     if (Spirit.spiritTypes[i] != null) {
+        //         addObject(new Spirit.spiritTypes[i].getConstructor(), 100 + i * 100, 350);
+        //     }
+        // }
+        addObject(new FireSpirit(), 100, 350);
+        addObject(new WaterSpirit(), 200, 350);
+        addObject(new GrassSpirit(), 300, 350);
     }
 
     public void chooseSpirit() {

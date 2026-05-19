@@ -12,13 +12,14 @@ public class WaterSpirit extends Spirit
      * Act - do whatever the WaterSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+
+    static GreenfootImage costume = new GreenfootImage("button-blue.png");
     
     public WaterSpirit()
     {
         super(20, 10, "Water");
         setLocation(200,300);
-        GreenfootImage image = new GreenfootImage("button-blue.png");
-        setImage(image);
+        setImage(costume);
     }
     public void act()
     {

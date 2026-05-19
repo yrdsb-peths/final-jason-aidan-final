@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Write a description of class Spirit here.
@@ -16,6 +17,8 @@ public class Spirit extends Actor
     int health;
     int attack;
     String type;
+
+    static Class<?>[] spiritTypes = {FireSpirit.class, WaterSpirit.class, GrassSpirit.class};
     
     public Spirit(int health, int attack, String type)
     {
