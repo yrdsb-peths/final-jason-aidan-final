@@ -19,17 +19,25 @@ public class MyWorld extends World {
         // Code to display the player's spirits on the screen
 
         try{
-            int x = 100;
+            GreenfootImage[] costumeList = new GreenfootImage[Spirit.spiritTypes.size()];
+            int i = 0;
             for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
 
                 Spirit spirit = spiritClass.getDeclaredConstructor().newInstance();
-                addObject(spirit, x, 350);
-                x += 100;
+                addObject(spirit, i * 100 + 50, 350);
+                costumeList[i] = new GreenfootImage(spirit.getImage());
+                costumeList[i].scale(50, 50);
+                i++;
             }
+
+            Chooser chooser = new Chooser(costumeList, 100);
+            addObject(chooser, 300, 200);
 
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
+
+
     }
 
     public void chooseSpirit() {
