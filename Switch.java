@@ -18,16 +18,22 @@ public class Switch extends Actor
     int height;
     GreenfootImage onImage;
     GreenfootImage offImage;
+    Chooser chooser;
 
-    public Switch(GreenfootImage onImage, GreenfootImage offImage, int width, int height) {
+    public Switch(GreenfootImage onImage, GreenfootImage offImage, int width, int height, Chooser chooser) {
+        
+        System.out.println("created");
         
         this.onImage = onImage;
         this.offImage = offImage;
+        this.chooser = chooser;
         
         this.width = width;
         this.height = height;
         
         setImage(offImage);
+
+        System.out.println("initialized");
         
         
     }
@@ -37,17 +43,26 @@ public class Switch extends Actor
     {
         // Add your action code here.
         if (Greenfoot.mouseClicked(this)) {
+            System.out.println("clicked");
             toggle();
         }
     }
 
     public void toggle() {
-        if (status == 0) {
+
+        if (chooser == null) {
+            return;
+        }
+
+        if (status == 0 && chooser.selectedNumber < chooser.maxOptions) {
             setImage(onImage);
             status = 1;
+            
         } else {
             setImage(offImage);
             status = 0;
         }
+
+        chooser.updateSelectedNumber();
     }
 }

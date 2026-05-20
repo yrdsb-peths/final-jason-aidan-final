@@ -15,14 +15,18 @@ public class Chooser extends Actor
     
     int spacing;
     GreenfootImage[] options;
-    int maxOptions = 0;
+    Switch[] switches;
+    int maxOptions;
+    int selectedNumber;
     boolean switchesCreated = false;
 
-    public Chooser(GreenfootImage[] options, int spacing)
+    public Chooser(GreenfootImage[] options, int maxOptions, int spacing)
     {
         this.spacing = spacing;
         this.options = options;
-        maxOptions = options.length;
+        this.maxOptions = maxOptions;
+        this.selectedNumber = 0;
+        switches = new Switch[options.length];
     }
 
     public void act()
@@ -30,22 +34,36 @@ public class Chooser extends Actor
         // can't use getWorld() in the constructor, so we create the switches here
         
         if (!switchesCreated) {
-            for (int i = 0; i < maxOptions; i++) {
-                
+            for (int i = 0; i < options.length; i++) {
+                                
                 GreenfootImage small = new GreenfootImage(options[i]);
                 small.scale(50, 50);
 
                 GreenfootImage large = new GreenfootImage(options[i]);
                 large.scale(60, 60);
 
-                Switch switch_ = new Switch(large, small, 50, 50);                
+
+                Switch switch_ = new Switch(large, small, 50, 50, this);   
+                
+                switches[i] = switch_;
 
                 getWorld().addObject(switch_, getX() + spacing * i, getY());
                 
             }
             switchesCreated = true;
-        }
 
+        }
         // Add your action code here.
+    }
+
+    public void updateSelectedNumber() {
+        // Code to return the amount of the selected option
+        selectedNumber = 0;
+        for (Switch switch_ : switches) {
+            if (switch_.status == 1) {
+                // return the amount for this option
+                selectedNumber++;
+            }
+        }
     }
 }
