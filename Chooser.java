@@ -27,6 +27,20 @@ public class Chooser extends Actor
         this.maxOptions = maxOptions;
         this.selectedNumber = 0;
         switches = new Switch[options.length];
+        
+        for (int i = 0; i < options.length; i++) {
+                                
+            GreenfootImage small = new GreenfootImage(options[i]);
+            small.scale(50, 50);
+
+            GreenfootImage large = new GreenfootImage(options[i]);
+            large.scale(60, 60);
+
+
+            Switch switch_ = new Switch(large, small, 50, 50, this);   
+            
+            switches[i] = switch_;
+        }
     }
 
     public void act()
@@ -35,19 +49,8 @@ public class Chooser extends Actor
         
         if (!switchesCreated) {
             for (int i = 0; i < options.length; i++) {
-                                
-                GreenfootImage small = new GreenfootImage(options[i]);
-                small.scale(50, 50);
 
-                GreenfootImage large = new GreenfootImage(options[i]);
-                large.scale(60, 60);
-
-
-                Switch switch_ = new Switch(large, small, 50, 50, this);   
-                
-                switches[i] = switch_;
-
-                getWorld().addObject(switch_, getX() + spacing * i, getY());
+                getWorld().addObject(switches[i], getX() + spacing * i, getY());
                 
             }
             switchesCreated = true;

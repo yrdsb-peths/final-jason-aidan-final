@@ -4,9 +4,12 @@ import java.util.List;
 
 public class MyWorld extends World {
     
-    int maxSpirits = 5;
+    int maxSpirits = 2;
     Spirit[] playerSpirits;
     int playerNum = 1;
+    
+    Chooser chooser;
+    
     static int WIDTH = 600;
     static int HEIGHT = 400;
     
@@ -14,12 +17,22 @@ public class MyWorld extends World {
 
         super(WIDTH, HEIGHT, 1);
         playerSpirits = new Spirit[maxSpirits];
-        displaySpirits();
         Submit s = new Submit();
         addObject(s,500,350);
+        
+        chooser = displaySpirits();
     }
 
-    public void displaySpirits(){
+    public void act() {
+        
+        chooseSpirit(chooser);
+        
+        //System.out.println(playerSpirits[0]);
+        //System.out.println(playerSpirits[1]);
+
+    }
+
+    public Chooser displaySpirits(){
         // Code to display the player's spirits on the screen
 
         try{
@@ -40,16 +53,40 @@ public class MyWorld extends World {
 
             addObject(chooser, 300, 200);
 
+            return chooser;
+
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
+
+            return null;
         }
 
 
     }
 
-    public void chooseSpirit() {
-        // Code to allow the player to choose a spirit
+    public void chooseSpirit(Chooser chooser) {
+
+        if (chooser == null) {
+            System.out.println("Error creating chooser");
+            return;
+        }
+
+        int j = 0;
+        int i = 0;
+        try {
+            for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
+                
+                if (chooser.switches[i].status == 1) {
+                    playerSpirits[j] = spiritClass.getDeclaredConstructor().newInstance();
+                    j++;
+                }
+                i++;
+
+            }
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+        }
+
+        
     }
-    
-    
 }
