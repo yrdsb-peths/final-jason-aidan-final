@@ -24,7 +24,6 @@ public class MyWorld extends World {
             for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
 
                 Spirit spirit = spiritClass.getDeclaredConstructor().newInstance();
-                addObject(spirit, i * 100 + 50, 350);
                 costumeList[i] = new GreenfootImage(spirit.getImage());
                 costumeList[i].scale(50, 50);
                 i++;

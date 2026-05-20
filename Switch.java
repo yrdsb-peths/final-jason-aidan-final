@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class SwitchA extends Actor
+public class Switch extends Actor
 {
     /**
      * Act - do whatever the Switch wants to do. This method is called whenever
@@ -16,10 +16,10 @@ public class SwitchA extends Actor
     int status = 0; // 0 for off, 1 for on
     int width;
     int height;
-    GreenfootImage onImage = new GreenfootImage("switch-on.png");
-    GreenfootImage offImage = new GreenfootImage("switch-off.png");
+    GreenfootImage onImage;
+    GreenfootImage offImage;
 
-    public SwitchA(GreenfootImage onImage, GreenfootImage offImage, int width, int height) {
+    public Switch(GreenfootImage onImage, GreenfootImage offImage, int width, int height) {
         
         System.out.println("hello1");
         this.onImage = onImage;

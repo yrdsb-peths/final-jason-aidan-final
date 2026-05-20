@@ -33,22 +33,16 @@ public class Chooser extends Actor
         if (!switchesCreated) {
             for (int i = 0; i < maxOptions; i++) {
                 
-                System.out.println("test");
-
                 GreenfootImage small = new GreenfootImage(options[i]);
                 small.scale(50, 50);
 
                 GreenfootImage large = new GreenfootImage(options[i]);
                 large.scale(60, 60);
 
-                SwitchA switcher = new SwitchA(large, small, 50, 50);
-                
-                System.out.println("test3");
+                Switch switch_ = new Switch(large, small, 50, 50);                
 
-
-                //getWorld().addObject(switch_, getX() + spacing * i, getY());
+                getWorld().addObject(switch_, getX() + spacing * i, getY());
                 
-                System.out.println("test2");
             }
             switchesCreated = true;
         }
