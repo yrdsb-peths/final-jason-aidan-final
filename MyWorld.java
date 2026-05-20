@@ -6,13 +6,13 @@ public class MyWorld extends World {
     
     int maxSpirits = 5;
     Spirit[] playerSpirits;
-
+    int playerNum = 1;
+    
     public MyWorld() {
 
         super(600, 400, 1);
         playerSpirits = new Spirit[maxSpirits];
         displaySpirits();
-
     }
 
     public void displaySpirits(){
