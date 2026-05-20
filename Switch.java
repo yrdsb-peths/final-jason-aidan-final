@@ -43,7 +43,6 @@ public class Switch extends Actor
     {
         // Add your action code here.
         if (Greenfoot.mouseClicked(this)) {
-            System.out.println("clicked");
             toggle();
         }
     }
