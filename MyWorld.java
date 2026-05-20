@@ -15,6 +15,8 @@ public class MyWorld extends World {
         super(WIDTH, HEIGHT, 1);
         playerSpirits = new Spirit[maxSpirits];
         displaySpirits();
+        Submit s = new Submit();
+        addObject(s,500,350);
     }
 
     public void displaySpirits(){
