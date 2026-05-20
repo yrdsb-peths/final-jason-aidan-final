@@ -23,7 +23,6 @@ public class Chooser extends Actor
         this.spacing = spacing;
         this.options = options;
         maxOptions = options.length;
-        System.out.println("test1");
     }
 
     public void act()

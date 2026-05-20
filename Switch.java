@@ -21,15 +21,12 @@ public class Switch extends Actor
 
     public Switch(GreenfootImage onImage, GreenfootImage offImage, int width, int height) {
         
-        System.out.println("hello1");
         this.onImage = onImage;
         this.offImage = offImage;
         
-        System.out.println("hello2");
         this.width = width;
         this.height = height;
         
-        System.out.println("hello3");
         setImage(offImage);
         
         
@@ -38,7 +35,6 @@ public class Switch extends Actor
 
     public void act()
     {
-        System.out.println("hello4");
         // Add your action code here.
         if (Greenfoot.mouseClicked(this)) {
             toggle();
