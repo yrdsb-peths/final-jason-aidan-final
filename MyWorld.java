@@ -7,12 +7,16 @@ public class MyWorld extends World {
     int maxSpirits = 5;
     Spirit[] playerSpirits;
     int playerNum = 1;
+    static int WIDTH = 600;
+    static int HEIGHT = 400;
     
     public MyWorld() {
 
-        super(600, 400, 1);
+        super(WIDTH, HEIGHT, 1);
         playerSpirits = new Spirit[maxSpirits];
         displaySpirits();
+        Submit s = new Submit();
+        addObject(s,500,350);
     }
 
     public void displaySpirits(){
