@@ -22,7 +22,7 @@ public class Switch extends Actor
 
     public Switch(GreenfootImage onImage, GreenfootImage offImage, int width, int height, Chooser chooser) {
         
-        System.out.println("created");
+        // System.out.println("created");
         
         this.onImage = onImage;
         this.offImage = offImage;
@@ -33,7 +33,7 @@ public class Switch extends Actor
         
         setImage(offImage);
 
-        System.out.println("initialized");
+        // System.out.println("initialized");
         
         
     }
