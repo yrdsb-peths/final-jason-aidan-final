@@ -9,6 +9,7 @@ dependency2.type=UsesDependency
 dependency3.from=Chooser
 dependency3.to=SwitchA
 dependency3.type=UsesDependency
+<<<<<<< Updated upstream
 dependency4.from=Spirit
 dependency4.to=FireSpirit
 dependency4.type=UsesDependency
@@ -18,6 +19,26 @@ editor.fx.0.x=0
 editor.fx.0.y=29
 height=729
 package.numDependencies=4
+=======
+dependency4.from=MyWorld
+dependency4.to=GrassSpirit
+dependency4.type=UsesDependency
+dependency5.from=Spirit
+dependency5.to=FireSpirit
+dependency5.type=UsesDependency
+dependency6.from=Spirit
+dependency6.to=WaterSpirit
+dependency6.type=UsesDependency
+dependency7.from=Spirit
+dependency7.to=GrassSpirit
+dependency7.type=UsesDependency
+editor.fx.0.height=736
+editor.fx.0.width=1382
+editor.fx.0.x=-8
+editor.fx.0.y=-8
+height=736
+package.numDependencies=7
+>>>>>>> Stashed changes
 package.numTargets=5
 project.charset=UTF-8
 publish.hasSource=false
