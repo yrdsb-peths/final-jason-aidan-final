@@ -34,7 +34,7 @@ public class MyWorld extends World {
             }
 
             Chooser chooser = new Chooser(costumeList, 100);
-            addObject(chooser, 100, HEIGHT/2);
+            addObject(chooser, 50, 50);
 
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
