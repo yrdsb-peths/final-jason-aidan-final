@@ -2,13 +2,20 @@ import greenfoot.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+enum States {
+    CHOOSING,
+    BATTLE
+}
+
 public class MyWorld extends World {
     
     int maxSpirits = 2;
     Spirit[] playerSpirits;
     int playerNum = 1;
+    States currentState = States.CHOOSING;
     
     Chooser chooser;
+    Button submitButton;
     
     static int WIDTH = 600;
     static int HEIGHT = 400;
@@ -17,18 +24,31 @@ public class MyWorld extends World {
 
         super(WIDTH, HEIGHT, 1);
         playerSpirits = new Spirit[maxSpirits];
-        Submit s = new Submit();
-        addObject(s,500,350);
+        submitButton = new Button(new GreenfootImage("karo.png"), 20);
+        addObject(submitButton, 500, 350);
         
         chooser = displaySpirits();
     }
 
     public void act() {
         
-        chooseSpirit(chooser);
+        if (currentState == States.CHOOSING) {
+            chooseSpirit(chooser);
+            boolean finishedChoosing = true;
+            for (Spirit spirit : playerSpirits) {
+                if (spirit == null) {
+                    finishedChoosing = false;
+                }
+            }
+            if (finishedChoosing && submitButton.isPressed) {
+                currentState = States.BATTLE;
+                chooser.remove();
+            }
+        } else if (currentState == States.BATTLE) {
+            // Code to handle battle state
+        }
         
-        //System.out.println(playerSpirits[0]);
-        //System.out.println(playerSpirits[1]);
+
 
     }
 

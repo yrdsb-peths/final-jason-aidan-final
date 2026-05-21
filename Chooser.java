@@ -69,4 +69,11 @@ public class Chooser extends Actor
             }
         }
     }
+
+    public void remove() {
+        for (Switch switch_ : switches) {
+            getWorld().removeObject(switch_);
+        }
+        getWorld().removeObject(this);
+    }
 }
