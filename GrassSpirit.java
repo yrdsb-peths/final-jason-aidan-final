@@ -12,7 +12,7 @@ public class GrassSpirit extends Spirit
      * Act - do whatever the GrassSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    static GreenfootImage costume = new GreenfootImage("button-green.png");
+    static GreenfootImage costume = new GreenfootImage("grass.png");
 
     public GrassSpirit()
     {

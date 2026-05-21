@@ -13,7 +13,7 @@ public class FireSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
 
-    static GreenfootImage costume = new GreenfootImage("button-red.png");
+    static GreenfootImage costume = new GreenfootImage("fire.png");
     
     public FireSpirit()
     {
