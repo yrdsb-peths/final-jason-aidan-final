@@ -29,7 +29,7 @@ public class MyWorld extends World {
         player1Spirits = new Spirit[maxSpirits];
         player2Spirits = new Spirit[maxSpirits];
         submitButton = new Button(new GreenfootImage("karo.png"), 20);
-        addObject(submitButton, 500, 350);
+        addObject(submitButton, WIDTH/2, HEIGHT/4 * 3);
         
         chooser1 = createSpiritChooser(70, 50, 70);
         chooser2 = createSpiritChooser(400, 50, 70);
@@ -67,17 +67,18 @@ public class MyWorld extends World {
             }
             // player 1 turn first
             // player 2 after and cycles after that
-            //int playerTurn = 1;
-            //while(!isEmptySpirits(player1Spritis) || !isEmptySpirits(player2Sprits))
+            int playerTurn = 1;
+            //while(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
             //{
                 //if(playerTurn % 2 != 0)
-                //{
+                ///{
                     //playerTurn(1);
                 //}
                 //else
                 //{
                     //playerTurn(2);
                 //}
+                //playerTurn++;
             //}
             //determineWinner();
         }
