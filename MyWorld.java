@@ -45,18 +45,23 @@ public class MyWorld extends World {
                     finishedChoosing = false;
                     break; 
                 }
+
+
             }
             if (finishedChoosing && submitButton.isPressed) {
                 currentState = States.BATTLE;
                 chooser1.remove();
                 chooser2.remove();
+                submitButton.remove();
+
+                for (int i = 0; i < maxSpirits; i++) {
+                    System.out.println("Player 1 Spirit " + (i+1) + ": " + player1Spirits[i].type);
+                    System.out.println("Player 2 Spirit " + (i+1) + ": " + player2Spirits[i].type);
+                }
             }
         } else if (currentState == States.BATTLE) {
             // Code to handle battle state
-            for (int i = 0; i < maxSpirits; i++) {
-                System.out.println("Player 1 Spirit " + (i+1) + ": " + player1Spirits[i].type);
-                System.out.println("Player 2 Spirit " + (i+1) + ": " + player2Spirits[i].type);
-            }
+
         }
         
 

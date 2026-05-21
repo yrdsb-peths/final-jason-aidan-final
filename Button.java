@@ -36,4 +36,8 @@ public class Button extends Actor
             isPressed = false; // Reset the button state after the delay
         }
     }
+
+    public void remove() {
+        getWorld().removeObject(this);
+    }
 }
