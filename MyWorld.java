@@ -57,10 +57,37 @@ public class MyWorld extends World {
                 System.out.println("Player 1 Spirit " + (i+1) + ": " + player1Spirits[i].type);
                 System.out.println("Player 2 Spirit " + (i+1) + ": " + player2Spirits[i].type);
             }
+            // player 1 turn first
+            // player 2 after and cycles after that
+            //int playerTurn = 1;
+            //while(!isEmptySpirits(player1Spritis) || !isEmptySpirits(player2Sprits))
+            //{
+                //if(playerTurn % 2 != 0)
+                //{
+                    //playerTurn(1);
+                //}
+                //else
+                //{
+                    //playerTurn(2);
+                //}
+            //}
+            //determineWinner();
         }
         
+    }
 
-
+    //returns true if the given list has no spirits
+    public boolean isEmptySpirits(Spirit[] list)
+    {
+        boolean output = true;
+        for(int i = 0; i < list.length; i++)
+        {
+            if(list[i] != null)
+            {
+                output = false;
+            }
+        }
+        return output;
     }
 
     public Chooser createSpiritChooser(int x, int y, int spacing){
@@ -80,6 +107,10 @@ public class MyWorld extends World {
             Chooser chooser = new Chooser(costumeList, 2, spacing);
 
             addObject(chooser, x, y);
+            Chooser chooser = new Chooser(costumeList, 2, 100);
+            // chooser.switches[0].status 
+
+            addObject(chooser, 300, 200);
 
             return chooser;
 
@@ -129,3 +160,15 @@ public class MyWorld extends World {
     
 
 }
+    //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
+    //public void playerTurn(int playerIndex)
+    //{
+        //if(playerIndex == 1)
+        //{
+            
+        //}
+        //else
+        //{
+            
+        //}
+    //}
