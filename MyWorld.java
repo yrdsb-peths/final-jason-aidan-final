@@ -106,11 +106,9 @@ public class MyWorld extends World {
 
             Chooser chooser = new Chooser(costumeList, 2, spacing);
 
-            addObject(chooser, x, y);
-            Chooser chooser = new Chooser(costumeList, 2, 100);
             // chooser.switches[0].status 
 
-            addObject(chooser, 300, 200);
+            addObject(chooser, x, y);
 
             return chooser;
 
@@ -158,17 +156,16 @@ public class MyWorld extends World {
         
     }
     
-
-}
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
-    //public void playerTurn(int playerIndex)
-    //{
-        //if(playerIndex == 1)
-        //{
+    public void playerTurn(int playerIndex)
+    {
+        if(playerIndex == 1)
+        {
             
-        //}
-        //else
-        //{
+        }
+        else
+        {
             
-        //}
-    //}
+        }
+    }
+}
