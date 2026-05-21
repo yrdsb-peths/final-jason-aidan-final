@@ -28,7 +28,9 @@ public class MyWorld extends World {
         super(WIDTH, HEIGHT, 1);
         player1Spirits = new Spirit[maxSpirits];
         player2Spirits = new Spirit[maxSpirits];
-        submitButton = new Button(new GreenfootImage("karo.png"), 20);
+        GreenfootImage image = new GreenfootImage("submit_button.png");
+        image.scale(125,125);
+        submitButton = new Button(image, 20);
         addObject(submitButton, WIDTH/2, HEIGHT/4 * 3);
         
         chooser1 = createSpiritChooser(70, 50, 70);
