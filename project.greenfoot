@@ -1,13 +1,26 @@
 #Greenfoot project file
 class.FireSpirit.image=button-red.png
+<<<<<<< Updated upstream
+=======
+class.GrassSpirit.image=button-green.png
+class.Submit.image=karo.png
+class.WaterSpirit.image=button-blue.png
+>>>>>>> Stashed changes
 dependency1.from=MyWorld
 dependency1.to=Chooser
 dependency1.type=UsesDependency
 dependency2.from=MyWorld
+<<<<<<< Updated upstream
 dependency2.to=Button
 dependency2.type=UsesDependency
 dependency3.from=MyWorld
 dependency3.to=Spirit
+=======
+dependency2.to=Spirit
+dependency2.type=UsesDependency
+dependency3.from=MyWorld
+dependency3.to=Submit
+>>>>>>> Stashed changes
 dependency3.type=UsesDependency
 dependency4.from=Chooser
 dependency4.to=Switch
@@ -41,7 +54,7 @@ publish.title=
 publish.url=
 readme.height=60
 readme.name=@README
-readme.width=48
+readme.width=49
 readme.x=10
 readme.y=10
 simulation.speed=50
@@ -81,35 +94,51 @@ target5.width=120
 target5.x=0
 target5.y=0
 target6.height=70
+<<<<<<< Updated upstream
 target6.name=FireSpirit
+=======
+target6.name=Submit
+>>>>>>> Stashed changes
 target6.showInterface=false
 target6.type=ClassTarget
 target6.width=120
 target6.x=0
 target6.y=0
 target7.height=70
+<<<<<<< Updated upstream
 target7.name=Submit
+=======
+target7.name=Spirit
+>>>>>>> Stashed changes
 target7.showInterface=false
 target7.type=ClassTarget
 target7.width=120
 target7.x=0
 target7.y=0
 target8.height=70
+<<<<<<< Updated upstream
 target8.name=Spirit
+=======
+target8.name=MyWorld
+>>>>>>> Stashed changes
 target8.showInterface=false
 target8.type=ClassTarget
 target8.width=120
 target8.x=0
 target8.y=0
 target9.height=70
+<<<<<<< Updated upstream
 target9.name=MyWorld
+=======
+target9.name=SwitchA
+>>>>>>> Stashed changes
 target9.showInterface=false
 target9.type=ClassTarget
 target9.width=120
 target9.x=0
 target9.y=0
 version=3.1.0
-width=1280
+width=1382
 world.lastInstantiated=MyWorld
 xPosition=0
-yPosition=29
+yPosition=0
