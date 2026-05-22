@@ -1,13 +1,26 @@
 #Greenfoot project file
 class.FireSpirit.image=button-red.png
+<<<<<<< Updated upstream
+=======
+class.GrassSpirit.image=button-green.png
+class.Submit.image=karo.png
+class.WaterSpirit.image=button-blue.png
+>>>>>>> Stashed changes
 dependency1.from=MyWorld
 dependency1.to=Spirit
 dependency1.type=UsesDependency
-dependency2.from=Chooser
-dependency2.to=Switch
+dependency2.from=MyWorld
+<<<<<<< Updated upstream
+dependency2.to=Button
 dependency2.type=UsesDependency
-dependency3.from=Switch
-dependency3.to=Chooser
+dependency3.from=MyWorld
+dependency3.to=Spirit
+=======
+dependency2.to=Spirit
+dependency2.type=UsesDependency
+dependency3.from=MyWorld
+dependency3.to=Submit
+>>>>>>> Stashed changes
 dependency3.type=UsesDependency
 dependency4.from=Spirit
 dependency4.to=FireSpirit
@@ -18,13 +31,19 @@ dependency5.type=UsesDependency
 dependency6.from=Spirit
 dependency6.to=GrassSpirit
 dependency6.type=UsesDependency
+dependency7.from=Spirit
+dependency7.to=WaterSpirit
+dependency7.type=UsesDependency
+dependency8.from=Spirit
+dependency8.to=GrassSpirit
+dependency8.type=UsesDependency
 editor.fx.0.height=729
 editor.fx.0.width=1280
 editor.fx.0.x=0
 editor.fx.0.y=29
 height=726
-package.numDependencies=6
-package.numTargets=11
+package.numDependencies=8
+package.numTargets=9
 project.charset=UTF-8
 publish.hasSource=false
 publish.locked=true
@@ -46,20 +65,6 @@ target1.type=ClassTarget
 target1.width=120
 target1.x=0
 target1.y=0
-target10.height=70
-target10.name=MyWorld
-target10.showInterface=false
-target10.type=ClassTarget
-target10.width=120
-target10.x=0
-target10.y=0
-target11.height=70
-target11.name=ImageDisplay
-target11.showInterface=false
-target11.type=ClassTarget
-target11.width=120
-target11.x=0
-target11.y=0
 target2.height=70
 target2.name=Chooser
 target2.showInterface=false
@@ -110,14 +115,18 @@ target8.width=120
 target8.x=0
 target8.y=0
 target9.height=70
-target9.name=ChoseScreen
+<<<<<<< Updated upstream
+target9.name=MyWorld
+=======
+target9.name=SwitchA
+>>>>>>> Stashed changes
 target9.showInterface=false
 target9.type=ClassTarget
 target9.width=120
 target9.x=0
 target9.y=0
 version=3.1.0
-width=1280
+width=1382
 world.lastInstantiated=MyWorld
 xPosition=0
 yPosition=29
