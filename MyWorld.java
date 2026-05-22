@@ -19,6 +19,10 @@ public class MyWorld extends World {
     Chooser chooser1;
     Chooser chooser2;
     Button submitButton;
+    Button attack;
+    Button passive;
+    Button chooseNew;
+    Button flee;
     
     static int WIDTH = 600;
     static int HEIGHT = 400;
@@ -32,6 +36,14 @@ public class MyWorld extends World {
         image.scale(125,125);
         submitButton = new Button(image, 20);
         addObject(submitButton, WIDTH/2, HEIGHT/4 * 3);
+        attack = new Button(null, 20);
+        addObject(attack,WIDTH/4,HEIGHT/3*2);
+        passive = new Button(null, 20);
+        addObject(passive,WIDTH/4 * 3,HEIGHT/3*2);
+        chooseNew = new Button(null, 20);
+        addObject(chooseNew,WIDTH/4,HEIGHT/6*5);
+        flee = new Button(null, 20);
+        addObject(flee,WIDTH/4 * 3,HEIGHT/6*5);
         
         chooser1 = createSpiritChooser(70, 50, 70);
         chooser2 = createSpiritChooser(400, 50, 70);
@@ -70,10 +82,11 @@ public class MyWorld extends World {
             // player 1 turn first
             // player 2 after and cycles after that
             int playerTurn = 1;
+            playerTurn(1);
             //while(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
             //{
                 //if(playerTurn % 2 != 0)
-                ///{
+                //{
                     //playerTurn(1);
                 //}
                 //else
@@ -172,11 +185,20 @@ public class MyWorld extends World {
     {
         if(playerIndex == 1)
         {
-            
+            //show all buttons, attack, passive, choose new, flee for p1
+            attack.setImage(new GreenfootImage("button-red.png"));
+            passive.setImage(new GreenfootImage("button-green.png"));
+            chooseNew.setImage(new GreenfootImage("button-blue.png"));
+            flee.setImage(new GreenfootImage("button-yellow.png"));
+            //
         }
         else
         {
-            
+            //show all buttons for p2
+            attack.setImage(new GreenfootImage("button-red.png"));
+            passive.setImage(new GreenfootImage("button-green.png"));
+            chooseNew.setImage(new GreenfootImage("button-blue.png"));
+            flee.setImage(new GreenfootImage("button-yellow.png"));
         }
     }
 }
