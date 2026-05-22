@@ -61,7 +61,7 @@ public class MyWorld extends World {
             // player 2 after and cycles after that
             int playerTurn = 1;
             playerTurn(1);
-            //while(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
+            //if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
             //{
                 //if(playerTurn % 2 != 0)
                 //{
@@ -72,8 +72,10 @@ public class MyWorld extends World {
                     //playerTurn(2);
                 //}
                 //playerTurn++;
+            //} else {
+                //determine Winner
             //}
-            //determineWinner();
+            //
         }
         
     }
@@ -94,22 +96,50 @@ public class MyWorld extends World {
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
     public void playerTurn(int playerIndex)
     {
+        showPlayerButtons(playerIndex);
         if(playerIndex == 1)
         {
-            //show all buttons, attack, passive, choose new, flee for p1
-            attack.setImage(new GreenfootImage("button-red.png"));
-            passive.setImage(new GreenfootImage("button-green.png"));
-            chooseNew.setImage(new GreenfootImage("button-blue.png"));
-            flee.setImage(new GreenfootImage("button-yellow.png"));
-            //
+            //player chooses button by click
         }
         else
         {
-            //show all buttons for p2
-            attack.setImage(new GreenfootImage("button-red.png"));
-            passive.setImage(new GreenfootImage("button-green.png"));
-            chooseNew.setImage(new GreenfootImage("button-blue.png"));
-            flee.setImage(new GreenfootImage("button-yellow.png"));
+            //player chooses button by click
         }
+    }
+    
+    public void showPlayerButtons(int num)
+    {
+        GreenfootImage a;
+        GreenfootImage p;
+        GreenfootImage c;
+        GreenfootImage f;
+        int scaleX = 210;
+        int scaleY = 70;
+        if(num == 1)
+        {
+            a = new GreenfootImage("attack_P1.png");
+            p = new GreenfootImage("passive_P1.png");
+            c = new GreenfootImage("chooseNew_P1.png");
+            f = new GreenfootImage("flee_P1.png");
+            a.scale(scaleX,scaleY);
+            p.scale(scaleX,scaleY);
+            c.scale(scaleX,scaleY);
+            f.scale(scaleX,scaleY);
+        }
+        else
+        {
+            a = new GreenfootImage("attack_P2.png");
+            p = new GreenfootImage("passive_P2.png");
+            c = new GreenfootImage("chooseNew_P2.png");
+            f = new GreenfootImage("flee_P2.png");
+            a.scale(scaleX,scaleY);
+            p.scale(scaleX,scaleY);
+            c.scale(scaleX,scaleY);
+            f.scale(scaleX,scaleY);
+        }
+        attack.setImage(a);
+        passive.setImage(p);
+        chooseNew.setImage(c);
+        flee.setImage(f);
     }
 }
