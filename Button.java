@@ -15,8 +15,10 @@ public class Button extends Actor
     int delayLeft;
     int delay = 20; // Number of act cycles the button stays pressed
     boolean isPressed = false;
+    GreenfootImage image;
     public Button(GreenfootImage image, int delay)
     {
+        this.image = image;
         setImage(image);
         isPressed = false;
         this.delay = delay;
@@ -24,7 +26,7 @@ public class Button extends Actor
     }
     public void act()
     {
-        // Add your action code here.
+        // Add your action code here.        
         if (Greenfoot.mouseClicked(this) && !isPressed) {
             isPressed = true;
             delayLeft = delay; // Set the delay for how long the button stays pressed
