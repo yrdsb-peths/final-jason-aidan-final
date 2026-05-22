@@ -1,6 +1,6 @@
 import greenfoot.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
+import java.util.ArrayList;
 
 enum States {
     CHOOSING,
@@ -11,8 +11,8 @@ enum States {
 public class MyWorld extends World {
     
     static int maxSpirits = 2;
-    Spirit[] player1Spirits;
-    Spirit[] player2Spirits;
+    ArrayList<Spirit> player1Spirits;
+    ArrayList<Spirit> player2Spirits;
 
     int playerNum = 1;
     States currentState = States.CHOOSING;
@@ -30,8 +30,8 @@ public class MyWorld extends World {
     public MyWorld() {
 
         super(WIDTH, HEIGHT, 1);
-        player1Spirits = new Spirit[maxSpirits];
-        player2Spirits = new Spirit[maxSpirits];
+        player1Spirits = new ArrayList<>();
+        player2Spirits = new ArrayList<>();
 
         attack = new Button(null, 20);
         addObject(attack,WIDTH/4,HEIGHT/3*2);

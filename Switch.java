@@ -6,6 +6,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
+
+
 public class Switch extends Actor
 {
     /**
@@ -14,27 +16,20 @@ public class Switch extends Actor
      */
 
     int status = 0; // 0 for off, 1 for on
-    int width;
-    int height;
+    int index;
     GreenfootImage onImage;
     GreenfootImage offImage;
     Chooser chooser;
 
-    public Switch(GreenfootImage onImage, GreenfootImage offImage, int width, int height, Chooser chooser) {
+    public Switch(GreenfootImage onImage, GreenfootImage offImage, int index, Chooser chooser) {
         
         // System.out.println("created");
         
         this.onImage = onImage;
         this.offImage = offImage;
         this.chooser = chooser;
-        
-        this.width = width;
-        this.height = height;
-        
-        setImage(offImage);
-
-        // System.out.println("initialized");
-        
+        this.index = index;
+        setImage(offImage);        
         
     }
 
@@ -62,6 +57,6 @@ public class Switch extends Actor
             status = 0;
         }
 
-        chooser.updateSelectedNumber();
+        chooser.updateSelectedNumber(index);
     }
 }

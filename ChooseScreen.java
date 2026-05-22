@@ -1,4 +1,5 @@
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
@@ -18,8 +19,8 @@ public class ChooseScreen extends Actor
     ImageDisplay[] player1Displays;
     ImageDisplay[] player2Displays;
 
-    Spirit[] player1Spirits;
-    Spirit[] player2Spirits;
+    ArrayList<Spirit> player1Spirits;
+    ArrayList<Spirit> player2Spirits;
 
     Chooser chooser1;
     Chooser chooser2;
@@ -31,7 +32,7 @@ public class ChooseScreen extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
 
-    public ChooseScreen(Spirit[] player1Spirits, Spirit[] player2Spirits, MyWorld world) {
+    public ChooseScreen(ArrayList<Spirit> player1Spirits, ArrayList<Spirit> player2Spirits, MyWorld world) {
         this.player1Spirits = player1Spirits;
         this.player2Spirits = player2Spirits;
         
@@ -51,16 +52,9 @@ public class ChooseScreen extends Actor
     public void act()
     {
         chooseSpirit(chooser1, chooser2);
-        boolean finishedChoosing = true;
-
         updateDisplay();
 
-        for (int i = 0; i < MyWorld.maxSpirits; i++) {
-            if (player1Spirits[i] == null || player2Spirits[i] == null) {
-                finishedChoosing = false;
-                break;
-            }
-        }
+        boolean finishedChoosing = player1Spirits.size() == MyWorld.maxSpirits && player2Spirits.size() == MyWorld.maxSpirits;
 
 
         if (finishedChoosing && submitButton.isPressed) {
@@ -68,6 +62,7 @@ public class ChooseScreen extends Actor
             chooser2.remove();
             submitButton.remove();
             removeDisplays();
+            world.chooseScreen = null;
             world.removeObject(this);
         }
     }
@@ -101,29 +96,30 @@ public class ChooseScreen extends Actor
             return;
         }
 
-        int j1 = 0;
-        int j2 = 0;
-        int i = 0;
-        try {
-            for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
-                
-                if (chooser1.switches[i].status == 1) {
-                    player1Spirits[j1] = spiritClass.getDeclaredConstructor().newInstance();
-                    j1++;
-                }
-
-                if (chooser2.switches[i].status == 1) {
-                    player2Spirits[j2] = spiritClass.getDeclaredConstructor().newInstance();
-                    j2++;
-                }
-                i++;
-
-            }
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
+        if (chooser1.selectedIndices == null || chooser2.selectedIndices == null) {
+            System.out.println("Error: selectedIndices is null");
+            return;
         }
 
+        player1Spirits.clear();
+        player2Spirits.clear();
         
+        for (int index : chooser1.selectedIndices) {
+            try {
+                player1Spirits.add(Spirit.spiritTypes.get(index).getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (int index : chooser2.selectedIndices) {
+            try {
+                player2Spirits.add(Spirit.spiritTypes.get(index).getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void updateDisplay() {
@@ -133,13 +129,13 @@ public class ChooseScreen extends Actor
                 continue;
             }
 
-            if (player1Spirits[i] != null && player1Spirits[i].getImage() != null) {
-                player1Displays[i].setImage(player1Spirits[i].getImage());
+            if (i < player1Spirits.size()) {
+                player1Displays[i].setImage(player1Spirits.get(i).getImage());
             } else {
                 player1Displays[i].setImage((GreenfootImage)null);
             }
-            if (player2Spirits[i] != null && player2Spirits[i].getImage() != null) {
-                player2Displays[i].setImage(player2Spirits[i].getImage());
+            if (i < player2Spirits.size()) {
+                player2Displays[i].setImage(player2Spirits.get(i).getImage());
             } else {
                 player2Displays[i].setImage((GreenfootImage)null);
             }

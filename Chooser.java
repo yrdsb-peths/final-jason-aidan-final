@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Chooser here.
@@ -16,6 +17,7 @@ public class Chooser extends Actor
     int spacing;
     GreenfootImage[] options;
     Switch[] switches;
+    ArrayList<Integer> selectedIndices;
     int maxOptions;
     int selectedNumber;
     boolean switchesCreated = false;
@@ -27,7 +29,8 @@ public class Chooser extends Actor
         this.maxOptions = maxOptions;
         this.selectedNumber = 0;
         switches = new Switch[options.length];
-        
+        selectedIndices = new ArrayList<Integer>();
+
         for (int i = 0; i < options.length; i++) {
                                 
             GreenfootImage small = new GreenfootImage(options[i]);
@@ -37,7 +40,7 @@ public class Chooser extends Actor
             large.scale(60, 60);
 
 
-            Switch switch_ = new Switch(large, small, 50, 50, this);   
+            Switch switch_ = new Switch(large, small, i, this);   
             
             switches[i] = switch_;
         }
@@ -59,15 +62,20 @@ public class Chooser extends Actor
         // Add your action code here.
     }
 
-    public void updateSelectedNumber() {
+    public void updateSelectedNumber(int index) {
         // Code to return the amount of the selected option
-        selectedNumber = 0;
-        for (Switch switch_ : switches) {
-            if (switch_.status == 1) {
-                // return the amount for this option
-                selectedNumber++;
+
+        for (int i = 0; i < selectedIndices.size(); i++) {
+            if (selectedIndices.get(i) == index) {
+                selectedIndices.remove(i);
+                selectedNumber--;
+                return;
             }
         }
+        selectedIndices.add(index);
+        selectedNumber++;
+
+        System.out.println("index: " + index);
     }
 
     public void remove() {
