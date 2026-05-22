@@ -1,0 +1,185 @@
+import java.lang.reflect.InvocationTargetException;
+
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Write a description of class ChoseScreen here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
+
+
+public class ChooseScreen extends Actor
+{
+
+    MyWorld world;
+    
+    ImageDisplay[] player1Displays;
+    ImageDisplay[] player2Displays;
+
+    Spirit[] player1Spirits;
+    Spirit[] player2Spirits;
+
+    Chooser chooser1;
+    Chooser chooser2;
+
+    Button submitButton;
+
+    boolean isFinished = false;
+
+    /**
+     * Act - do whatever the ChoseScreen wants to do. This method is called whenever
+     * the 'Act' or 'Run' button gets pressed in the environment.
+     */
+
+    public ChooseScreen(Spirit[] player1Spirits, Spirit[] player2Spirits, MyWorld world) {
+        this.player1Spirits = player1Spirits;
+        this.player2Spirits = player2Spirits;
+        
+        this.world = world;
+
+        submitButton = new Button(new GreenfootImage("karo.png"), 20);
+        world.addObject(submitButton, 500, 350);
+
+        initSelectedDisplay();
+        
+        chooser1 = createSpiritChooser(70, 50, 70);
+        chooser2 = createSpiritChooser(400, 50, 70);
+    }   
+
+    public void act()
+    {
+        chooseSpirit(chooser1, chooser2);
+        boolean finishedChoosing = true;
+
+        updateDisplay();
+
+        for (int i = 0; i < MyWorld.maxSpirits; i++) {
+            if (player1Spirits[i] == null || player2Spirits[i] == null) {
+                finishedChoosing = false;
+                break;
+            }
+        }
+
+
+        if (finishedChoosing && submitButton.isPressed) {
+            chooser1.remove();
+            chooser2.remove();
+            submitButton.remove();
+
+            for (int i = 0; i < MyWorld.maxSpirits; i++) {
+                System.out.println("Player 1 Spirit " + (i+1) + ": " + player1Spirits[i].type);
+                System.out.println("Player 2 Spirit " + (i+1) + ": " + player2Spirits[i].type);
+            }
+            isFinished = true;
+        }
+    }
+
+    public void initSelectedDisplay() {
+
+        player1Displays = new ImageDisplay[MyWorld.maxSpirits];
+        player2Displays = new ImageDisplay[MyWorld.maxSpirits];
+
+        for (int i = 0; i < MyWorld.maxSpirits; i++) {
+            
+            player1Displays[i] = new ImageDisplay();
+            world.addObject(player1Displays[i], 70 + 70 * i, 150);
+        
+        
+            player2Displays[i] = new ImageDisplay();
+            world.addObject(player2Displays[i], 400 + 70 * i, 150);
+            
+        }
+    }
+
+    public void chooseSpirit(Chooser chooser1, Chooser chooser2) { 
+
+        if (chooser1 == null) {
+            System.out.println("Error creating chooser");
+            return;
+        }
+
+        if (chooser2 == null) {
+            System.out.println("Error creating chooser");
+            return;
+        }
+
+        int j1 = 0;
+        int j2 = 0;
+        int i = 0;
+        try {
+            for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
+                
+                if (chooser1.switches[i].status == 1) {
+                    player1Spirits[j1] = spiritClass.getDeclaredConstructor().newInstance();
+                    j1++;
+                }
+
+                if (chooser2.switches[i].status == 1) {
+                    player2Spirits[j2] = spiritClass.getDeclaredConstructor().newInstance();
+                    j2++;
+                }
+                i++;
+
+            }
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+        }
+
+        
+    }
+
+    public void updateDisplay() {
+        System.out.println("Start updating");
+        
+        for (int i = 0; i < MyWorld.maxSpirits; i++) {
+            if (player1Displays[i] == null || player2Displays[i] == null) {
+                System.out.println("Index " + i + " displays not initialized yet");
+                continue;
+            }
+
+            if (player1Spirits[i] != null && player1Spirits[i].getImage() != null) {
+                System.out.println("Updating player 1 display " + i);
+                player1Displays[i].setImage(player1Spirits[i].getImage());
+            } else {
+                player1Displays[i].setImage((GreenfootImage)null);
+            }
+            if (player2Spirits[i] != null && player2Spirits[i].getImage() != null) {
+                System.out.println("Updating player 2 display " + i);
+                player2Displays[i].setImage(player2Spirits[i].getImage());
+            } else {
+                player2Displays[i].setImage((GreenfootImage)null);
+            }
+        }
+    }
+
+    public Chooser createSpiritChooser(int x, int y, int spacing){
+        // Code to display the player's spirits on the screen
+
+        try{
+            GreenfootImage[] costumeList = new GreenfootImage[Spirit.spiritTypes.size()];
+            int i = 0;
+            for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
+
+                Spirit spirit = spiritClass.getDeclaredConstructor().newInstance();
+                costumeList[i] = new GreenfootImage(spirit.getImage());
+                costumeList[i].scale(50, 50);
+                i++;
+            }
+
+            Chooser chooser = new Chooser(costumeList, 2, spacing);
+
+            // chooser.switches[0].status 
+
+            world.addObject(chooser, x, y);
+
+            return chooser;
+
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+}

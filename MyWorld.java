@@ -10,15 +10,15 @@ enum States {
 
 public class MyWorld extends World {
     
-    int maxSpirits = 2;
+    static int maxSpirits = 2;
     Spirit[] player1Spirits;
     Spirit[] player2Spirits;
+
     int playerNum = 1;
     States currentState = States.CHOOSING;
+
+    ChooseScreen chooseScreen;
     
-    Chooser chooser1;
-    Chooser chooser2;
-    Button submitButton;
     
     static int WIDTH = 600;
     static int HEIGHT = 400;
@@ -28,37 +28,19 @@ public class MyWorld extends World {
         super(WIDTH, HEIGHT, 1);
         player1Spirits = new Spirit[maxSpirits];
         player2Spirits = new Spirit[maxSpirits];
-        submitButton = new Button(new GreenfootImage("karo.png"), 20);
-        addObject(submitButton, 500, 350);
         
-        chooser1 = createSpiritChooser(70, 50, 70);
-        chooser2 = createSpiritChooser(400, 50, 70);
+        chooseScreen = new ChooseScreen(player1Spirits, player2Spirits, this);
+        addObject(chooseScreen, WIDTH/2, HEIGHT/2);
     }
 
     public void act() {
         
         if (currentState == States.CHOOSING) {
-            chooseSpirit(chooser1, chooser2);
-            boolean finishedChoosing = true;
-            for (int i = 0; i < maxSpirits; i++) {
-                if (player1Spirits[i] == null || player2Spirits[i] == null) {
-                    finishedChoosing = false;
-                    break; 
-                }
 
-
-            }
-            if (finishedChoosing && submitButton.isPressed) {
+            if (chooseScreen.isFinished) {
                 currentState = States.BATTLE;
-                chooser1.remove();
-                chooser2.remove();
-                submitButton.remove();
-
-                for (int i = 0; i < maxSpirits; i++) {
-                    System.out.println("Player 1 Spirit " + (i+1) + ": " + player1Spirits[i].type);
-                    System.out.println("Player 2 Spirit " + (i+1) + ": " + player2Spirits[i].type);
-                }
             }
+            
         } else if (currentState == States.BATTLE) {
             // Code to handle battle state
             for (int i = 0; i < maxSpirits; i++) {
@@ -97,73 +79,6 @@ public class MyWorld extends World {
         }
         return output;
     }
-
-    public Chooser createSpiritChooser(int x, int y, int spacing){
-        // Code to display the player's spirits on the screen
-
-        try{
-            GreenfootImage[] costumeList = new GreenfootImage[Spirit.spiritTypes.size()];
-            int i = 0;
-            for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
-
-                Spirit spirit = spiritClass.getDeclaredConstructor().newInstance();
-                costumeList[i] = new GreenfootImage(spirit.getImage());
-                costumeList[i].scale(50, 50);
-                i++;
-            }
-
-            Chooser chooser = new Chooser(costumeList, 2, spacing);
-
-            // chooser.switches[0].status 
-
-            addObject(chooser, x, y);
-
-            return chooser;
-
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
-
-            return null;
-        }
-    }
-
-    public void chooseSpirit(Chooser chooser1, Chooser chooser2) { 
-
-        if (chooser1 == null) {
-            System.out.println("Error creating chooser");
-            return;
-        }
-
-        if (chooser2 == null) {
-            System.out.println("Error creating chooser");
-            return;
-        }
-
-        int j1 = 0;
-        int j2 = 0;
-        int i = 0;
-        try {
-            for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
-                
-                if (chooser1.switches[i].status == 1) {
-                    player1Spirits[j1] = spiritClass.getDeclaredConstructor().newInstance();
-                    j1++;
-                }
-
-                if (chooser2.switches[i].status == 1) {
-                    player2Spirits[j2] = spiritClass.getDeclaredConstructor().newInstance();
-                    j2++;
-                }
-                i++;
-
-            }
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
-        }
-
-        
-    }
-    
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
     public void playerTurn(int playerIndex)
     {
