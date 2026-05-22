@@ -39,8 +39,10 @@ public class ChooseScreen extends Actor
         
         this.world = world;
 
-        submitButton = new Button(new GreenfootImage("karo.png"), 20);
-        world.addObject(submitButton, 500, 350);
+        GreenfootImage image = new GreenfootImage("submit_button.png");
+        image.scale(125,125);
+        submitButton = new Button(image, 20);
+        world.addObject(submitButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/4 * 3);
 
         initSelectedDisplay();
         
