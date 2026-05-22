@@ -26,8 +26,6 @@ public class ChooseScreen extends Actor
 
     Button submitButton;
 
-    boolean isFinished = false;
-
     /**
      * Act - do whatever the ChoseScreen wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -69,12 +67,8 @@ public class ChooseScreen extends Actor
             chooser1.remove();
             chooser2.remove();
             submitButton.remove();
-
-            for (int i = 0; i < MyWorld.maxSpirits; i++) {
-                System.out.println("Player 1 Spirit " + (i+1) + ": " + player1Spirits[i].type);
-                System.out.println("Player 2 Spirit " + (i+1) + ": " + player2Spirits[i].type);
-            }
-            isFinished = true;
+            removeDisplays();
+            world.removeObject(this);
         }
     }
 
@@ -133,22 +127,18 @@ public class ChooseScreen extends Actor
     }
 
     public void updateDisplay() {
-        System.out.println("Start updating");
         
         for (int i = 0; i < MyWorld.maxSpirits; i++) {
             if (player1Displays[i] == null || player2Displays[i] == null) {
-                System.out.println("Index " + i + " displays not initialized yet");
                 continue;
             }
 
             if (player1Spirits[i] != null && player1Spirits[i].getImage() != null) {
-                System.out.println("Updating player 1 display " + i);
                 player1Displays[i].setImage(player1Spirits[i].getImage());
             } else {
                 player1Displays[i].setImage((GreenfootImage)null);
             }
             if (player2Spirits[i] != null && player2Spirits[i].getImage() != null) {
-                System.out.println("Updating player 2 display " + i);
                 player2Displays[i].setImage(player2Spirits[i].getImage());
             } else {
                 player2Displays[i].setImage((GreenfootImage)null);
@@ -182,6 +172,13 @@ public class ChooseScreen extends Actor
             e.printStackTrace();
 
             return null;
+        }
+    }
+
+    public void removeDisplays() {
+        for (int i = 0; i < MyWorld.maxSpirits; i++) {
+            world.removeObject(player1Displays[i]);
+            world.removeObject(player2Displays[i]);
         }
     }
 }

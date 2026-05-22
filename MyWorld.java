@@ -50,16 +50,13 @@ public class MyWorld extends World {
         
         if (currentState == States.CHOOSING) {
 
-            if (chooseScreen.isFinished) {
+            if (chooseScreen == null) {
                 currentState = States.BATTLE;
             }
             
         } else if (currentState == States.BATTLE) {
             // Code to handle battle state
-            for (int i = 0; i < maxSpirits; i++) {
-                System.out.println("Player 1 Spirit " + (i+1) + ": " + player1Spirits[i].type);
-                System.out.println("Player 2 Spirit " + (i+1) + ": " + player2Spirits[i].type);
-            }
+
             // player 1 turn first
             // player 2 after and cycles after that
             int playerTurn = 1;
