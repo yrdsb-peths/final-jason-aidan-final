@@ -68,6 +68,7 @@ public class ChooseScreen extends Actor
             chooser2.remove();
             submitButton.remove();
             removeDisplays();
+            world.chooseScreen = null;
             world.removeObject(this);
         }
     }

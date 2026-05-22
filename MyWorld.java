@@ -54,7 +54,8 @@ public class MyWorld extends World {
                 currentState = States.BATTLE;
             }
             
-        } else if (currentState == States.BATTLE) {
+        }
+        if (currentState == States.BATTLE) {
             // Code to handle battle state
 
             // player 1 turn first
@@ -97,19 +98,19 @@ public class MyWorld extends World {
         if(playerIndex == 1)
         {
             //show all buttons, attack, passive, choose new, flee for p1
-            attack.setImage(new GreenfootImage("button-red.png"));
-            passive.setImage(new GreenfootImage("button-green.png"));
-            chooseNew.setImage(new GreenfootImage("button-blue.png"));
-            flee.setImage(new GreenfootImage("button-yellow.png"));
+            attack.setImage(new GreenfootImage("attack_P1.png"));
+            passive.setImage(new GreenfootImage("passive_P1.png"));
+            chooseNew.setImage(new GreenfootImage("chooseNew_P1.png"));
+            flee.setImage(new GreenfootImage("flee_P1.png"));
             //
         }
         else
         {
             //show all buttons for p2
-            attack.setImage(new GreenfootImage("button-red.png"));
-            passive.setImage(new GreenfootImage("button-green.png"));
-            chooseNew.setImage(new GreenfootImage("button-blue.png"));
-            flee.setImage(new GreenfootImage("button-yellow.png"));
+            attack.setImage(new GreenfootImage("attack_P2.png"));
+            passive.setImage(new GreenfootImage("passive_P2.png"));
+            chooseNew.setImage(new GreenfootImage("chooseNew_P2.png"));
+            flee.setImage(new GreenfootImage("flee_P2.png"));
         }
     }
 }
