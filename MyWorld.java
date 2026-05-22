@@ -60,33 +60,32 @@ public class MyWorld extends World {
             // player 1 turn first
             // player 2 after and cycles after that
             int playerTurn = 1;
-            playerTurn(1);
-            //if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
-            //{
-                //if(playerTurn % 2 != 0)
-                //{
-                    //playerTurn(1);
-                //}
-                //else
-                //{
-                    //playerTurn(2);
-                //}
-                //playerTurn++;
-            //} else {
+            if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
+            {
+                if(playerTurn % 2 != 0)
+                {
+                    playerTurn(1);
+                }
+                else
+                {
+                    playerTurn(2);
+                }
+                playerTurn++;
+            } else {
                 //determine Winner
-            //}
-            //
+            }
+            
         }
         
     }
 
     //returns true if the given list has no spirits
-    public boolean isEmptySpirits(Spirit[] list)
+    public boolean isEmptySpirits(ArrayList<Spirit> list)
     {
         boolean output = true;
-        for(int i = 0; i < list.length; i++)
+        for(int i = 0; i < list.size(); i++)
         {
-            if(list[i] != null)
+            if(list.get(i) != null)
             {
                 output = false;
             }
@@ -100,10 +99,14 @@ public class MyWorld extends World {
         if(playerIndex == 1)
         {
             //player chooses button by click
+            player1Spirits.remove(0);
+            System.out.print(player1Spirits);
         }
         else
         {
             //player chooses button by click
+            player2Spirits.remove(0);
+            System.out.print(player2Spirits);
         }
     }
     
