@@ -16,8 +16,6 @@ public class MyWorld extends World {
 
     int playerNum = 1;
     States currentState = States.CHOOSING;
-
-    ChooseScreen chooseScreen;
     
     Button attack;
     Button passive;
@@ -26,12 +24,16 @@ public class MyWorld extends World {
     
     static int WIDTH = 600;
     static int HEIGHT = 400;
+
+    boolean screenCreated;
     
     public MyWorld() {
 
         super(WIDTH, HEIGHT, 1);
         player1Spirits = new ArrayList<>();
         player2Spirits = new ArrayList<>();
+        
+        screenCreated = false;
 
         attack = new Button(null, 20);
         addObject(attack,WIDTH/4,HEIGHT/3*2);
@@ -42,18 +44,18 @@ public class MyWorld extends World {
         flee = new Button(null, 20);
         addObject(flee,WIDTH/4 * 3,HEIGHT/6*5);
         
-        chooseScreen = new ChooseScreen(player1Spirits, player2Spirits, this);
-        addObject(chooseScreen, WIDTH/2, HEIGHT/2);
+
     }
 
     public void act() {
         
         if (currentState == States.CHOOSING) {
 
-            if (chooseScreen == null) {
-                currentState = States.BATTLE;
+            if (!screenCreated) {
+                addObject(new ChooseScreen(player1Spirits, player2Spirits, this), WIDTH/2, HEIGHT/2);
+                screenCreated = true;
             }
-            
+
         } else if (currentState == States.BATTLE) {
             // Code to handle battle state
 

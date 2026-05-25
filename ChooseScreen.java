@@ -62,7 +62,8 @@ public class ChooseScreen extends Actor
             chooser2.remove();
             submitButton.remove();
             removeDisplays();
-            world.chooseScreen = null;
+            world.currentState = States.BATTLE;
+            world.screenCreated = false;
             world.removeObject(this);
         }
     }
