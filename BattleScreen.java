@@ -14,14 +14,25 @@ public class BattleScreen extends Actor
      * Act - do whatever the BattleScreen wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-
     
     Button attack;
     Button passive;
     Button chooseNew;
     Button flee;
+    
+    Spirit p1Spirit;
+    Spirit p2Spirit;
+    
+    int playerTurn;
+    
+    ArrayList<Spirit> player1Spirits;
+    ArrayList<Spirit> player2Spirits;
 
     public BattleScreen(ArrayList<Spirit> player1Spirits, ArrayList<Spirit> player2Spirits, MyWorld world) {
+        
+        this.player1Spirits = player1Spirits;
+        this.player2Spirits = player2Spirits;
+        
         attack = new Button(null, 20);
         world.addObject(attack, MyWorld.WIDTH/4, MyWorld.HEIGHT/3*2);
         passive = new Button(null, 20);
@@ -30,62 +41,106 @@ public class BattleScreen extends Actor
         world.addObject(chooseNew, MyWorld.WIDTH/4, MyWorld.HEIGHT/6*5);
         flee = new Button(null, 20);
         world.addObject(flee, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6*5);
+        playerTurn = 1;
+        
     }
-
 
     public void act()
     {
-        // Code to handle battle state
+        turn();
+    }
 
+    public void turn()
+    {
         // player 1 turn first
         // player 2 after and cycles after that
-        int playerTurn = 1;
-        playerTurn(1);
-        //if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
-        //{
-            //if(playerTurn % 2 != 0)
-            //{
-                //playerTurn(1);
-            //}
-            //else
-            //{
-                //playerTurn(2);
-            //}
-            //playerTurn++;
-        //} else {
-            //determine Winner
-        //}
-        //
+        if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
+        {
+            if(playerTurn % 2 != 0)
+            {
+                playerAction(1);
+            }
+            else
+            {
+                playerAction(2);
+            }
+        } else {
+            //gameOver();
+        }
+        
     }
 
     //returns true if the given list has no spirits
-    public boolean isEmptySpirits(Spirit[] list)
+    public boolean isEmptySpirits(ArrayList<Spirit> list)
     {
-        boolean output = true;
-        for(int i = 0; i < list.length; i++)
+        if(list.size() == 0)
         {
-            if(list[i] != null)
-            {
-                output = false;
-            }
+            return true;
         }
-        return output;
+        return false;
     }
 
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
-    public void playerTurn(int playerIndex)
+    public void playerAction(int playerIndex)
     {
         showPlayerButtons(playerIndex);
+        p1Spirit = player1Spirits.get(0);
+        p2Spirit = player2Spirits.get(0);
         if(playerIndex == 1)
         {
             //player chooses button by click
+            if(attack.isPressed)
+            {
+                attack.isPressed = false;
+                if(p1Spirit.attack >= p2Spirit.health)
+                {
+                    p2Spirit.health = 0;
+                    System.out.println("p2 Spirit's health is at " + p2Spirit.health);
+                }
+                else
+                {
+                    p2Spirit.health -= p1Spirit.attack;
+                    System.out.println("p2 Spirit's health is at " + p2Spirit.health);
+                }
+                nextTurn();
+            }
+            if(flee.isPressed)
+            {
+                //forfeit game p1
+                flee.isPressed = false;
+            }
         }
         else
         {
             //player chooses button by click
+            if(attack.isPressed)
+            {
+                attack.isPressed = false;
+                if(p2Spirit.attack >= p1Spirit.health)
+                {
+                    p1Spirit.health = 0;
+                    System.out.println("p1 Spirit's health is at " + p1Spirit.health);
+                }
+                else
+                {
+                    p1Spirit.health -= p2Spirit.attack;
+                    System.out.println("p1 Spirit's health is at " + p1Spirit.health);
+                }
+                nextTurn();
+            }
+            if(flee.isPressed)
+            {
+                //forfeit game p2
+                flee.isPressed = false;
+            }
         }
     }
 
+    public void nextTurn()
+    {
+        playerTurn++;
+    }
+    
     public void showPlayerButtons(int num)
     {
         GreenfootImage a;
