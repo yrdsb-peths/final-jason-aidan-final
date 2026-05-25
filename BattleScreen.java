@@ -91,17 +91,9 @@ public class BattleScreen extends Actor
             //player chooses button by click
             if(attack.isPressed)
             {
+                
                 attack.isPressed = false;
-                if(p1Spirit.attack >= p2Spirit.health)
-                {
-                    p2Spirit.health = 0;
-                    System.out.println("p2 Spirit's health is at " + p2Spirit.health);
-                }
-                else
-                {
-                    p2Spirit.health -= p1Spirit.attack;
-                    System.out.println("p2 Spirit's health is at " + p2Spirit.health);
-                }
+                determineAttack(playerIndex);
                 nextTurn();
             }
             if(flee.isPressed)
@@ -116,16 +108,7 @@ public class BattleScreen extends Actor
             if(attack.isPressed)
             {
                 attack.isPressed = false;
-                if(p2Spirit.attack >= p1Spirit.health)
-                {
-                    p1Spirit.health = 0;
-                    System.out.println("p1 Spirit's health is at " + p1Spirit.health);
-                }
-                else
-                {
-                    p1Spirit.health -= p2Spirit.attack;
-                    System.out.println("p1 Spirit's health is at " + p1Spirit.health);
-                }
+                determineAttack(playerIndex);
                 nextTurn();
             }
             if(flee.isPressed)
@@ -136,6 +119,48 @@ public class BattleScreen extends Actor
         }
     }
 
+    public void determineAttack(int playerIndex)
+    {
+        if(playerIndex == 1)
+        {
+            if(p1Spirit.comparedTo(p2Spirit) == 0)
+            {
+                p2Spirit.health -= p1Spirit.attack;
+                System.out.println("p2 Spirit's health is at " + p2Spirit.health);
+                System.out.println("p1 dealt " + p1Spirit.attack + " damage");
+            } else if(p1Spirit.comparedTo(p2Spirit) > 0)
+            {
+                p2Spirit.health -= p1Spirit.attack * 1.5;
+                System.out.println("p2 Spirit's health is at " + p2Spirit.health);
+                System.out.println("p1 dealt " + p1Spirit.attack * 1.5 + ". Super Effective!");
+            } else if(p1Spirit.comparedTo(p2Spirit) < 0)
+            {
+                p2Spirit.health -= p1Spirit.attack * 0.5;
+                System.out.println("p2 Spirit's health is at " + p2Spirit.health);
+                System.out.println("p1 dealt " + p1Spirit.attack * 0.5 + ". It's not very Effective");
+            }
+        }
+        else
+        {
+            if(p2Spirit.comparedTo(p1Spirit) == 0)
+            {
+                p1Spirit.health -= p2Spirit.attack;
+                System.out.println("p1 Spirit's health is at " + p1Spirit.health);
+                System.out.println("p2 dealt " + p2Spirit.attack + " damage");
+            } else if(p2Spirit.comparedTo(p1Spirit) > 0)
+            {
+                p1Spirit.health -= p2Spirit.attack * 1.5;
+                System.out.println("p1 Spirit's health is at " + p1Spirit.health);
+                System.out.println("p2 dealt " + p2Spirit.attack * 1.5 + ". Super Effective!");
+            } else if(p2Spirit.comparedTo(p1Spirit) < 0)
+            {
+                p1Spirit.health -= p2Spirit.attack * 0.5;
+                System.out.println("p1 Spirit's health is at " + p1Spirit.health);
+                System.out.println("p2 dealt " + p2Spirit.attack * 0.5 + ". It's not very Effective");
+            }
+        }
+    }
+    
     public void nextTurn()
     {
         playerTurn++;
