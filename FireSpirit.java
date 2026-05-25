@@ -14,10 +14,12 @@ public class FireSpirit extends Spirit
      */
 
     static GreenfootImage costume = new GreenfootImage("fire.png");
+    static final int BASE_HEALTH = 50;
+    static final int BASE_ATTACK = 10;
     
     public FireSpirit()
     {
-        super(50, 10, Element.fire);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire);
         setLocation(200, 300);
         setImage(costume);
     }

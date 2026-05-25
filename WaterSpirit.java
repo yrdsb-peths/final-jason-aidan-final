@@ -14,11 +14,12 @@ public class WaterSpirit extends Spirit
      */
 
     static GreenfootImage costume = new GreenfootImage("water.png");
+    static final int BASE_HEALTH = 60;
+    static final int BASE_ATTACK = 8;
     
     public WaterSpirit()
     {
-        super(20, 10, Element.water);
-
+        super(BASE_HEALTH, BASE_ATTACK, Element.water);
         setLocation(200,300);
         setImage(costume);
     }
