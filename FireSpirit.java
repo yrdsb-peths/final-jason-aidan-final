@@ -17,7 +17,7 @@ public class FireSpirit extends Spirit
     
     public FireSpirit()
     {
-        super(50, 10, "Fire", "Water");
+        super(50, 10, "Fire");
         setLocation(200, 300);
         setImage(costume);
     }

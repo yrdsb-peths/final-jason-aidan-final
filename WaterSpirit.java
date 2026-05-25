@@ -17,7 +17,7 @@ public class WaterSpirit extends Spirit
     
     public WaterSpirit()
     {
-        super(20, 10, "Water", "Grass");
+        super(20, 10, "Water");
         setLocation(200,300);
         setImage(costume);
     }
