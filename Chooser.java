@@ -75,7 +75,6 @@ public class Chooser extends Actor
         selectedIndices.add(index);
         selectedNumber++;
 
-        System.out.println("index: " + index);
     }
 
     public void remove() {
