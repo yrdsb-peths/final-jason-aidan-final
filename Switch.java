@@ -22,9 +22,7 @@ public class Switch extends Actor
     Chooser chooser;
 
     public Switch(GreenfootImage onImage, GreenfootImage offImage, int index, Chooser chooser) {
-        
-        // System.out.println("created");
-        
+                
         this.onImage = onImage;
         this.offImage = offImage;
         this.chooser = chooser;
