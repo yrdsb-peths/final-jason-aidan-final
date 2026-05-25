@@ -17,7 +17,7 @@ public class Spirit extends Actor
     
     int health;
     int attack;
-    String type;
+    Element type;
 
     // Creates a fixed list of spirit types that can be used to dynamically create spirit objects
 
@@ -28,15 +28,17 @@ public class Spirit extends Actor
     );
     
     
-    public Spirit(int health, int attack, String type)
+    public Spirit(int health, int attack, Element type)
     {
         this.health = health;
         this.attack = attack;
         this.type = type;
     }
 
-    public void act()
+    public int comparedTo(Spirit other)
     {
-        
+        return this.type.comparedTo(other.type);
     }
+
+
 }
