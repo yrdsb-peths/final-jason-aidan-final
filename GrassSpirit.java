@@ -16,7 +16,7 @@ public class GrassSpirit extends Spirit
 
     public GrassSpirit()
     {
-        super(50, 10, "Grass", "Fire");
+        super(20, 10, Element.grass);
         setLocation(200,300);
         setImage(costume);
     }

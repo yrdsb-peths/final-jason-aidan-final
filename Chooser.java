@@ -65,6 +65,10 @@ public class Chooser extends Actor
     public void updateSelectedNumber(int index) {
         // Code to return the amount of the selected option
 
+        if (selectedNumber == maxOptions && !selectedIndices.contains(index)) {
+            return;
+        }
+
         for (int i = 0; i < selectedIndices.size(); i++) {
             if (selectedIndices.get(i) == index) {
                 selectedIndices.remove(i);

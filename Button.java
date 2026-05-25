@@ -15,6 +15,7 @@ public class Button extends Actor
     int delayLeft;
     int delay = 20; // Number of act cycles the button stays pressed
     boolean isPressed = false;
+    boolean isHovering = false;
     GreenfootImage image;
     public Button(GreenfootImage image, int delay)
     {
@@ -30,6 +31,12 @@ public class Button extends Actor
         if (Greenfoot.mouseClicked(this) && !isPressed) {
             isPressed = true;
             delayLeft = delay; // Set the delay for how long the button stays pressed
+        }
+
+        if (Greenfoot.mouseMoved(this)) {
+            isHovering = true;
+        } else {
+            isHovering = false;
         }
 
         delayLeft--;
