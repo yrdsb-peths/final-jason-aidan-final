@@ -14,8 +14,8 @@ public class WaterSpirit extends Spirit
      */
 
     static GreenfootImage costume = new GreenfootImage("water.png");
-    static final int BASE_HEALTH = 60;
-    static final int BASE_ATTACK = 8;
+    static final int BASE_HEALTH = 50;
+    static final int BASE_ATTACK = 10;
     
     public WaterSpirit()
     {
@@ -23,14 +23,12 @@ public class WaterSpirit extends Spirit
         setLocation(200,300);
         setImage(costume);
     }
+
     public void passive(Spirit other) {
         
         this.health += 10;
         other.healingAmount = 5;
         other.healingDuration = 3;
     }
-    public void act()
-    {
-        // Add your action code here.
-    }
+
 }

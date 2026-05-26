@@ -13,8 +13,8 @@ public class GrassSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("grass.png");
-    static final int BASE_HEALTH = 70;
-    static final int BASE_ATTACK = 7;
+    static final int BASE_HEALTH = 50;
+    static final int BASE_ATTACK = 10;
 
     public GrassSpirit()
     {
@@ -31,8 +31,4 @@ public class GrassSpirit extends Spirit
         // Any additional initialization code for FireSpirit can go here
     }
 
-    public void act()
-    {
-        // Add your action code here.
-    }
 }

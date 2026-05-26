@@ -12,7 +12,6 @@ public class FireSpirit extends Spirit
      * Act - do whatever the FireSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-
     static GreenfootImage costume = new GreenfootImage("fire.png");
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
@@ -32,8 +31,4 @@ public class FireSpirit extends Spirit
         // Any additional initialization code for FireSpirit can go here
     }
 
-    public void act()
-    {
-        // Add your action code here.
-    }
 }
