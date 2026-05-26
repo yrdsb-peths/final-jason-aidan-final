@@ -131,24 +131,19 @@ public class BattleScreen extends Actor
                 if(randCrit < 10)
                 {
                     outputDmg = p1Spirit.attack * 3;
-                    System.out.println("Crit!");
                 } else{ 
                     outputDmg = p1Spirit.attack * 1.5;
-                    System.out.println("Super Effective!");
                 }
             } else if(p1Spirit.comparedTo(p2Spirit) < 0)
             {
                 int randMiss = Greenfoot.getRandomNumber(100);
                 if(randMiss < 10)
                 {
-                    System.out.println("Miss!");
                 } else{ 
                     outputDmg = p1Spirit.attack * 0.5;
-                    System.out.println("Not Effective!");
                 }
             }
             p2Spirit.health -= (int)outputDmg;
-            System.out.println("P2 health is at " + p2Spirit.health);
         }
         else
         {
@@ -162,24 +157,19 @@ public class BattleScreen extends Actor
                 if(randCrit < 10)
                 {
                     outputDmg = p2Spirit.attack * 3;
-                    System.out.println("Crit!");
                 } else{ 
                     outputDmg = p2Spirit.attack * 1.5;
-                    System.out.println("Super Effective!");
                 }
             } else if(p2Spirit.comparedTo(p1Spirit) < 0)
             {
                 int randMiss = Greenfoot.getRandomNumber(100);
                 if(randMiss < 10)
                 {
-                    System.out.println("Miss!");
                 } else{ 
                     outputDmg = p2Spirit.attack * 0.5;
-                    System.out.println("Not Effective!");
                 }
             }
             p1Spirit.health -= (int)outputDmg;
-            System.out.println("P1 health is at " + p1Spirit.health);
         }
     }
     
