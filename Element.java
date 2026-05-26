@@ -18,15 +18,19 @@ public class Element
     static Element water = new Element("Water");
     static Element grass = new Element("Grass");
     static Element electric = new Element("Electric");
-
+    static Element rock = new Element("Rock");
+    static Element poison = new Element("Poison");
+    
     static Map<Element, Map<Element, Integer>> typeEffectiveness = Map.of(
         fire, 
         Map.of(
         //neutral
             fire, 0, 
+            rock, 0,
             
         //super effective
             grass, 1, 
+            poison, 1,
             
         //not effective
             water, -1,
@@ -40,21 +44,25 @@ public class Element
         //super effective
             fire, 1, 
             electric, 1,
+            rock, 1,
             
         //not effective
-            grass, -1
+            grass, -1,
+            poison, -1
     ),
         grass, 
         Map.of(
         //neutral
             grass, 0, 
+            rock, 0,
             
         //super effective
             water, 1, 
             
         //not effective
             fire, -1,
-            electric, -1
+            electric, -1,
+            poison, -1
     ),
         electric,
         Map.of(
@@ -63,10 +71,40 @@ public class Element
             
         //super effective
             grass, 1, 
+            poison, 1,
             
         //not effective
             fire, -1,
-            water, -1
+            water, -1,
+            rock, -1
+    ),
+        rock,
+        Map.of(
+        //neutral
+            fire, 0,
+            grass, 0,
+            rock, 0, 
+            
+        //super effective 
+            electric, 0,
+            
+        //not effective
+            water, -1,
+            poison, -1
+    ),
+        poison, 
+        Map.of(
+        //neutral
+            poison, 0,
+            
+        //super effective
+            water, 1,
+            grass, 1, 
+            rock, 1,
+            
+        //not effective
+            fire, -1,
+            electric, -1
     )
     );
 
