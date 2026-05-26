@@ -64,6 +64,7 @@ public class BattleScreen extends Actor
             {
                 playerAction(2);
             }
+            checkIfFainted();
         } else {
             //gameOver();
         }
@@ -91,7 +92,6 @@ public class BattleScreen extends Actor
             //player chooses button by click
             if(attack.isPressed)
             {
-                
                 attack.isPressed = false;
                 determineAttack(playerIndex);
                 nextTurn();
@@ -123,47 +123,83 @@ public class BattleScreen extends Actor
     {
         if(playerIndex == 1)
         {
+            double outputDmg = 0.0;
             if(p1Spirit.comparedTo(p2Spirit) == 0)
             {
-                p2Spirit.health -= p1Spirit.attack;
-                System.out.println("p2 Spirit's health is at " + p2Spirit.health);
-                System.out.println("p1 dealt " + p1Spirit.attack + " damage");
+                outputDmg = p1Spirit.attack;
             } else if(p1Spirit.comparedTo(p2Spirit) > 0)
             {
-                p2Spirit.health -= p1Spirit.attack * 1.5;
-                System.out.println("p2 Spirit's health is at " + p2Spirit.health);
-                System.out.println("p1 dealt " + p1Spirit.attack * 1.5 + ". Super Effective!");
+                int randCrit = Greenfoot.getRandomNumber(100);
+                if(randCrit < 10)
+                {
+                    outputDmg = p1Spirit.attack * 3;
+                    System.out.println("Crit!");
+                } else{ 
+                    outputDmg = p1Spirit.attack * 1.5;
+                    System.out.println("Super Effective!");
+                }
             } else if(p1Spirit.comparedTo(p2Spirit) < 0)
             {
-                p2Spirit.health -= p1Spirit.attack * 0.5;
-                System.out.println("p2 Spirit's health is at " + p2Spirit.health);
-                System.out.println("p1 dealt " + p1Spirit.attack * 0.5 + ". It's not very Effective");
+                int randMiss = Greenfoot.getRandomNumber(100);
+                if(randMiss < 10)
+                {
+                    System.out.println("Miss!");
+                } else{ 
+                    outputDmg = p1Spirit.attack * 0.5;
+                    System.out.println("Not Effective!");
+                }
             }
+            p2Spirit.health -= (int)outputDmg;
+            System.out.println("P2 health is at " + p2Spirit.health);
         }
         else
         {
+            double outputDmg = 0.0;
             if(p2Spirit.comparedTo(p1Spirit) == 0)
             {
-                p1Spirit.health -= p2Spirit.attack;
-                System.out.println("p1 Spirit's health is at " + p1Spirit.health);
-                System.out.println("p2 dealt " + p2Spirit.attack + " damage");
+                outputDmg = p2Spirit.attack;
             } else if(p2Spirit.comparedTo(p1Spirit) > 0)
             {
-                p1Spirit.health -= p2Spirit.attack * 1.5;
-                System.out.println("p1 Spirit's health is at " + p1Spirit.health);
-                System.out.println("p2 dealt " + p2Spirit.attack * 1.5 + ". Super Effective!");
+                int randCrit = Greenfoot.getRandomNumber(100);
+                if(randCrit < 10)
+                {
+                    outputDmg = p2Spirit.attack * 3;
+                    System.out.println("Crit!");
+                } else{ 
+                    outputDmg = p2Spirit.attack * 1.5;
+                    System.out.println("Super Effective!");
+                }
             } else if(p2Spirit.comparedTo(p1Spirit) < 0)
             {
-                p1Spirit.health -= p2Spirit.attack * 0.5;
-                System.out.println("p1 Spirit's health is at " + p1Spirit.health);
-                System.out.println("p2 dealt " + p2Spirit.attack * 0.5 + ". It's not very Effective");
+                int randMiss = Greenfoot.getRandomNumber(100);
+                if(randMiss < 10)
+                {
+                    System.out.println("Miss!");
+                } else{ 
+                    outputDmg = p2Spirit.attack * 0.5;
+                    System.out.println("Not Effective!");
+                }
             }
+            p1Spirit.health -= (int)outputDmg;
+            System.out.println("P1 health is at " + p1Spirit.health);
         }
     }
     
     public void nextTurn()
     {
         playerTurn++;
+    }
+    
+    public void checkIfFainted()
+    {
+        if(p1Spirit.health <= 0)
+        {
+            
+        }
+        if(p2Spirit.health <= 0)
+        {
+            
+        }
     }
     
     public void showPlayerButtons(int num)
