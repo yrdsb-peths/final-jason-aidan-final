@@ -45,7 +45,8 @@ public class Spirit extends Actor
         poisonedDuration = 0;
         burningDamage = 0;
         poisonedPercentage = 0;
-
+        healingAmount = 0;
+        healingDuration = 0;
         this.health = health;
         this.attack = attack;
         this.type = type;
@@ -54,6 +55,30 @@ public class Spirit extends Actor
     public int comparedTo(Spirit other)
     {
         return this.type.comparedTo(other.type);
+    }
+
+    public void applyStatusEffects()
+    {
+        //apply burn damage and decrease burn duration
+        if(this.burningDuration > 0)
+        {
+            this.health -= this.burningDamage;
+            this.burningDuration--;
+        }
+        //apply poison damage and decrease poison duration
+        if(this.poisonedDuration > 0)
+        {
+            this.health -= (int)(this.health * this.poisonedPercentage);
+            this.poisonedDuration--;
+        }
+
+        if (this.healingDuration > 0)
+        {
+            this.health += this.healingAmount;
+            this.healingDuration--;
+        }
+
+
     }
 
 

@@ -20,10 +20,10 @@ public class BattleScreen extends Actor
     
     MyWorld world;
     
-    Button attack;
-    Button passive;
-    Button chooseNew;
-    Button flee;
+    Button attackButton;
+    Button passiveButton;
+    Button chooseNewButton;
+    Button fleeButton;
 
 
     HashMap<String, Label> player1Label;
@@ -84,14 +84,25 @@ public class BattleScreen extends Actor
         p1Spirit = player1Spirits.get(0);
         p2Spirit = player2Spirits.get(0);
 
-        if (attack.isPressed) {
-            attack.isPressed = false;
+        if (attackButton.isPressed) {
+            attackButton.isPressed = false;
             opponentSpirit.health -= calculateAttack(currenSpirit, opponentSpirit);
             nextTurn();
-        } else if (flee.isPressed) {
-            flee.isPressed = false;
+        } else if (passiveButton.isPressed) {
+            passiveButton.isPressed = false;
+            currenSpirit.passive(opponentSpirit);
+            nextTurn();
+
+        } else if (chooseNewButton.isPressed) {
+            chooseNewButton.isPressed = false;
+            // Handle choosing new spirit logic here
+        } else if (fleeButton.isPressed) {
+            fleeButton.isPressed = false;
             // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
         }
+
+        currenSpirit.applyStatusEffects();
+        opponentSpirit.applyStatusEffects();
     }
 
     public int calculateAttack(Spirit attacker, Spirit defender) {
@@ -158,26 +169,26 @@ public class BattleScreen extends Actor
         chooseNewImage.scale(scaleX,scaleY);
         fleeImage.scale(scaleX,scaleY);
 
-        attack.setImage(attackImage);
-        passive.setImage(passiveImage);
-        chooseNew.setImage(chooseNewImage);
-        flee.setImage(fleeImage);
+        attackButton.setImage(attackImage);
+        passiveButton.setImage(passiveImage);
+        chooseNewButton.setImage(chooseNewImage);
+        fleeButton.setImage(fleeImage);
 
     }
 
     public void initButtons()
     {
 
-        attack = new Button(null, 20);
-        passive = new Button(null, 20);
-        chooseNew = new Button(null, 20);
-        flee = new Button(null, 20);
+        attackButton = new Button(null, 20);
+        passiveButton = new Button(null, 20);
+        chooseNewButton = new Button(null, 20);
+        fleeButton = new Button(null, 20);
 
 
-        world.addObject(attack, 90, MyWorld.HEIGHT-90);
-        world.addObject(passive, MyWorld.WIDTH-90, MyWorld.HEIGHT-90);
-        world.addObject(chooseNew, 90, MyWorld.HEIGHT-30);
-        world.addObject(flee, MyWorld.WIDTH-90, MyWorld.HEIGHT-30);
+        world.addObject(attackButton, 90, MyWorld.HEIGHT-90);
+        world.addObject(passiveButton, MyWorld.WIDTH-90, MyWorld.HEIGHT-90);
+        world.addObject(chooseNewButton, 90, MyWorld.HEIGHT-30);
+        world.addObject(fleeButton, MyWorld.WIDTH-90, MyWorld.HEIGHT-30);
 
     }
 
