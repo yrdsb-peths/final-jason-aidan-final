@@ -22,6 +22,15 @@ public class GrassSpirit extends Spirit
         setLocation(200,300);
         setImage(costume);
     }
+
+    public void passive(Spirit other) {
+        other.poisonedPercentage = 0.2;
+        other.poisonedDuration = 3;
+
+        
+        // Any additional initialization code for FireSpirit can go here
+    }
+
     public void act()
     {
         // Add your action code here.

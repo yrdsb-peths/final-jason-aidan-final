@@ -23,6 +23,12 @@ public class WaterSpirit extends Spirit
         setLocation(200,300);
         setImage(costume);
     }
+    public void passive(Spirit other) {
+        
+        this.health += 10;
+        other.healingAmount = 5;
+        other.healingDuration = 3;
+    }
     public void act()
     {
         // Add your action code here.

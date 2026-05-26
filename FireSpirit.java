@@ -23,6 +23,15 @@ public class FireSpirit extends Spirit
         setLocation(200, 300);
         setImage(costume);
     }
+
+    public void passive(Spirit other) {
+        other.burningDamage = 5;
+        other.burningDuration = 3;
+
+        
+        // Any additional initialization code for FireSpirit can go here
+    }
+
     public void act()
     {
         // Add your action code here.
