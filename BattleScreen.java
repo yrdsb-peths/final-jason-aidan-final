@@ -219,8 +219,8 @@ public class BattleScreen extends Actor
         GreenfootImage p;
         GreenfootImage c;
         GreenfootImage f;
-        int scaleX = 210;
-        int scaleY = 70;
+        int scaleX = 180;
+        int scaleY = 60;
         if(num == 1)
         {
             a = new GreenfootImage("attack_P1.png");
@@ -258,10 +258,10 @@ public class BattleScreen extends Actor
         flee = new Button(null, 20);
 
 
-        world.addObject(attack, MyWorld.WIDTH/4, MyWorld.HEIGHT/3*2);
-        world.addObject(passive, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/3*2);
-        world.addObject(chooseNew, MyWorld.WIDTH/4, MyWorld.HEIGHT/6*5);
-        world.addObject(flee, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6*5);
+        world.addObject(attack, 90, MyWorld.HEIGHT-90);
+        world.addObject(passive, MyWorld.WIDTH-90, MyWorld.HEIGHT-90);
+        world.addObject(chooseNew, 90, MyWorld.HEIGHT-30);
+        world.addObject(flee, MyWorld.WIDTH-90, MyWorld.HEIGHT-30);
 
     }
 
