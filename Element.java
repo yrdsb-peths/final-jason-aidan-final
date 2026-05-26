@@ -17,6 +17,7 @@ public class Element
     static Element fire = new Element("Fire");
     static Element water = new Element("Water");
     static Element grass = new Element("Grass");
+    static Element electric = new Element("Electric");
 
     static Map<Element, Map<Element, Integer>> typeEffectiveness = Map.of(
         fire, 
@@ -28,7 +29,8 @@ public class Element
             grass, 1, 
             
         //not effective
-            water, -1
+            water, -1,
+            electric, -1
     ),
         water, 
         Map.of(
@@ -37,6 +39,7 @@ public class Element
             
         //super effective
             fire, 1, 
+            electric, 1,
             
         //not effective
             grass, -1
@@ -50,7 +53,20 @@ public class Element
             water, 1, 
             
         //not effective
-            fire, -1
+            fire, -1,
+            electric, -1
+    ),
+        electric,
+        Map.of(
+        //neutral
+            electric, 0, 
+            
+        //super effective
+            grass, 1, 
+            
+        //not effective
+            fire, -1,
+            water, -1
     )
     );
 

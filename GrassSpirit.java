@@ -22,8 +22,4 @@ public class GrassSpirit extends Spirit
         setLocation(200,300);
         setImage(costume);
     }
-    public void act()
-    {
-        // Add your action code here.
-    }
 }

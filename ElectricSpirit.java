@@ -1,24 +1,24 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class FireSpirit here.
+ * Write a description of class ElectricSpirit here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class FireSpirit extends Spirit
+public class ElectricSpirit extends Spirit
 {
     /**
-     * Act - do whatever the FireSpirit wants to do. This method is called whenever
+     * Act - do whatever the ElectricSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    static GreenfootImage costume = new GreenfootImage("fire.png");
+    static GreenfootImage costume = new GreenfootImage("yellow-button.png");
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
     
-    public FireSpirit()
+    public ElectricSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.fire);
+        super(BASE_HEALTH, BASE_ATTACK, Element.electric);
         setLocation(200, 300);
         setImage(costume);
     }
