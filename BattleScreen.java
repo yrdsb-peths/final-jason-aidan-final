@@ -108,10 +108,20 @@ public class BattleScreen extends Actor
     public int calculateAttack(Spirit attacker, Spirit defender) {
         double outputDmg = 0.0;
         int effectiveness = attacker.comparedTo(defender);
-        
         if(effectiveness == 0) {
-            outputDmg = attacker.attack;
-
+            int rand = Greenfoot.getRandomNumber(100);
+            if(rand <= 10)
+            {
+                System.out.println("Miss!");
+            } else if(rand > 10 && rand <= 90)
+            {
+                outputDmg = attacker.attack;
+                System.out.println("Regular attack!");
+            } else if(rand > 90)
+            {
+                outputDmg = attacker.attack * 1.5;
+                System.out.println("Normal Crit!");
+            }
         } else if(effectiveness > 0) {
             int randCrit = Greenfoot.getRandomNumber(100);
             if(randCrit < 10) {
@@ -121,7 +131,6 @@ public class BattleScreen extends Actor
                 outputDmg = attacker.attack * 1.5;
                 System.out.println("Super Effective!");
             }
-
         } else if(effectiveness < 0) {
             int randMiss = Greenfoot.getRandomNumber(100);
             if(randMiss < 10) {
@@ -131,7 +140,6 @@ public class BattleScreen extends Actor
                 System.out.println("Not Effective!");
             }
         }
-        
         return (int)outputDmg;
     }
     
