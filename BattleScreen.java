@@ -78,99 +78,58 @@ public class BattleScreen extends Actor
     {
         
         Spirit currenSpirit = turnNumber % 2 == 1 ? p1Spirit : p2Spirit;
-        Spirit opponentSpirit = turnNumber % 2 == 0 ? p2Spirit : p1Spirit;
+        Spirit opponentSpirit = turnNumber % 2 == 0 ? p1Spirit : p2Spirit;
 
         showPlayerButtons();
         p1Spirit = player1Spirits.get(0);
         p2Spirit = player2Spirits.get(0);
 
-        if(turnNumber % 2 == 1)
-        {
-            //player chooses button by click
-            if(attack.isPressed)
-            {
-                attack.isPressed = false;
-                determineAttack(1);
-                nextTurn();
-                
-            }
-            if(flee.isPressed)
-            {
-                //forfeit game p1
-                flee.isPressed = false;
-            }
-        }
-        else
-        {
-            //player chooses button by click
-            if(attack.isPressed)
-            {
-                attack.isPressed = false;
-                determineAttack(2);
-                nextTurn();
-            }
-            if(flee.isPressed)
-            {
-                //forfeit game p2
-                flee.isPressed = false;
-            }
+        if (attack.isPressed) {
+            attack.isPressed = false;
+            opponentSpirit.health -= calculateAttack(currenSpirit, opponentSpirit);
+            nextTurn();
+        } else if (flee.isPressed) {
+            flee.isPressed = false;
+            // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
         }
     }
 
-    public void determineAttack(int playerIndex)
-    {
-        if(playerIndex == 1)
-        {
-            double outputDmg = 0.0;
-            if(p1Spirit.comparedTo(p2Spirit) == 0)
+    public int calculateAttack(Spirit attacker, Spirit defender) {
+        double outputDmg = 0.0;
+        int effectiveness = attacker.comparedTo(defender);
+        if(effectiveness == 0) {
+            int rand = Greenfoot.getRandomNumber(100);
+            if(rand <= 10)
             {
-                outputDmg = p1Spirit.attack;
-            } else if(p1Spirit.comparedTo(p2Spirit) > 0)
+                System.out.println("Miss!");
+            } else if(rand > 10 && rand <= 90)
             {
-                int randCrit = Greenfoot.getRandomNumber(100);
-                if(randCrit < 10)
-                {
-                    outputDmg = p1Spirit.attack * 3;
-                } else{ 
-                    outputDmg = p1Spirit.attack * 1.5;
-                }
-            } else if(p1Spirit.comparedTo(p2Spirit) < 0)
+                outputDmg = attacker.attack;
+                System.out.println("Regular attack!");
+            } else if(rand > 90)
             {
-                int randMiss = Greenfoot.getRandomNumber(100);
-                if(randMiss < 10)
-                {
-                } else{ 
-                    outputDmg = p1Spirit.attack * 0.5;
-                }
+                outputDmg = attacker.attack * 1.5;
+                System.out.println("Normal Crit!");
             }
-            p2Spirit.health -= (int)outputDmg;
-        }
-        else
-        {
-            double outputDmg = 0.0;
-            if(p2Spirit.comparedTo(p1Spirit) == 0)
-            {
-                outputDmg = p2Spirit.attack;
-            } else if(p2Spirit.comparedTo(p1Spirit) > 0)
-            {
-                int randCrit = Greenfoot.getRandomNumber(100);
-                if(randCrit < 10)
-                {
-                    outputDmg = p2Spirit.attack * 3;
-                } else{ 
-                    outputDmg = p2Spirit.attack * 1.5;
-                }
-            } else if(p2Spirit.comparedTo(p1Spirit) < 0)
-            {
-                int randMiss = Greenfoot.getRandomNumber(100);
-                if(randMiss < 10)
-                {
-                } else{ 
-                    outputDmg = p2Spirit.attack * 0.5;
-                }
+        } else if(effectiveness > 0) {
+            int randCrit = Greenfoot.getRandomNumber(100);
+            if(randCrit < 10) {
+                outputDmg = attacker.attack * 3;
+                System.out.println("Crit!");
+            } else { 
+                outputDmg = attacker.attack * 1.5;
+                System.out.println("Super Effective!");
             }
-            p1Spirit.health -= (int)outputDmg;
+        } else if(effectiveness < 0) {
+            int randMiss = Greenfoot.getRandomNumber(100);
+            if(randMiss < 10) {
+                System.out.println("Miss!");
+            } else { 
+                outputDmg = attacker.attack * 0.5;
+                System.out.println("Not Effective!");
+            }
         }
+        return (int)outputDmg;
     }
     
     public void nextTurn()
