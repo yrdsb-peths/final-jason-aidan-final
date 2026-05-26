@@ -209,8 +209,8 @@ public class BattleScreen extends Actor
         GreenfootImage passiveImage = new GreenfootImage("passive_P" + num + ".png");
         GreenfootImage chooseNewImage = new GreenfootImage("chooseNew_P" + num + ".png");
         GreenfootImage fleeImage = new GreenfootImage("flee_P" + num + ".png");
-        int scaleX = 210;
-        int scaleY = 70;
+        int scaleX = 180;
+        int scaleY = 60;
 
         attackImage.scale(scaleX,scaleY);
         passiveImage.scale(scaleX,scaleY);
@@ -221,6 +221,7 @@ public class BattleScreen extends Actor
         passive.setImage(passiveImage);
         chooseNew.setImage(chooseNewImage);
         flee.setImage(fleeImage);
+
     }
 
     public void initButtons()
@@ -232,10 +233,10 @@ public class BattleScreen extends Actor
         flee = new Button(null, 20);
 
 
-        world.addObject(attack, MyWorld.WIDTH/4, MyWorld.HEIGHT/3*2);
-        world.addObject(passive, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/3*2);
-        world.addObject(chooseNew, MyWorld.WIDTH/4, MyWorld.HEIGHT/6*5);
-        world.addObject(flee, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6*5);
+        world.addObject(attack, 90, MyWorld.HEIGHT-90);
+        world.addObject(passive, MyWorld.WIDTH-90, MyWorld.HEIGHT-90);
+        world.addObject(chooseNew, 90, MyWorld.HEIGHT-30);
+        world.addObject(flee, MyWorld.WIDTH-90, MyWorld.HEIGHT-30);
 
     }
 
