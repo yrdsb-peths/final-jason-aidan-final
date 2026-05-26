@@ -1,6 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
 
 /**
  * Write a description of class BattleScreen here.
@@ -15,10 +18,16 @@ public class BattleScreen extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
+    MyWorld world;
+    
     Button attack;
     Button passive;
     Button chooseNew;
     Button flee;
+
+
+    HashMap<String, Label> player1Label;
+    HashMap<String, Label> player2Label;
     
     Spirit p1Spirit;
     Spirit p2Spirit;
@@ -32,15 +41,13 @@ public class BattleScreen extends Actor
         
         this.player1Spirits = player1Spirits;
         this.player2Spirits = player2Spirits;
+
+        this.world = world;
+
+        initButtons();
+        initLabels();
         
-        attack = new Button(null, 20);
-        world.addObject(attack, MyWorld.WIDTH/4, MyWorld.HEIGHT/3*2);
-        passive = new Button(null, 20);
-        world.addObject(passive, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/3*2);
-        chooseNew = new Button(null, 20);
-        world.addObject(chooseNew, MyWorld.WIDTH/4, MyWorld.HEIGHT/6*5);
-        flee = new Button(null, 20);
-        world.addObject(flee, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6*5);
+
         playerTurn = 1;
         
     }
@@ -52,6 +59,8 @@ public class BattleScreen extends Actor
 
     public void turn()
     {
+
+        
         // player 1 turn first
         // player 2 after and cycles after that
         if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
@@ -83,9 +92,11 @@ public class BattleScreen extends Actor
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
     public void playerAction(int playerIndex)
     {
+        
         showPlayerButtons(playerIndex);
         p1Spirit = player1Spirits.get(0);
         p2Spirit = player2Spirits.get(0);
+
         if(playerIndex == 1)
         {
             //player chooses button by click
@@ -175,5 +186,68 @@ public class BattleScreen extends Actor
         passive.setImage(p);
         chooseNew.setImage(c);
         flee.setImage(f);
+    }
+
+    public void initButtons()
+    {
+
+        attack = new Button(null, 20);
+        passive = new Button(null, 20);
+        chooseNew = new Button(null, 20);
+        flee = new Button(null, 20);
+
+
+        world.addObject(attack, MyWorld.WIDTH/4, MyWorld.HEIGHT/3*2);
+        world.addObject(passive, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/3*2);
+        world.addObject(chooseNew, MyWorld.WIDTH/4, MyWorld.HEIGHT/6*5);
+        world.addObject(flee, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6*5);
+
+    }
+
+
+    public void initLabels()
+    {
+
+        Label health1label = new Label("Health: " + player1Spirits.get(0).health, 24);
+        Label attack1label = new Label("Attack: " + player1Spirits.get(0).attack, 24);
+        Label type1label = new Label("Type: " + player1Spirits.get(0).type.toString(), 24);
+
+        Label health2label = new Label("Health: " + player2Spirits.get(0).health, 24);
+        Label attack2label = new Label("Attack: " + player2Spirits.get(0).attack, 24);
+        Label type2label = new Label("Type: " + player2Spirits.get(0).type.toString(), 24);
+
+        player1Label = new HashMap<String, Label>(Map.of(
+            "health", health1label,
+            "attack", attack1label,
+            "type", type1label
+        ));
+
+        player2Label = new HashMap<String, Label>(Map.of(
+            "health", health2label,
+            "attack", attack2label,
+            "type", type2label
+        ));
+
+        world.addObject(health1label, MyWorld.WIDTH/4, MyWorld.HEIGHT/6);
+        world.addObject(attack1label, MyWorld.WIDTH/4, MyWorld.HEIGHT/6 + 30);
+        world.addObject(type1label, MyWorld.WIDTH/4, MyWorld.HEIGHT/6 + 60);
+
+        world.addObject(health2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6);
+        world.addObject(attack2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6 + 30);
+        world.addObject(type2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6 + 60);
+
+    }
+    public void updateLabels()
+    {
+
+
+        player1Label.get("health").setValue("Health: " + p1Spirit.health);
+        player1Label.get("attack").setValue("Attack: " + p1Spirit.attack);
+        player1Label.get("type").setValue("Type: " + p1Spirit.type.toString());
+
+
+        player2Label.get("health").setValue("Health: " + p2Spirit.health);
+        player2Label.get("attack").setValue("Attack: " + p2Spirit.attack);
+        player2Label.get("type").setValue("Type: " + p2Spirit.type.toString());
     }
 }

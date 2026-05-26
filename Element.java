@@ -58,4 +58,8 @@ public class Element
         // put your code here
         return typeEffectiveness.get(this).get(other);
     }
+
+    public String toString() {
+        return stringName;
+    }
 }
