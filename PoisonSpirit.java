@@ -13,8 +13,8 @@ public class PoisonSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("poison.png");
-    static final int BASE_HEALTH = 50;
-    static final int BASE_ATTACK = 10;
+    static final int BASE_HEALTH = 70;
+    static final int BASE_ATTACK = 20;
     
     public PoisonSpirit()
     {
@@ -25,8 +25,5 @@ public class PoisonSpirit extends Spirit
 
     public void passive(Spirit other) {
         
-        this.health += 10;
-        other.healingAmount = 5;
-        other.healingDuration = 3;
     }
 }

@@ -52,12 +52,9 @@ public class Chooser extends Actor
         
         if (!switchesCreated) {
             for (int i = 0; i < options.length; i++) {
-
                 getWorld().addObject(switches[i], getX() + spacing * i, getY());
-                
             }
             switchesCreated = true;
-
         }
         // Add your action code here.
     }

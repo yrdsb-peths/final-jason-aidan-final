@@ -30,7 +30,11 @@ public class Spirit extends Actor
     static List<Class<? extends Spirit>> spiritTypes = List.of(
         FireSpirit.class, 
         WaterSpirit.class, 
-        GrassSpirit.class
+        GrassSpirit.class,
+        ElectricSpirit.class,
+        RockSpirit.class,
+        PoisonSpirit.class,
+        OrdinarySpirit.class
     );
 
     public void passive(Spirit other) {
