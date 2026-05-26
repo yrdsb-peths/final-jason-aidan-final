@@ -12,7 +12,7 @@ public class ElectricSpirit extends Spirit
      * Act - do whatever the ElectricSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    static GreenfootImage costume = new GreenfootImage("yellow-button.png");
+    static GreenfootImage costume = new GreenfootImage("electric.png");
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
     
