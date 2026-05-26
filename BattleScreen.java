@@ -32,7 +32,7 @@ public class BattleScreen extends Actor
     Spirit p1Spirit;
     Spirit p2Spirit;
     
-    int playerTurn;
+    int turnNumber;
     
     ArrayList<Spirit> player1Spirits;
     ArrayList<Spirit> player2Spirits;
@@ -48,36 +48,19 @@ public class BattleScreen extends Actor
         initLabels();
         
 
-        playerTurn = 1;
+        turnNumber = 1;
         
     }
 
     public void act()
     {
-        turn();
-    }
-
-    public void turn()
-    {
-
-        
-        // player 1 turn first
-        // player 2 after and cycles after that
         if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
         {
-            if(playerTurn % 2 != 0)
-            {
-                playerAction(1);
-            }
-            else
-            {
-                playerAction(2);
-            }
+            playerAction();
             checkIfFainted();
         } else {
             //gameOver();
         }
-        
     }
 
     //returns true if the given list has no spirits
@@ -91,21 +74,25 @@ public class BattleScreen extends Actor
     }
 
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
-    public void playerAction(int playerIndex)
+    public void playerAction()
     {
         
-        showPlayerButtons(playerIndex);
+        Spirit currenSpirit = turnNumber % 2 == 1 ? p1Spirit : p2Spirit;
+        Spirit opponentSpirit = turnNumber % 2 == 0 ? p2Spirit : p1Spirit;
+
+        showPlayerButtons();
         p1Spirit = player1Spirits.get(0);
         p2Spirit = player2Spirits.get(0);
 
-        if(playerIndex == 1)
+        if(turnNumber % 2 == 1)
         {
             //player chooses button by click
             if(attack.isPressed)
             {
                 attack.isPressed = false;
-                determineAttack(playerIndex);
+                determineAttack(1);
                 nextTurn();
+                
             }
             if(flee.isPressed)
             {
@@ -119,7 +106,7 @@ public class BattleScreen extends Actor
             if(attack.isPressed)
             {
                 attack.isPressed = false;
-                determineAttack(playerIndex);
+                determineAttack(2);
                 nextTurn();
             }
             if(flee.isPressed)
@@ -198,7 +185,8 @@ public class BattleScreen extends Actor
     
     public void nextTurn()
     {
-        playerTurn++;
+        updateLabels();
+        turnNumber++;
     }
     
     public void checkIfFainted()
@@ -213,40 +201,26 @@ public class BattleScreen extends Actor
         }
     }
     
-    public void showPlayerButtons(int num)
+    public void showPlayerButtons()
     {
-        GreenfootImage a;
-        GreenfootImage p;
-        GreenfootImage c;
-        GreenfootImage f;
+        int num = 2 - turnNumber % 2;
+
+        GreenfootImage attackImage = new GreenfootImage("attack_P" + num + ".png");
+        GreenfootImage passiveImage = new GreenfootImage("passive_P" + num + ".png");
+        GreenfootImage chooseNewImage = new GreenfootImage("chooseNew_P" + num + ".png");
+        GreenfootImage fleeImage = new GreenfootImage("flee_P" + num + ".png");
         int scaleX = 210;
         int scaleY = 70;
-        if(num == 1)
-        {
-            a = new GreenfootImage("attack_P1.png");
-            p = new GreenfootImage("passive_P1.png");
-            c = new GreenfootImage("chooseNew_P1.png");
-            f = new GreenfootImage("flee_P1.png");
-            a.scale(scaleX,scaleY);
-            p.scale(scaleX,scaleY);
-            c.scale(scaleX,scaleY);
-            f.scale(scaleX,scaleY);
-        }
-        else
-        {
-            a = new GreenfootImage("attack_P2.png");
-            p = new GreenfootImage("passive_P2.png");
-            c = new GreenfootImage("chooseNew_P2.png");
-            f = new GreenfootImage("flee_P2.png");
-            a.scale(scaleX,scaleY);
-            p.scale(scaleX,scaleY);
-            c.scale(scaleX,scaleY);
-            f.scale(scaleX,scaleY);
-        }
-        attack.setImage(a);
-        passive.setImage(p);
-        chooseNew.setImage(c);
-        flee.setImage(f);
+
+        attackImage.scale(scaleX,scaleY);
+        passiveImage.scale(scaleX,scaleY);
+        chooseNewImage.scale(scaleX,scaleY);
+        fleeImage.scale(scaleX,scaleY);
+
+        attack.setImage(attackImage);
+        passive.setImage(passiveImage);
+        chooseNew.setImage(chooseNewImage);
+        flee.setImage(fleeImage);
     }
 
     public void initButtons()
