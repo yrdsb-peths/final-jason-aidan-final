@@ -46,7 +46,7 @@ public class BattleScreen extends Actor
         this.player2Spirits = player2Spirits;
 
         this.world = world;
-
+        
         initButtons();
         initLabels();
         p1SpiritDisplay = new ImageDisplay();
