@@ -21,7 +21,7 @@ public class RockSpirit extends Spirit
     
     public RockSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.rock, attackName, passiveName, passiveDetails);
+        super(BASE_HEALTH, BASE_ATTACK, Element.rock, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }

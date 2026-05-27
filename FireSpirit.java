@@ -21,7 +21,7 @@ public class FireSpirit extends Spirit
     
     public FireSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails, costume);
         setLocation(200, 300);
         setImage(costume);
     }
