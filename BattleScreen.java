@@ -54,10 +54,10 @@ public class BattleScreen extends Actor
 
     public void act()
     {
-        if(!isEmptySpirits(player1Spirits) || !isEmptySpirits(player2Spirits))
+        if(player1Spirits.size() > 0 && player2Spirits.size() > 0)
         {
             playerAction();
-            checkIfFainted();
+            
         } else {
             //gameOver();
         }
@@ -76,13 +76,15 @@ public class BattleScreen extends Actor
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
     public void playerAction()
     {
+
+        p1Spirit = player1Spirits.get(0);
+        p2Spirit = player2Spirits.get(0);
         
         Spirit currentSpirit = turnNumber % 2 == 1 ? p1Spirit : p2Spirit;
         Spirit opponentSpirit = turnNumber % 2 == 0 ? p1Spirit : p2Spirit;
 
         showPlayerButtons();
-        p1Spirit = player1Spirits.get(0);
-        p2Spirit = player2Spirits.get(0);
+
 
         if (attackButton.isPressed) {
             attackButton.isPressed = false;
@@ -105,6 +107,8 @@ public class BattleScreen extends Actor
 
         currentSpirit.applyStatusEffects();
         opponentSpirit.applyStatusEffects();
+
+        checkIfFainted();
     }
 
     public int calculateAttack(Spirit attacker, Spirit defender) {
