@@ -20,6 +20,7 @@ public class MyWorld extends World {
     
     static int WIDTH = 600;
     static int HEIGHT = 400;
+    GreenfootImage image;
 
     boolean screenCreated;
     
@@ -40,6 +41,9 @@ public class MyWorld extends World {
             if (!screenCreated) {
                 addObject(new ChooseScreen(player1Spirits, player2Spirits, this), WIDTH/2, HEIGHT/2);
                 screenCreated = true;
+                image = new GreenfootImage("backgroundStarter.png");
+                image.scale(600,400);
+                setBackground(image);
             }
 
         } else if (currentState == States.BATTLE) {
@@ -47,6 +51,9 @@ public class MyWorld extends World {
             if (!screenCreated) {
                 addObject(new BattleScreen(player1Spirits, player2Spirits, this), WIDTH/2, HEIGHT/2);
                 screenCreated = true;
+                image = new GreenfootImage("background1.png");
+                image.scale(600,400);
+                setBackground(image);
             }
         }
         
