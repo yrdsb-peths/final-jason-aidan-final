@@ -21,6 +21,8 @@ public class Element
     static Element rock = new Element("Rock");
     static Element poison = new Element("Poison");
     static Element ordinary = new Element("Ordinary");
+    static Element big = new Element("Big");
+    static Element small = new Element("Small");
     
     static Map<Element, Map<Element, Integer>> typeEffectiveness = Map.of(
         fire, 
@@ -36,12 +38,14 @@ public class Element
             
         //not effective
             water, -1,
-            electric, -1
+            electric, -1,
+            big, -1
     ),
         water, 
         Map.of(
         //neutral
             water, 0, 
+            big, 0,
             
         //super effective
             fire, 1, 
@@ -58,6 +62,7 @@ public class Element
         //neutral
             grass, 0, 
             rock, 0,
+            big, 0,
             
         //super effective
             water, 1, 
@@ -77,6 +82,7 @@ public class Element
             grass, 1, 
             poison, 1,
             ordinary, 1,
+            big, 1,
             
         //not effective
             fire, -1,
@@ -93,6 +99,7 @@ public class Element
         //super effective 
             electric, 1,
             ordinary, 1,
+            big, 1,
             
         //not effective
             water, -1,
@@ -108,6 +115,7 @@ public class Element
             grass, 1, 
             rock, 1,
             ordinary, 1,
+            big, 1,
             
         //not effective
             fire, -1,
@@ -122,11 +130,29 @@ public class Element
             electric, 0,
             rock, 0,
             poison, 0,
+            big, 0,
             
         //super effective
             ordinary, 1
             
         //not effective
+        
+    ),
+        big,
+        Map.of(
+        //neutral
+        water, 0,
+        
+        //super effective
+        fire, 1,
+        grass, 1,
+        ordinary, 1,
+        big, 1,
+        
+        //not effective
+        electric, -1,
+        rock, -1,
+        poison, -1
         
     )
     );
