@@ -51,7 +51,7 @@ public class MyWorld extends World {
             if (!screenCreated) {
                 addObject(new BattleScreen(player1Spirits, player2Spirits, this), WIDTH/2, HEIGHT/2);
                 screenCreated = true;
-                int i = Greenfoot.getRandomNumber(3);
+                int i = Greenfoot.getRandomNumber(4);
                 if(i == 0)
                 {
                     image = new GreenfootImage("background1.png");
