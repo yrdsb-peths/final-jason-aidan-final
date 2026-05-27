@@ -15,10 +15,13 @@ public class PoisonSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("poison.png");
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 20;
+    static final String attackName = "Toxin";
+    static final String passiveName = "Corrosive Acid";
+    static final String passiveDetails = "Poison your enemies overtime!";
     
     public PoisonSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.poison);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }

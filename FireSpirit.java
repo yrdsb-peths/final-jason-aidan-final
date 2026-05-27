@@ -15,10 +15,13 @@ public class FireSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("fire.png");
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
+    static final String attackName = "Burn";
+    static final String passiveName = "FlameThrower";
+    static final String passiveDetails = "Burn your enemies overtime!";
     
     public FireSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.fire);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
         setLocation(200, 300);
         setImage(costume);
     }

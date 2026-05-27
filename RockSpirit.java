@@ -15,10 +15,13 @@ public class RockSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("rock.png");
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 20;
+    static final String attackName = "Crumble";
+    static final String passiveName = "Boulder Shell";
+    static final String passiveDetails = "Reduce the damage taken";
     
     public RockSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.rock);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }

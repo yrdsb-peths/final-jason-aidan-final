@@ -15,10 +15,13 @@ public class ElectricSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("electric.png");
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 20;
+    static final String attackName = "Shock";
+    static final String passiveName = "Thunder Strike";
+    static final String passiveDetails = "Increase your chances of a critical hit!";
     
     public ElectricSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.electric);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
         setLocation(200, 300);
         setImage(costume);
     }

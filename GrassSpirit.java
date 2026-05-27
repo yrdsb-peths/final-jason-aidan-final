@@ -15,10 +15,13 @@ public class GrassSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("grass.png");
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
+    static final String attackName = "Seed";
+    static final String passiveName = "Pollenate";
+    static final String passiveDetails = "Heal 10 health";
 
     public GrassSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.grass);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }

@@ -15,10 +15,13 @@ public class OrdinarySpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("ordinary.png");
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
+    static final String attackName = "Thing";
+    static final String passiveName = "Transformation";
+    static final String passiveDetails = "You'll find out soon...";
     
     public OrdinarySpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.ordinary);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }

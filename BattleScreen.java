@@ -77,7 +77,7 @@ public class BattleScreen extends Actor
     public void playerAction()
     {
         
-        Spirit currenSpirit = turnNumber % 2 == 1 ? p1Spirit : p2Spirit;
+        Spirit currentSpirit = turnNumber % 2 == 1 ? p1Spirit : p2Spirit;
         Spirit opponentSpirit = turnNumber % 2 == 0 ? p1Spirit : p2Spirit;
 
         showPlayerButtons();
@@ -86,22 +86,24 @@ public class BattleScreen extends Actor
 
         if (attackButton.isPressed) {
             attackButton.isPressed = false;
-            opponentSpirit.health -= calculateAttack(currenSpirit, opponentSpirit);
+            opponentSpirit.health -= calculateAttack(currentSpirit, opponentSpirit);
             nextTurn();
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
-            currenSpirit.passive(opponentSpirit);
+            //System.out.println(currentSpirit + " used " + currentSpirit.passiveName);
+            currentSpirit.passive(opponentSpirit);
             nextTurn();
-
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
             // Handle choosing new spirit logic here
+            
+            nextTurn();
         } else if (fleeButton.isPressed) {
             fleeButton.isPressed = false;
             // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
         }
 
-        currenSpirit.applyStatusEffects();
+        currentSpirit.applyStatusEffects();
         opponentSpirit.applyStatusEffects();
     }
 

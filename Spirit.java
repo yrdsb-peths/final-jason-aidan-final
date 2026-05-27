@@ -24,6 +24,10 @@ public class Spirit extends Actor
     int healingAmount;
     int healingDuration; // # of turns
     Element type;
+    
+    String attackName = "";
+    String passiveName = "";
+    String passiveDetails = "";
 
     // Creates a fixed list of spirit types that can be used to dynamically create spirit objects
 
@@ -43,7 +47,7 @@ public class Spirit extends Actor
     }
     
     
-    public Spirit(int health, int attack, Element type)
+    public Spirit(int health, int attack, Element type, String attackName, String passiveName, String passiveDetails)
     {
         burningDuration = 0;
         poisonedDuration = 0;
@@ -54,6 +58,9 @@ public class Spirit extends Actor
         this.health = health;
         this.attack = attack;
         this.type = type;
+        this.attackName = attackName;
+        this.passiveName = passiveName;
+        this.passiveDetails = passiveDetails;
     }
 
     public int comparedTo(Spirit other)

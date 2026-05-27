@@ -16,10 +16,13 @@ public class WaterSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("water.png");
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
+    static final String attackName = "Splash";
+    static final String passiveName = "Rainfall";
+    static final String passiveDetails = "Remove effects and deal 20 damage";
     
     public WaterSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.water);
+        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }
