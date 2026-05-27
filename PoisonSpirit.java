@@ -21,7 +21,7 @@ public class PoisonSpirit extends Spirit
     
     public PoisonSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
+        super(BASE_HEALTH, BASE_ATTACK, Element.poison, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }

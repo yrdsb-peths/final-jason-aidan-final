@@ -21,7 +21,7 @@ public class GrassSpirit extends Spirit
 
     public GrassSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
+        super(BASE_HEALTH, BASE_ATTACK, Element.grass, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }
