@@ -51,8 +51,13 @@ public class Chooser extends Actor
         // can't use getWorld() in the constructor, so we create the switches here
         
         if (!switchesCreated) {
+            int j = 0;
             for (int i = 0; i < options.length; i++) {
-                getWorld().addObject(switches[i], getX() + spacing * i, getY());
+                if(i % 3 == 0 && i != 0)
+                {
+                    j++;
+                }
+                getWorld().addObject(switches[i], getX() + spacing * (i%3), getY() + spacing * j);
             }
             switchesCreated = true;
         }

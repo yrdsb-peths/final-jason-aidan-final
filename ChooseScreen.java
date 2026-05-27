@@ -76,11 +76,11 @@ public class ChooseScreen extends Actor
         for (int i = 0; i < MyWorld.maxSpirits; i++) {
             
             player1Displays[i] = new ImageDisplay();
-            world.addObject(player1Displays[i], 70 + 70 * i, 150);
+            world.addObject(player1Displays[i], 70 + 70 * i, 300);
         
         
             player2Displays[i] = new ImageDisplay();
-            world.addObject(player2Displays[i], 400 + 70 * i, 150);
+            world.addObject(player2Displays[i], 400 + 70 * i, 300);
             
         }
     }
