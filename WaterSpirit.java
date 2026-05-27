@@ -28,10 +28,9 @@ public class WaterSpirit extends Spirit
     }
 
     public void passive(Spirit other) {
-        
         this.health += 10;
-        other.healingAmount = 5;
-        other.healingDuration = 3;
+        this.healingAmount = 5;
+        this.healingDuration = 3;
     }
 
 }

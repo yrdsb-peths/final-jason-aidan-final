@@ -27,9 +27,9 @@ public class GrassSpirit extends Spirit
     }
 
     public void passive(Spirit other) {
-        other.poisonedPercentage = 0.2;
-        other.poisonedDuration = 3;
-
+        this.health += 10;
+        this.healingAmount = 5;
+        this.healingDuration = 3;
         
         // Any additional initialization code for FireSpirit can go here
     }
