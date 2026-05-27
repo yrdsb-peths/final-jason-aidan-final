@@ -31,6 +31,9 @@ public class BattleScreen extends Actor
     
     Spirit p1Spirit;
     Spirit p2Spirit;
+
+    ImageDisplay p1SpiritDisplay;
+    ImageDisplay p2SpiritDisplay;
     
     int turnNumber;
     
@@ -46,7 +49,8 @@ public class BattleScreen extends Actor
 
         initButtons();
         initLabels();
-        
+        p1SpiritDisplay = new ImageDisplay();
+        p2SpiritDisplay = new ImageDisplay();
 
         turnNumber = 1;
         
@@ -84,6 +88,7 @@ public class BattleScreen extends Actor
         Spirit opponentSpirit = turnNumber % 2 == 0 ? p1Spirit : p2Spirit;
 
         showPlayerButtons();
+        updateImageDisplays();
 
 
         if (attackButton.isPressed) {
@@ -252,5 +257,25 @@ public class BattleScreen extends Actor
         player2Label.get("health").setValue("Health: " + p2Spirit.health);
         player2Label.get("attack").setValue("Attack: " + p2Spirit.attack);
         player2Label.get("type").setValue("Type: " + p2Spirit.type.toString());
+    }
+
+    public void updateImageDisplays()
+    {
+        
+        int scaleX = 100;
+        int scaleY = 100;
+
+        GreenfootImage p1Image = p1Spirit.image;
+        GreenfootImage p2Image = p2Spirit.image;
+
+        p1Image.scale(scaleX, scaleY);
+        p2Image.scale(scaleX, scaleY);
+
+        p1SpiritDisplay.setImage(p1Image);
+        p2SpiritDisplay.setImage(p2Image);
+
+
+        world.addObject(p1SpiritDisplay, MyWorld.WIDTH/4, MyWorld.HEIGHT/2);
+        world.addObject(p2SpiritDisplay, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/2);
     }
 }

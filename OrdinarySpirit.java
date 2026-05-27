@@ -21,7 +21,7 @@ public class OrdinarySpirit extends Spirit
     
     public OrdinarySpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.ordinary, attackName, passiveName, passiveDetails);
+        super(BASE_HEALTH, BASE_ATTACK, Element.ordinary, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }

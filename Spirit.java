@@ -24,6 +24,8 @@ public class Spirit extends Actor
     int healingAmount;
     int healingDuration; // # of turns
     Element type;
+
+    GreenfootImage image;
     
     String attackName = "";
     String passiveName = "";
@@ -47,7 +49,7 @@ public class Spirit extends Actor
     }
     
     
-    public Spirit(int health, int attack, Element type, String attackName, String passiveName, String passiveDetails)
+    public Spirit(int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)
     {
         burningDuration = 0;
         poisonedDuration = 0;
@@ -61,6 +63,7 @@ public class Spirit extends Actor
         this.attackName = attackName;
         this.passiveName = passiveName;
         this.passiveDetails = passiveDetails;
+        this.image = image;
     }
 
     public int comparedTo(Spirit other)
