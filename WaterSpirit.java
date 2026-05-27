@@ -22,7 +22,7 @@ public class WaterSpirit extends Spirit
     
     public WaterSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails);
+        super(BASE_HEALTH, BASE_ATTACK, Element.water, attackName, passiveName, passiveDetails);
         setLocation(200,300);
         setImage(costume);
     }
