@@ -216,13 +216,30 @@ public class BattleScreen extends Actor
     public void initLabels()
     {
 
-        Label health1label = new Label("Health: " + player1Spirits.get(0).health, 24);
-        Label attack1label = new Label("Attack: " + player1Spirits.get(0).attack, 24);
-        Label type1label = new Label("Type: " + player1Spirits.get(0).type.toString(), 24);
+        int fontSize = 18;
 
-        Label health2label = new Label("Health: " + player2Spirits.get(0).health, 24);
-        Label attack2label = new Label("Attack: " + player2Spirits.get(0).attack, 24);
-        Label type2label = new Label("Type: " + player2Spirits.get(0).type.toString(), 24);
+        Label health1label = new Label("HP: " + player1Spirits.get(0).health, fontSize);
+        Label attack1label = new Label("ATT: " + player1Spirits.get(0).attack, fontSize);
+        Label type1label = new Label("Type: " + player1Spirits.get(0).type.toString(), fontSize);
+
+        Label health2label = new Label("HP: " + player2Spirits.get(0).health, fontSize);
+        Label attack2label = new Label("ATT: " + player2Spirits.get(0).attack, fontSize);
+        Label type2label = new Label("Type: " + player2Spirits.get(0).type.toString(), fontSize);
+
+        health1label.setFillColor(Color.BLACK);
+        health1label.setLineColor(null);
+        health2label.setFillColor(Color.BLACK);
+        health2label.setLineColor(null);
+
+        attack1label.setFillColor(Color.BLACK);
+        attack1label.setLineColor(null);
+        attack2label.setFillColor(Color.BLACK);
+        attack2label.setLineColor(null);
+
+        type1label.setFillColor(Color.BLACK);
+        type1label.setLineColor(null);
+        type2label.setFillColor(Color.BLACK);
+        type2label.setLineColor(null);
 
         player1Label = new HashMap<String, Label>(Map.of(
             "health", health1label,
@@ -236,26 +253,26 @@ public class BattleScreen extends Actor
             "type", type2label
         ));
 
-        world.addObject(health1label, MyWorld.WIDTH/4, MyWorld.HEIGHT/6);
-        world.addObject(attack1label, MyWorld.WIDTH/4, MyWorld.HEIGHT/6 + 30);
-        world.addObject(type1label, MyWorld.WIDTH/4, MyWorld.HEIGHT/6 + 60);
+        world.addObject(health1label, MyWorld.WIDTH/4 - 20, MyWorld.HEIGHT/2-30);
+        world.addObject(attack1label, MyWorld.WIDTH/4 - 100, MyWorld.HEIGHT/2-30);
+        world.addObject(type1label, MyWorld.WIDTH/4 - 90, MyWorld.HEIGHT/2);
 
-        world.addObject(health2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6);
-        world.addObject(attack2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6 + 30);
-        world.addObject(type2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/6 + 60);
+        world.addObject(health2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/2-30);
+        world.addObject(attack2label, MyWorld.WIDTH/4 * 3 + 80, MyWorld.HEIGHT/2-30);
+        world.addObject(type2label, MyWorld.WIDTH/4 * 3 + 20, MyWorld.HEIGHT/2);
 
     }
     public void updateLabels()
     {
 
 
-        player1Label.get("health").setValue("Health: " + p1Spirit.health);
-        player1Label.get("attack").setValue("Attack: " + p1Spirit.attack);
+        player1Label.get("health").setValue("HP: " + p1Spirit.health);
+        player1Label.get("attack").setValue("ATT: " + p1Spirit.attack);
         player1Label.get("type").setValue("Type: " + p1Spirit.type.toString());
 
 
-        player2Label.get("health").setValue("Health: " + p2Spirit.health);
-        player2Label.get("attack").setValue("Attack: " + p2Spirit.attack);
+        player2Label.get("health").setValue("HP: " + p2Spirit.health);
+        player2Label.get("attack").setValue("ATT: " + p2Spirit.attack);
         player2Label.get("type").setValue("Type: " + p2Spirit.type.toString());
     }
 
@@ -265,8 +282,9 @@ public class BattleScreen extends Actor
         int scaleX = 100;
         int scaleY = 100;
 
-        GreenfootImage p1Image = p1Spirit.image;
-        GreenfootImage p2Image = p2Spirit.image;
+        // create new copy
+        GreenfootImage p1Image = new GreenfootImage(p1Spirit.image);
+        GreenfootImage p2Image = new GreenfootImage(p2Spirit.image);
 
         p1Image.scale(scaleX, scaleY);
         p2Image.scale(scaleX, scaleY);
@@ -275,7 +293,7 @@ public class BattleScreen extends Actor
         p2SpiritDisplay.setImage(p2Image);
 
 
-        world.addObject(p1SpiritDisplay, MyWorld.WIDTH/4, MyWorld.HEIGHT/2);
-        world.addObject(p2SpiritDisplay, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/2);
+        world.addObject(p1SpiritDisplay, MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
+        world.addObject(p2SpiritDisplay, MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
     }
 }

@@ -82,6 +82,12 @@ public class Label extends Actor
         this.fillColor = fillColor;
         updateImage();
     }
+
+    public void setFontSize(int fontSize)
+    {
+        this.fontSize = fontSize;
+        updateImage();
+    }
     
 
     /**
