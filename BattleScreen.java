@@ -63,8 +63,35 @@ public class BattleScreen extends Actor
             playerAction();
             
         } else {
-            //gameOver();
+            gameOver();
         }
+    }
+
+    public void gameOver()
+    {
+        if(player1Spirits.size() == 0)
+        {
+            // Player 2 wins
+            System.out.println("Player 2 wins!");
+        } else if(player2Spirits.size() == 0) {
+            // Player 1 wins
+            System.out.println("Player 1 wins!");
+        }
+        player1Label.forEach((key, label) -> {
+            world.removeObject(label);
+        });
+        player2Label.forEach((key, label) -> {
+            world.removeObject(label);
+        });
+        world.removeObject(attackButton);
+        world.removeObject(passiveButton);
+        world.removeObject(chooseNewButton);
+        world.removeObject(fleeButton);
+        world.removeObject(p1SpiritDisplay);
+        world.removeObject(p2SpiritDisplay);
+        world.currentState = States.CHOOSING;
+        world.screenCreated = false;
+        world.removeObject(this);
     }
 
     //returns true if the given list has no spirits
@@ -165,12 +192,17 @@ public class BattleScreen extends Actor
     {
         if(p1Spirit.health <= 0)
         {
+            p1Spirit = player1Spirits.remove(0);
             
         }
         if(p2Spirit.health <= 0)
         {
+            p2Spirit = player2Spirits.remove(0);
             
         }
+
+        updateImageDisplays();
+        updateLabels();
     }
     
     public void showPlayerButtons()
