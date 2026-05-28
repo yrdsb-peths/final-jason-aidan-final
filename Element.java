@@ -23,6 +23,7 @@ public class Element
     static Element ordinary = new Element("Ordinary");
     static Element big = new Element("Big");
     static Element small = new Element("Small");
+    static Element dark = new Element("Dark");
     
     static Map<Element, Map<Element, Integer>> typeEffectiveness = Map.of(
         fire, 
@@ -36,6 +37,7 @@ public class Element
             poison, 1,
             ordinary, 1,
             small, 1,
+            dark, 1,
             
         //not effective
             water, -1,
@@ -48,6 +50,7 @@ public class Element
             water, 0, 
             big, 0,
             small, 0,
+            dark, 0,
             
         //super effective
             fire, 1, 
@@ -74,7 +77,8 @@ public class Element
         //not effective
             fire, -1,
             electric, -1,
-            poison, -1
+            poison, -1,
+            dark, -1
     ),
         electric,
         Map.of(
@@ -86,6 +90,7 @@ public class Element
             poison, 1,
             ordinary, 1,
             big, 1,
+            dark, 1,
             
         //not effective
             fire, -1,
@@ -99,6 +104,7 @@ public class Element
             fire, 0,
             grass, 0,
             rock, 0, 
+            dark, 0,
             
         //super effective 
             electric, 1,
@@ -125,7 +131,8 @@ public class Element
         //not effective
             fire, -1,
             electric, -1,
-            small, -1
+            small, -1,
+            dark, -1
     ),
         ordinary, 
         Map.of(
@@ -138,6 +145,7 @@ public class Element
             poison, 0,
             big, 0,
             small, 0,
+            dark, 0,
             
         //super effective
             ordinary, 1
@@ -160,7 +168,8 @@ public class Element
         //not effective
         electric, -1,
         rock, -1,
-        poison, -1
+        poison, -1,
+        dark, -1
         
     ),
         small,
@@ -174,11 +183,30 @@ public class Element
         poison, 1,
         ordinary, 1,
         small, 1,
+        dark, 1,
         
         //not effective
         fire, -1,
         grass, -1,
         big, -1
+    ),
+        dark, 
+        Map.of(
+        //neutral
+        rock, 0,
+        poison, 0,
+            
+        //super effective
+        fire, 1,
+        grass, 1,
+        ordinary, 1,
+        big, 1,
+        dark, 1,
+            
+        //not effective
+        water, -1,
+        electric, -1,
+        small, -1
     )
     );
 
