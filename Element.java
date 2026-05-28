@@ -31,52 +31,52 @@ public class Element
         //neutral
             fire, 0, 
             rock, 0,
+            electric, 0,
+            ordinary, 0,
             
         //super effective
             grass, 1, 
             poison, 1,
-            ordinary, 1,
             small, 1,
             dark, 1,
             
         //not effective
             water, -1,
-            electric, -1,
             big, -1
     ),
         water, 
         Map.of(
         //neutral
             water, 0, 
+            rock, 0,
+            ordinary, 0,
             big, 0,
             small, 0,
             dark, 0,
             
         //super effective
             fire, 1, 
-            electric, 1,
-            rock, 1,
-            ordinary, 1,
+            poison, 1,
             
         //not effective
             grass, -1,
-            poison, -1
+            electric, -1
     ),
         grass, 
         Map.of(
         //neutral
             grass, 0, 
+            electric, 0,
             rock, 0,
+            ordinary, 0,
             big, 0,
             
         //super effective
             water, 1, 
-            ordinary, 1,
             small, 1,
             
         //not effective
             fire, -1,
-            electric, -1,
             poison, -1,
             dark, -1
     ),
@@ -84,17 +84,17 @@ public class Element
         Map.of(
         //neutral
             electric, 0, 
+            grass, 0,
+            ordinary, 0,
             
         //super effective
-            grass, 1, 
+            water, 1,
             poison, 1,
-            ordinary, 1,
             big, 1,
             dark, 1,
             
         //not effective
             fire, -1,
-            water, -1,
             rock, -1,
             small, -1
     ),
@@ -102,34 +102,34 @@ public class Element
         Map.of(
         //neutral
             fire, 0,
+            water, 0,
             grass, 0,
             rock, 0, 
+            ordinary, 0,
             dark, 0,
             
         //super effective 
             electric, 1,
-            ordinary, 1,
             big, 1,
             small, 1,
             
         //not effective
-            water, -1,
             poison, -1
     ),
         poison, 
         Map.of(
         //neutral
+            fire, 0,
             poison, 0,
+            ordinary, 0,
             
         //super effective
-            water, 1,
             grass, 1, 
             rock, 1,
-            ordinary, 1,
             big, 1,
             
         //not effective
-            fire, -1,
+            water, -1,
             electric, -1,
             small, -1,
             dark, -1
@@ -137,31 +137,30 @@ public class Element
         ordinary, 
         Map.of(
         //neutral
-            fire, 0,
-            water, 0,
-            grass, 0,
-            electric, 0,
-            rock, 0,
-            poison, 0,
-            big, 0,
-            small, 0,
-            dark, 0,
             
         //super effective
-            ordinary, 1
+            ordinary, 1,
             
         //not effective
-        
+            fire, -1,
+            water, -1,
+            grass, -1,
+            electric, -1,
+            rock, -1,
+            poison, -1,
+            big, -1,
+            small, -1,
+            dark, -1
     ),
         big,
         Map.of(
         //neutral
         water, 0,
+        ordinary, 0,
         
         //super effective
         fire, 1,
         grass, 1,
-        ordinary, 1,
         big, 1,
         small, 1,
         
@@ -177,11 +176,11 @@ public class Element
         //neutral
         water, 0,
         rock, 0,
+            ordinary, 0,
         
         //super effective
         electric, 1,
         poison, 1,
-        ordinary, 1,
         small, 1,
         dark, 1,
         
@@ -195,11 +194,11 @@ public class Element
         //neutral
         rock, 0,
         poison, 0,
+        ordinary, 0,
             
         //super effective
         fire, 1,
         grass, 1,
-        ordinary, 1,
         big, 1,
         dark, 1,
             
