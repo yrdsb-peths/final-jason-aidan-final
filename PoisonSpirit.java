@@ -13,6 +13,7 @@ public class PoisonSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("poison.png");
+    static final String NAME = "Poison Spirit";
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 20;
     static final String attackName = "Toxin";
@@ -21,7 +22,7 @@ public class PoisonSpirit extends Spirit
     
     public PoisonSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.poison, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.poison, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }

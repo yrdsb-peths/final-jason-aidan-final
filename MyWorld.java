@@ -26,9 +26,13 @@ public class MyWorld extends World {
     
     public MyWorld() {
 
+        
+
         super(WIDTH, HEIGHT, 1);
         player1Spirits = new ArrayList<>();
         player2Spirits = new ArrayList<>();
+
+        
         
         screenCreated = false;
 
@@ -51,22 +55,6 @@ public class MyWorld extends World {
             if (!screenCreated) {
                 addObject(new BattleScreen(player1Spirits, player2Spirits, this), WIDTH/2, HEIGHT/2);
                 screenCreated = true;
-                int i = Greenfoot.getRandomNumber(4);
-                if(i == 0)
-                {
-                    image = new GreenfootImage("background1.png");
-                } else if (i == 1)
-                {
-                    image = new GreenfootImage("background2.png");
-                } else if (i == 2)
-                {
-                    image = new GreenfootImage("background3.png");
-                } else if (i == 3)
-                {
-                    image = new GreenfootImage("background4.png");
-                }
-                image.scale(600,400);
-                setBackground(image);
             }
         }
         

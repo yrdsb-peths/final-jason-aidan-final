@@ -13,6 +13,7 @@ public class RockSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("rock.png");
+    static final String NAME = "Rock Spirit";
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 20;
     static final String attackName = "Crumble";
@@ -21,7 +22,7 @@ public class RockSpirit extends Spirit
     
     public RockSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.rock, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.rock, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }

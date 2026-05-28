@@ -15,6 +15,7 @@ public class Spirit extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
+    String name;
     int health;
     int attack;
     int burningDamage;
@@ -52,8 +53,9 @@ public class Spirit extends Actor
     }
     
     
-    public Spirit(int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)
+    public Spirit(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)
     {
+
         burningDuration = 0;
         poisonedDuration = 0;
         burningDamage = 0;
@@ -67,6 +69,7 @@ public class Spirit extends Actor
         this.passiveName = passiveName;
         this.passiveDetails = passiveDetails;
         this.image = image;
+        this.name = name;
     }
 
     public int comparedTo(Spirit other)

@@ -14,6 +14,7 @@ public class BigSpirit extends Spirit
      */
     
     static GreenfootImage costume = new GreenfootImage("big.png");
+    static final String NAME = "Big Spirit";
     static final int BASE_HEALTH = 120;
     static final int BASE_ATTACK = 30;
     static final String attackName = "Stomp";
@@ -22,7 +23,7 @@ public class BigSpirit extends Spirit
     
     public BigSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.big, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.big, attackName, passiveName, passiveDetails, costume);
         setLocation(200, 300);
         setImage(costume);
     }

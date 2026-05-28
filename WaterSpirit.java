@@ -14,6 +14,7 @@ public class WaterSpirit extends Spirit
      */
 
     static GreenfootImage costume = new GreenfootImage("water.png");
+    static final String NAME = "Water Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
     static final String attackName = "Splash";
@@ -22,7 +23,7 @@ public class WaterSpirit extends Spirit
     
     public WaterSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.water, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }
