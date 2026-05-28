@@ -35,6 +35,7 @@ public class Element
             grass, 1, 
             poison, 1,
             ordinary, 1,
+            small, 1,
             
         //not effective
             water, -1,
@@ -46,6 +47,7 @@ public class Element
         //neutral
             water, 0, 
             big, 0,
+            small, 0,
             
         //super effective
             fire, 1, 
@@ -67,6 +69,7 @@ public class Element
         //super effective
             water, 1, 
             ordinary, 1,
+            small, 1,
             
         //not effective
             fire, -1,
@@ -87,7 +90,8 @@ public class Element
         //not effective
             fire, -1,
             water, -1,
-            rock, -1
+            rock, -1,
+            small, -1
     ),
         rock,
         Map.of(
@@ -100,6 +104,7 @@ public class Element
             electric, 1,
             ordinary, 1,
             big, 1,
+            small, 1,
             
         //not effective
             water, -1,
@@ -119,7 +124,8 @@ public class Element
             
         //not effective
             fire, -1,
-            electric, -1
+            electric, -1,
+            small, -1
     ),
         ordinary, 
         Map.of(
@@ -131,6 +137,7 @@ public class Element
             rock, 0,
             poison, 0,
             big, 0,
+            small, 0,
             
         //super effective
             ordinary, 1
@@ -148,12 +155,30 @@ public class Element
         grass, 1,
         ordinary, 1,
         big, 1,
+        small, 1,
         
         //not effective
         electric, -1,
         rock, -1,
         poison, -1
         
+    ),
+        small,
+        Map.of(
+        //neutral
+        water, 0,
+        rock, 0,
+        
+        //super effective
+        electric, 1,
+        poison, 1,
+        ordinary, 1,
+        small, 1,
+        
+        //not effective
+        fire, -1,
+        grass, -1,
+        big, -1
     )
     );
 
