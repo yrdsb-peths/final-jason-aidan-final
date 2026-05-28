@@ -24,6 +24,8 @@ public class Element
     static Element big = new Element("Big");
     static Element small = new Element("Small");
     static Element dark = new Element("Dark");
+    static Element star = new Element("Star");
+    static Element sus = new Element("Sus");
     
     static Map<Element, Map<Element, Integer>> typeEffectiveness = Map.of(
         fire, 
@@ -155,57 +157,63 @@ public class Element
         big,
         Map.of(
         //neutral
-        water, 0,
-        ordinary, 0,
+            water, 0,
+            ordinary, 0,
         
         //super effective
-        fire, 1,
-        grass, 1,
-        big, 1,
-        small, 1,
+            fire, 1,
+            grass, 1,
+            big, 1,
+            small, 1,
         
         //not effective
-        electric, -1,
-        rock, -1,
-        poison, -1,
-        dark, -1
+            electric, -1,
+            rock, -1,
+            poison, -1,
+            dark, -1
         
     ),
         small,
         Map.of(
         //neutral
-        water, 0,
-        rock, 0,
+            water, 0,
+            rock, 0,
             ordinary, 0,
         
         //super effective
-        electric, 1,
-        poison, 1,
-        small, 1,
-        dark, 1,
+            electric, 1,
+            poison, 1,
+            small, 1,
+            dark, 1,
         
         //not effective
-        fire, -1,
-        grass, -1,
-        big, -1
+            fire, -1,
+            grass, -1,
+            big, -1
     ),
         dark, 
         Map.of(
         //neutral
-        rock, 0,
-        poison, 0,
-        ordinary, 0,
+            rock, 0,
+            poison, 0,
+            ordinary, 0,
             
         //super effective
-        fire, 1,
-        grass, 1,
-        big, 1,
-        dark, 1,
+            fire, 1,
+            grass, 1,
+            big, 1,
+            dark, 1,
             
         //not effective
-        water, -1,
-        electric, -1,
-        small, -1
+            water, -1,
+            electric, -1,
+            small, -1
+    //),
+        //star,
+        //Map.of(
+        //neutral
+            
+        
     )
     );
 
