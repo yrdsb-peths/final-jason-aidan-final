@@ -13,6 +13,7 @@ public class ElectricSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("electric.png");
+    static final String NAME = "Electric Spirit";
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 20;
     static final String attackName = "Shock";
@@ -21,7 +22,7 @@ public class ElectricSpirit extends Spirit
     
     public ElectricSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.electric, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, attackName, passiveName, passiveDetails, costume);
         setLocation(200, 300);
         setImage(costume);
     }

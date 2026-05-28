@@ -13,6 +13,7 @@ public class OrdinarySpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("ordinary.png");
+    static final String NAME = "Ordinary Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
     static final String attackName = "Thing";
@@ -21,7 +22,7 @@ public class OrdinarySpirit extends Spirit
     
     public OrdinarySpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.ordinary, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }

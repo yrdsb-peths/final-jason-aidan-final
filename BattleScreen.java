@@ -40,8 +40,16 @@ public class BattleScreen extends Actor
     ArrayList<Spirit> player1Spirits;
     ArrayList<Spirit> player2Spirits;
 
+    Label textBox;
+
+    GreenfootImage backgroundImage;
+    
+
+
     public BattleScreen(ArrayList<Spirit> player1Spirits, ArrayList<Spirit> player2Spirits, MyWorld world) {
         
+        setImage((GreenfootImage)null);
+
         this.player1Spirits = player1Spirits;
         this.player2Spirits = player2Spirits;
 
@@ -51,6 +59,11 @@ public class BattleScreen extends Actor
         initLabels();
         p1SpiritDisplay = new ImageDisplay();
         p2SpiritDisplay = new ImageDisplay();
+
+        setBackground();
+
+        initTextBox();
+
 
         turnNumber = 1;
         
@@ -89,6 +102,7 @@ public class BattleScreen extends Actor
         world.removeObject(fleeButton);
         world.removeObject(p1SpiritDisplay);
         world.removeObject(p2SpiritDisplay);
+        world.removeObject(textBox);
         world.currentState = States.CHOOSING;
         world.screenCreated = false;
         world.removeObject(this);
@@ -121,20 +135,23 @@ public class BattleScreen extends Actor
         if (attackButton.isPressed) {
             attackButton.isPressed = false;
             opponentSpirit.health -= calculateAttack(currentSpirit, opponentSpirit);
-            nextTurn(currentSpirit, opponentSpirit);
+            nextTurn(currentSpirit, opponentSpirit, 0);
+
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
             //System.out.println(currentSpirit + " used " + currentSpirit.passiveName);
             currentSpirit.passive(opponentSpirit);
-            nextTurn(currentSpirit, opponentSpirit);
+            nextTurn(currentSpirit, opponentSpirit, 1);
+
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
             // Handle choosing new spirit logic here
-            
-            nextTurn(currentSpirit, opponentSpirit);
+            nextTurn(currentSpirit, opponentSpirit, 2);
+
         } else if (fleeButton.isPressed) {
             fleeButton.isPressed = false;
             // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
+            nextTurn(currentSpirit, opponentSpirit, 3);
         }
 
 
@@ -148,43 +165,50 @@ public class BattleScreen extends Actor
             int rand = Greenfoot.getRandomNumber(100);
             if(rand <= 10)
             {
-                System.out.println("Miss!");
+                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It missed!");
             } else if(rand > 10 && rand <= 90)
             {
                 outputDmg = attacker.attack;
-                System.out.println("Regular attack!");
+                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It dealt " + (int)outputDmg + " damage!");
             } else if(rand > 90)
             {
                 outputDmg = attacker.attack * 1.5;
-                System.out.println("Normal Crit!");
+                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was a critical hit, \n dealing " + (int)outputDmg + " damage!");
             }
         } else if(effectiveness > 0) {
             int randCrit = Greenfoot.getRandomNumber(100);
             if(randCrit < 10) {
                 outputDmg = attacker.attack * 3;
-                System.out.println("Crit!");
+                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was a critical hit, \n dealing " + (int)outputDmg + " damage!");
             } else { 
                 outputDmg = attacker.attack * 1.5;
-                System.out.println("Super Effective!");
+                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was super effective, \n dealing " + (int)outputDmg + " damage!");
             }
         } else if(effectiveness < 0) {
             int randMiss = Greenfoot.getRandomNumber(100);
             if(randMiss < 10) {
-                System.out.println("Miss!");
+                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It missed!");
             } else { 
                 outputDmg = attacker.attack * 0.5;
-                System.out.println("Not Effective!");
+                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was not very effective, \n dealing " + (int)outputDmg + " damage.");
             }
         }
         return (int)outputDmg;
     }
     
-    public void nextTurn(Spirit currentSpirit, Spirit opponentSpirit)
+    public void nextTurn(Spirit currentSpirit, Spirit opponentSpirit, int buttonPressed)
     {
         currentSpirit.applyStatusEffects();
         opponentSpirit.applyStatusEffects();
 
         updateLabels();
+        if (buttonPressed == 1) {
+            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " used " + currentSpirit.passiveName + "!");
+        } else if (buttonPressed == 2) {
+            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " switched spirit!");
+        } else if (buttonPressed == 3) {
+            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " fled from the battle!");
+        }
         turnNumber++;
     }
     
@@ -248,7 +272,7 @@ public class BattleScreen extends Actor
     public void initLabels()
     {
 
-        int fontSize = 18;
+        int fontSize = 20;
 
         Label health1label = new Label("HP: " + player1Spirits.get(0).health, fontSize);
         Label attack1label = new Label("ATT: " + player1Spirits.get(0).attack, fontSize);
@@ -287,7 +311,7 @@ public class BattleScreen extends Actor
 
         world.addObject(health1label, MyWorld.WIDTH/4 - 20, MyWorld.HEIGHT/2-30);
         world.addObject(attack1label, MyWorld.WIDTH/4 - 100, MyWorld.HEIGHT/2-30);
-        world.addObject(type1label, MyWorld.WIDTH/4 - 90, MyWorld.HEIGHT/2);
+        world.addObject(type1label, MyWorld.WIDTH/4 - 85, MyWorld.HEIGHT/2);
 
         world.addObject(health2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/2-30);
         world.addObject(attack2label, MyWorld.WIDTH/4 * 3 + 80, MyWorld.HEIGHT/2-30);
@@ -327,5 +351,32 @@ public class BattleScreen extends Actor
 
         world.addObject(p1SpiritDisplay, MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
         world.addObject(p2SpiritDisplay, MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
+    }
+
+    public void initTextBox()
+    {
+        textBox = new Label("None", 20);
+        textBox.setFillColor(Color.BLACK);
+        textBox.setLineColor(null);
+        world.addObject(textBox, MyWorld.WIDTH/2, MyWorld.HEIGHT-80);
+    }
+    public void updateTextBox(String string)
+    {
+        textBox.setValue(string);
+        
+    }
+
+    public void setBackground()
+    {
+
+        int i = Greenfoot.getRandomNumber(4);
+        backgroundImage = new GreenfootImage("background"+(i+1)+".png");
+        backgroundImage.scale(600, 400);
+        
+        backgroundImage.setColor(Color.WHITE);
+        backgroundImage.fillRect(190, 285, 220, 110);
+
+        world.setBackground(backgroundImage);
+        
     }
 }

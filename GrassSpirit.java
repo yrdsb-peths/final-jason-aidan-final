@@ -13,6 +13,7 @@ public class GrassSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("grass.png");
+    static final String NAME = "Grass Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
     static final String attackName = "Seed";
@@ -21,7 +22,7 @@ public class GrassSpirit extends Spirit
 
     public GrassSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.grass, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }

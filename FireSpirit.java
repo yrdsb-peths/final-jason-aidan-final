@@ -13,6 +13,7 @@ public class FireSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("fire.png");
+    static final String NAME = "Fire Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
     static final String attackName = "Burn";
@@ -21,7 +22,7 @@ public class FireSpirit extends Spirit
     
     public FireSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails, costume);
         setLocation(200, 300);
         setImage(costume);
     }
