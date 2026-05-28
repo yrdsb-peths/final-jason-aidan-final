@@ -42,7 +42,8 @@ public class Spirit extends Actor
         PoisonSpirit.class,
         OrdinarySpirit.class,
         BigSpirit.class,
-        SmallSpirit.class
+        SmallSpirit.class,
+        DarkSpirit.class
     );
 
     public void passive(Spirit other) {
