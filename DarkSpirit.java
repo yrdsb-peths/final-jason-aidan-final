@@ -23,8 +23,7 @@ public class DarkSpirit extends Spirit
     public DarkSpirit()
     {
         super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, attackName, passiveName, passiveDetails, costume);
-        setLocation(200,300);
-        setImage(costume);
+
     }
 
     public void passive(Spirit other) {

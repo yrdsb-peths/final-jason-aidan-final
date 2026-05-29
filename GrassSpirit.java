@@ -23,8 +23,7 @@ public class GrassSpirit extends Spirit
     public GrassSpirit()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, attackName, passiveName, passiveDetails, costume);
-        setLocation(200,300);
-        setImage(costume);
+
     }
 
     public void passive(Spirit other) {

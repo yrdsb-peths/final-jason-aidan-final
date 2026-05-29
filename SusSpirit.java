@@ -23,8 +23,6 @@ public class SusSpirit extends Spirit
     public SusSpirit()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.sus, attackName, passiveName, passiveDetails, costume);
-        setLocation(200, 300);
-        setImage(costume);
     }
 
     public void passive(Spirit other) {

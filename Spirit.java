@@ -8,7 +8,7 @@ import java.util.List;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Spirit extends Actor
+public class Spirit
 {
     /**
      * Act - do whatever the Spirit wants to do. This method is called whenever

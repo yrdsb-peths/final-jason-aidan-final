@@ -23,8 +23,6 @@ public class StarSpirit extends Spirit
     public StarSpirit()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, attackName, passiveName, passiveDetails, costume);
-        setLocation(200, 300);
-        setImage(costume);
     }
 
     public void passive(Spirit other) {

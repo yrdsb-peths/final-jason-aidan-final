@@ -24,8 +24,7 @@ public class BigSpirit extends Spirit
     public BigSpirit()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.big, attackName, passiveName, passiveDetails, costume);
-        setLocation(200, 300);
-        setImage(costume);
+
     }
 
     public void passive(Spirit other) {

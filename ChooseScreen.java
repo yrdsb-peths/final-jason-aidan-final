@@ -184,7 +184,7 @@ public class ChooseScreen extends Actor
             }
 
             if (i < player1Spirits.size()) {
-                GreenfootImage image = new GreenfootImage(player1Spirits.get(i).getImage());
+                GreenfootImage image = new GreenfootImage(player1Spirits.get(i).image);
 
                 int size = player1Spirits.get(i).level;
                 image.scale(size + 40, size + 40);
@@ -193,7 +193,7 @@ public class ChooseScreen extends Actor
                 player1Displays[i].setImage((GreenfootImage)null);
             }
             if (i < player2Spirits.size()) {
-                GreenfootImage image = new GreenfootImage(player2Spirits.get(i).getImage());
+                GreenfootImage image = new GreenfootImage(player2Spirits.get(i).image);
 
                 int size = player2Spirits.get(i).level;
                 image.scale(size + 40, size + 40);
@@ -213,7 +213,7 @@ public class ChooseScreen extends Actor
             for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
 
                 Spirit spirit = spiritClass.getDeclaredConstructor().newInstance();
-                costumeList[i] = new GreenfootImage(spirit.getImage());
+                costumeList[i] = new GreenfootImage(spirit.image);
                 costumeList[i].scale(50, 50);
                 i++;
             }

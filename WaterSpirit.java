@@ -24,8 +24,7 @@ public class WaterSpirit extends Spirit
     public WaterSpirit()
     {
         super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, attackName, passiveName, passiveDetails, costume);
-        setLocation(200,300);
-        setImage(costume);
+
     }
 
     public void passive(Spirit other) {

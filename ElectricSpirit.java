@@ -23,8 +23,7 @@ public class ElectricSpirit extends Spirit
     public ElectricSpirit()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, attackName, passiveName, passiveDetails, costume);
-        setLocation(200, 300);
-        setImage(costume);
+
     }
     
     public void passive(Spirit other) {

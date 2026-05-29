@@ -24,7 +24,5 @@ public class SmallSpirit extends Spirit
     public SmallSpirit()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.small, attackName, passiveName, passiveDetails, costume);
-        setLocation(200, 300);
-        setImage(costume);
     }
 }
