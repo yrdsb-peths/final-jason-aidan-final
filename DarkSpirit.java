@@ -13,6 +13,7 @@ public class DarkSpirit extends Spirit
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("dark.png");
+    static final String NAME = "Dark Spirit";
     static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 20;
     static final String attackName = "Shadow";
@@ -21,7 +22,7 @@ public class DarkSpirit extends Spirit
     
     public DarkSpirit()
     {
-        super(BASE_HEALTH, BASE_ATTACK, Element.dark, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, attackName, passiveName, passiveDetails, costume);
         setLocation(200,300);
         setImage(costume);
     }

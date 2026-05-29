@@ -16,7 +16,7 @@ public class BigSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("big.png");
     static final String NAME = "Big Spirit";
     static final int BASE_HEALTH = 120;
-    static final int BASE_ATTACK = 30;
+    static final int BASE_ATTACK = 20;
     static final String attackName = "Stomp";
     static final String passiveName = "Ground Pound";
     static final String passiveDetails = "Increase your damage output by 10 damage";
