@@ -379,4 +379,10 @@ public class BattleScreen extends Actor
         world.setBackground(backgroundImage);
         
     }
+
+    public void updateHealthbar(int health1, int health2)
+    {
+        backgroundImage.setColor(Color.GREEN);
+        backgroundImage.fillRect(20, 100, health1, 20);
+    }
 }

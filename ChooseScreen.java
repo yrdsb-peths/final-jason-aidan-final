@@ -47,8 +47,8 @@ public class ChooseScreen extends Actor
 
         initSelectedDisplay();
         
-        chooser1 = createSpiritChooser(70, 50, 70);
-        chooser2 = createSpiritChooser(400, 50, 70);
+        chooser1 = createSpiritChooser(45, 50, 60);
+        chooser2 = createSpiritChooser(375, 50, 60);
     }   
 
     public void act()
@@ -78,11 +78,11 @@ public class ChooseScreen extends Actor
         for (int i = 0; i < MyWorld.maxSpirits; i++) {
             
             player1Displays[i] = new ImageDisplay();
-            world.addObject(player1Displays[i], 70 + 70 * i, 300);
+            world.addObject(player1Displays[i], 20 + 40 * i, 300);
         
         
             player2Displays[i] = new ImageDisplay();
-            world.addObject(player2Displays[i], 400 + 70 * i, 300);
+            world.addObject(player2Displays[i], 420 + 40 * i, 300);
             
         }
     }
@@ -159,7 +159,7 @@ public class ChooseScreen extends Actor
                 i++;
             }
 
-            Chooser chooser = new Chooser(costumeList, 2, spacing);
+            Chooser chooser = new Chooser(costumeList, MyWorld.maxSpirits, spacing, 4);
 
             // chooser.switches[0].status 
 

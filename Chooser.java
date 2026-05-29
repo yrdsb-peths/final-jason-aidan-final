@@ -21,13 +21,15 @@ public class Chooser extends Actor
     int maxOptions;
     int selectedNumber;
     boolean switchesCreated = false;
+    int spiritsPerRow;
 
-    public Chooser(GreenfootImage[] options, int maxOptions, int spacing)
+    public Chooser(GreenfootImage[] options, int maxOptions, int spacing, int spiritsPerRow)
     {
         this.spacing = spacing;
         this.options = options;
         this.maxOptions = maxOptions;
         this.selectedNumber = 0;
+        this.spiritsPerRow = spiritsPerRow;
         switches = new Switch[options.length];
         selectedIndices = new ArrayList<Integer>();
 
@@ -53,11 +55,11 @@ public class Chooser extends Actor
         if (!switchesCreated) {
             int j = 0;
             for (int i = 0; i < options.length; i++) {
-                if(i % 3 == 0 && i != 0)
+                if(i % spiritsPerRow == 0 && i != 0)
                 {
                     j++;
                 }
-                getWorld().addObject(switches[i], getX() + spacing * (i%3), getY() + spacing * j);
+                getWorld().addObject(switches[i], getX() + spacing * (i%spiritsPerRow), getY() + spacing * j);
             }
             switchesCreated = true;
         }

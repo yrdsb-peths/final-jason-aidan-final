@@ -10,7 +10,7 @@ enum States {
 
 public class MyWorld extends World {
     
-    static int maxSpirits = 2;
+    static int maxSpirits = 5;
     ArrayList<Spirit> player1Spirits;
     ArrayList<Spirit> player2Spirits;
 
