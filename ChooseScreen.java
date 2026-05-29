@@ -19,8 +19,8 @@ public class ChooseScreen extends Actor
     Button[] player1Displays;
     Button[] player2Displays;
 
-    ArrayList<Spirit> player1Spirits;
-    ArrayList<Spirit> player2Spirits;
+    ArrayList<Entity> player1Entities;
+    ArrayList<Entity> player2Entities;
 
     Chooser chooser1;
     Chooser chooser2;
@@ -32,7 +32,7 @@ public class ChooseScreen extends Actor
     int player1points;
     int player2points;
 
-    static int MAX_CHOOSE_POINTS = 30;
+    static int MAX_CHOOSE_POINTS = 10;
 
 
     /**
@@ -40,9 +40,9 @@ public class ChooseScreen extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
 
-    public ChooseScreen(ArrayList<Spirit> player1Spirits, ArrayList<Spirit> player2Spirits, MyWorld world) {
-        this.player1Spirits = player1Spirits;
-        this.player2Spirits = player2Spirits;
+    public ChooseScreen(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
+        this.player1Entities = player1Entities;
+        this.player2Entities = player2Entities;
         
         this.world = world;
         this.state = 0;
@@ -70,7 +70,7 @@ public class ChooseScreen extends Actor
             chooseSpirit(chooser1, chooser2);
             updateDisplay();
 
-            boolean finishedChoosing = player1Spirits.size() == MyWorld.maxSpirits && player2Spirits.size() == MyWorld.maxSpirits;
+            boolean finishedChoosing = player1Entities.size() == MyWorld.maxEntities && player2Entities.size() == MyWorld.maxEntities;
 
 
             if (finishedChoosing && submitButton.isPressed) {
@@ -79,35 +79,15 @@ public class ChooseScreen extends Actor
             }
 
         } else if (this.state == 1) {
-            for (int i = 0; i < player1Displays.length; i++) {
-                if (player1Displays[i].isPressed) {
-                    System.out.println(i);
-                    if (player1points > 0) {
-                        player1points --;
-                        player1Spirits.get(i).levelUp();
-                        updateDisplay();
-                    }
-                    player1Displays[i].isPressed = false;
-                }
-            }
 
-            for (int i = 0; i < player2Displays.length; i++) {
-                if (player2Displays[i].isPressed) {
-                    if (player2points > 0) {
-                        player2points --;
-                        player2Spirits.get(i).levelUp();
-                        updateDisplay();
-                    }
-                    player2Displays[i].isPressed = false;
-                }
-            }
+            checkLevelUp();
 
             if (submitButton.isPressed) {
-                for (Spirit spirit : player1Spirits) {
-                    spirit.fixLevel();
+                for (Entity entity : player1Entities) {
+                    entity.fixLevel();
                 }
-                for (Spirit spirit : player2Spirits) {
-                    spirit.fixLevel();
+                for (Entity entity : player2Entities) {
+                    entity.fixLevel();
                 }
                 chooser1.remove();
                 chooser2.remove();
@@ -123,10 +103,10 @@ public class ChooseScreen extends Actor
 
     public void initSelectedDisplay() {
 
-        player1Displays = new Button[MyWorld.maxSpirits];
-        player2Displays = new Button[MyWorld.maxSpirits];
+        player1Displays = new Button[MyWorld.maxEntities];
+        player2Displays = new Button[MyWorld.maxEntities];
 
-        for (int i = 0; i < MyWorld.maxSpirits; i++) {
+        for (int i = 0; i < MyWorld.maxEntities; i++) {
             
             player1Displays[i] = new Button(null, 10);
             world.addObject(player1Displays[i], 20 + 40 * i, 300);
@@ -140,12 +120,7 @@ public class ChooseScreen extends Actor
 
     public void chooseSpirit(Chooser chooser1, Chooser chooser2) { 
 
-        if (chooser1 == null) {
-            System.out.println("Error creating chooser");
-            return;
-        }
-
-        if (chooser2 == null) {
+        if (chooser1 == null || chooser2 == null) {
             System.out.println("Error creating chooser");
             return;
         }
@@ -155,12 +130,12 @@ public class ChooseScreen extends Actor
             return;
         }
 
-        player1Spirits.clear();
-        player2Spirits.clear();
+        player1Entities.clear();
+        player2Entities.clear();
         
         for (int index : chooser1.selectedIndices) {
             try {
-                player1Spirits.add(Spirit.spiritTypes.get(index).getDeclaredConstructor().newInstance());
+                player1Entities.add(Spirit.spiritTypes.get(index).getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -168,7 +143,7 @@ public class ChooseScreen extends Actor
 
         for (int index : chooser2.selectedIndices) {
             try {
-                player2Spirits.add(Spirit.spiritTypes.get(index).getDeclaredConstructor().newInstance());
+                player2Entities.add(Spirit.spiritTypes.get(index).getDeclaredConstructor().newInstance());
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -178,24 +153,24 @@ public class ChooseScreen extends Actor
 
     public void updateDisplay() {
         
-        for (int i = 0; i < MyWorld.maxSpirits; i++) {
+        for (int i = 0; i < MyWorld.maxEntities; i++) {
             if (player1Displays[i] == null || player2Displays[i] == null) {
                 continue;
             }
 
-            if (i < player1Spirits.size()) {
-                GreenfootImage image = new GreenfootImage(player1Spirits.get(i).image);
+            if (i < player1Entities.size()) {
+                GreenfootImage image = new GreenfootImage(player1Entities.get(i).image);
 
-                int size = player1Spirits.get(i).level;
+                int size = player1Entities.get(i).level;
                 image.scale(size + 40, size + 40);
                 player1Displays[i].setImage(image);
             } else {
                 player1Displays[i].setImage((GreenfootImage)null);
             }
-            if (i < player2Spirits.size()) {
-                GreenfootImage image = new GreenfootImage(player2Spirits.get(i).image);
+            if (i < player2Entities.size()) {
+                GreenfootImage image = new GreenfootImage(player2Entities.get(i).image);
 
-                int size = player2Spirits.get(i).level;
+                int size = player2Entities.get(i).level;
                 image.scale(size + 40, size + 40);
                 player2Displays[i].setImage(image);
             } else {
@@ -205,7 +180,7 @@ public class ChooseScreen extends Actor
     }
 
     public Chooser createSpiritChooser(int x, int y, int spacing){
-        // Code to display the player's spirits on the screen
+        // Code to display the player's entitys on the screen
 
         try{
             GreenfootImage[] costumeList = new GreenfootImage[Spirit.spiritTypes.size()];
@@ -218,7 +193,7 @@ public class ChooseScreen extends Actor
                 i++;
             }
 
-            Chooser chooser = new Chooser(costumeList, MyWorld.maxSpirits, spacing, 4);
+            Chooser chooser = new Chooser(costumeList, MyWorld.maxEntities, spacing, 4);
 
             // chooser.switches[0].status 
 
@@ -234,9 +209,51 @@ public class ChooseScreen extends Actor
     }
 
     public void removeDisplays() {
-        for (int i = 0; i < MyWorld.maxSpirits; i++) {
+        for (int i = 0; i < MyWorld.maxEntities; i++) {
             world.removeObject(player1Displays[i]);
             world.removeObject(player2Displays[i]);
         }
     }
+
+    public void checkLevelUp() {
+        Button[] displays;
+        int points;
+        ArrayList<Entity> entities;
+
+        for (int j = 0; j < 2; j++ ) {
+            if (j == 0) {
+                displays = player1Displays;
+                points = player1points;
+                entities = player1Entities;
+            } else {
+                displays = player2Displays;
+                points = player2points;
+                entities = player2Entities;
+            }
+
+            for (int i = 0; i < displays.length; i++) {
+                if (displays[i].isPressed) {
+
+                    if (points == 0) { continue; }
+
+                    // primitives aren't pass by copy
+                    if (j == 0) {
+                        player1points --;
+                    } else {
+                        player2points --;
+                    }
+
+                    entities.get(i).levelUp();
+
+                    if (entities.get(i).level > 5 && entities.get(i) instanceof Spirit level1) {
+                        entities.set(i, level1.getUpgraded()); 
+                    }
+                    updateDisplay();
+                    displays[i].isPressed = false;
+                }
+            }
+        }
+    }
+
+    
 }

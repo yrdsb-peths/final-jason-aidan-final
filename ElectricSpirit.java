@@ -29,4 +29,8 @@ public class ElectricSpirit extends Spirit
     public void passive(Spirit other) {
         
     }
+
+    public Soul getUpgraded() {
+        return null;
+    }
 }

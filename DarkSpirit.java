@@ -29,4 +29,8 @@ public class DarkSpirit extends Spirit
     public void passive(Spirit other) {
         
     }
+
+    public Soul getUpgraded() {
+        return null;
+    }
 }

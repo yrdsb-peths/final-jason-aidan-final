@@ -31,4 +31,8 @@ public class WaterSpirit extends Spirit
         
     }
 
+    public Soul getUpgraded() {
+        return null;
+    }
+
 }

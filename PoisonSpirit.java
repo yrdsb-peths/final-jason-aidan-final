@@ -30,4 +30,8 @@ public class PoisonSpirit extends Spirit
         other.poisonedPercentage = 0.2;
         other.poisonedDuration = 3;
     }
+
+    public Soul getUpgraded() {
+        return null;
+    }
 }

@@ -29,16 +29,16 @@ public class BattleScreen extends Actor
     HashMap<String, Label> player1Label;
     HashMap<String, Label> player2Label;
     
-    Spirit p1Spirit;
-    Spirit p2Spirit;
+    Entity p1Entity;
+    Entity p2Entity;
 
-    ImageDisplay p1SpiritDisplay;
-    ImageDisplay p2SpiritDisplay;
+    ImageDisplay p1EntityDisplay;
+    ImageDisplay p2EntityDisplay;
     
     int turnNumber;
     
-    ArrayList<Spirit> player1Spirits;
-    ArrayList<Spirit> player2Spirits;
+    ArrayList<Entity> player1Entities;
+    ArrayList<Entity> player2Entities;
 
     Label textBox;
 
@@ -46,19 +46,19 @@ public class BattleScreen extends Actor
     
 
 
-    public BattleScreen(ArrayList<Spirit> player1Spirits, ArrayList<Spirit> player2Spirits, MyWorld world) {
+    public BattleScreen(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
         
         setImage((GreenfootImage)null);
 
-        this.player1Spirits = player1Spirits;
-        this.player2Spirits = player2Spirits;
+        this.player1Entities = player1Entities;
+        this.player2Entities = player2Entities;
 
         this.world = world;
         
         initButtons();
         initLabels();
-        p1SpiritDisplay = new ImageDisplay();
-        p2SpiritDisplay = new ImageDisplay();
+        p1EntityDisplay = new ImageDisplay();
+        p2EntityDisplay = new ImageDisplay();
 
         setBackground();
 
@@ -71,7 +71,7 @@ public class BattleScreen extends Actor
 
     public void act()
     {
-        if(player1Spirits.size() > 0 && player2Spirits.size() > 0)
+        if(player1Entities.size() > 0 && player2Entities.size() > 0)
         {
             playerAction();
             
@@ -82,11 +82,11 @@ public class BattleScreen extends Actor
 
     public void gameOver()
     {
-        if(player1Spirits.size() == 0)
+        if(player1Entities.size() == 0)
         {
             // Player 2 wins
             System.out.println("Player 2 wins!");
-        } else if(player2Spirits.size() == 0) {
+        } else if(player2Entities.size() == 0) {
             // Player 1 wins
             System.out.println("Player 1 wins!");
         }
@@ -100,8 +100,8 @@ public class BattleScreen extends Actor
         world.removeObject(passiveButton);
         world.removeObject(chooseNewButton);
         world.removeObject(fleeButton);
-        world.removeObject(p1SpiritDisplay);
-        world.removeObject(p2SpiritDisplay);
+        world.removeObject(p1EntityDisplay);
+        world.removeObject(p2EntityDisplay);
         world.removeObject(textBox);
         world.currentState = States.CHOOSING;
         world.screenCreated = false;
@@ -109,7 +109,7 @@ public class BattleScreen extends Actor
     }
 
     //returns true if the given list has no spirits
-    public boolean isEmptySpirits(ArrayList<Spirit> list)
+    public boolean isEmptyEntities(ArrayList<Entity> list)
     {
         if(list.size() == 0)
         {
@@ -122,11 +122,11 @@ public class BattleScreen extends Actor
     public void playerAction()
     {
 
-        p1Spirit = player1Spirits.get(0);
-        p2Spirit = player2Spirits.get(0);
+        p1Entity = player1Entities.get(0);
+        p2Entity = player2Entities.get(0);
         
-        Spirit currentSpirit = turnNumber % 2 == 1 ? p1Spirit : p2Spirit;
-        Spirit opponentSpirit = turnNumber % 2 == 0 ? p1Spirit : p2Spirit;
+        Entity currentEntity = turnNumber % 2 == 1 ? p1Entity : p2Entity;
+        Entity opponentEntity = turnNumber % 2 == 0 ? p1Entity : p2Entity;
 
         showPlayerButtons();
         updateImageDisplays();
@@ -134,31 +134,31 @@ public class BattleScreen extends Actor
 
         if (attackButton.isPressed) {
             attackButton.isPressed = false;
-            opponentSpirit.health -= calculateAttack(currentSpirit, opponentSpirit);
-            nextTurn(currentSpirit, opponentSpirit, 0);
+            opponentEntity.health -= calculateAttack(currentEntity, opponentEntity);
+            nextTurn(currentEntity, opponentEntity, 0);
 
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
-            //System.out.println(currentSpirit + " used " + currentSpirit.passiveName);
-            currentSpirit.passive(opponentSpirit);
-            nextTurn(currentSpirit, opponentSpirit, 1);
+            //System.out.println(currentEntity + " used " + currentEntity.passiveName);
+            currentEntity.passive(opponentEntity);
+            nextTurn(currentEntity, opponentEntity, 1);
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
             // Handle choosing new spirit logic here
-            nextTurn(currentSpirit, opponentSpirit, 2);
+            nextTurn(currentEntity, opponentEntity, 2);
 
         } else if (fleeButton.isPressed) {
             fleeButton.isPressed = false;
             // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
-            nextTurn(currentSpirit, opponentSpirit, 3);
+            nextTurn(currentEntity, opponentEntity, 3);
         }
 
 
         checkIfFainted();
     }
 
-    public int calculateAttack(Spirit attacker, Spirit defender) {
+    public int calculateAttack(Entity attacker, Entity defender) {
         double outputDmg = 0.0;
         int effectiveness = attacker.comparedTo(defender);
         if(effectiveness == 0) {
@@ -196,14 +196,14 @@ public class BattleScreen extends Actor
         return (int)outputDmg;
     }
     
-    public void nextTurn(Spirit currentSpirit, Spirit opponentSpirit, int buttonPressed)
+    public void nextTurn(Entity currentEntity, Entity opponentEntity, int buttonPressed)
     {
-        currentSpirit.applyStatusEffects();
-        opponentSpirit.applyStatusEffects();
+        currentEntity.applyStatusEffects();
+        opponentEntity.applyStatusEffects();
 
         updateLabels();
         if (buttonPressed == 1) {
-            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " used " + currentSpirit.passiveName + "!");
+            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " used " + currentEntity.passiveName + "!");
         } else if (buttonPressed == 2) {
             updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " switched spirit!");
         } else if (buttonPressed == 3) {
@@ -214,14 +214,14 @@ public class BattleScreen extends Actor
     
     public void checkIfFainted()
     {
-        if(p1Spirit.health <= 0)
+        if(p1Entity.health <= 0)
         {
-            p1Spirit = player1Spirits.remove(0);
+            p1Entity = player1Entities.remove(0);
             
         }
-        if(p2Spirit.health <= 0)
+        if(p2Entity.health <= 0)
         {
-            p2Spirit = player2Spirits.remove(0);
+            p2Entity = player2Entities.remove(0);
             
         }
 
@@ -274,13 +274,13 @@ public class BattleScreen extends Actor
 
         int fontSize = 20;
 
-        Label health1label = new Label("HP: " + player1Spirits.get(0).health, fontSize);
-        Label attack1label = new Label("ATT: " + player1Spirits.get(0).attack, fontSize);
-        Label type1label = new Label("Type: " + player1Spirits.get(0).type.toString(), fontSize);
+        Label health1label = new Label("HP: " + player1Entities.get(0).health, fontSize);
+        Label attack1label = new Label("ATT: " + player1Entities.get(0).attack, fontSize);
+        Label type1label = new Label("Type: " + player1Entities.get(0).type.toString(), fontSize);
 
-        Label health2label = new Label("HP: " + player2Spirits.get(0).health, fontSize);
-        Label attack2label = new Label("ATT: " + player2Spirits.get(0).attack, fontSize);
-        Label type2label = new Label("Type: " + player2Spirits.get(0).type.toString(), fontSize);
+        Label health2label = new Label("HP: " + player2Entities.get(0).health, fontSize);
+        Label attack2label = new Label("ATT: " + player2Entities.get(0).attack, fontSize);
+        Label type2label = new Label("Type: " + player2Entities.get(0).type.toString(), fontSize);
 
         health1label.setFillColor(Color.BLACK);
         health1label.setLineColor(null);
@@ -322,14 +322,14 @@ public class BattleScreen extends Actor
     {
 
 
-        player1Label.get("health").setValue("HP: " + p1Spirit.health);
-        player1Label.get("attack").setValue("ATT: " + p1Spirit.attack);
-        player1Label.get("type").setValue("Type: " + p1Spirit.type.toString());
+        player1Label.get("health").setValue("HP: " + p1Entity.health);
+        player1Label.get("attack").setValue("ATT: " + p1Entity.attack);
+        player1Label.get("type").setValue("Type: " + p1Entity.type.toString());
 
 
-        player2Label.get("health").setValue("HP: " + p2Spirit.health);
-        player2Label.get("attack").setValue("ATT: " + p2Spirit.attack);
-        player2Label.get("type").setValue("Type: " + p2Spirit.type.toString());
+        player2Label.get("health").setValue("HP: " + p2Entity.health);
+        player2Label.get("attack").setValue("ATT: " + p2Entity.attack);
+        player2Label.get("type").setValue("Type: " + p2Entity.type.toString());
     }
 
     public void updateImageDisplays()
@@ -339,18 +339,18 @@ public class BattleScreen extends Actor
         int scaleY = 100;
 
         // create new copy
-        GreenfootImage p1Image = new GreenfootImage(p1Spirit.image);
-        GreenfootImage p2Image = new GreenfootImage(p2Spirit.image);
+        GreenfootImage p1Image = new GreenfootImage(p1Entity.image);
+        GreenfootImage p2Image = new GreenfootImage(p2Entity.image);
 
         p1Image.scale(scaleX, scaleY);
         p2Image.scale(scaleX, scaleY);
 
-        p1SpiritDisplay.setImage(p1Image);
-        p2SpiritDisplay.setImage(p2Image);
+        p1EntityDisplay.setImage(p1Image);
+        p2EntityDisplay.setImage(p2Image);
 
 
-        world.addObject(p1SpiritDisplay, MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
-        world.addObject(p2SpiritDisplay, MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
+        world.addObject(p1EntityDisplay, MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
+        world.addObject(p2EntityDisplay, MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
     }
 
     public void initTextBox()

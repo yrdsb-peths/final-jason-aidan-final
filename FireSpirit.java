@@ -34,4 +34,9 @@ public class FireSpirit extends Spirit
         // Any additional initialization code for FireSpirit can go here
     }
 
+    public BlazeSoul getUpgraded() {
+        return new BlazeSoul();
+    }
+
+
 }

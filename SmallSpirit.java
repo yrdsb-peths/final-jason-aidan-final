@@ -25,4 +25,12 @@ public class SmallSpirit extends Spirit
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.small, attackName, passiveName, passiveDetails, costume);
     }
+
+    public Soul getUpgraded() {
+        return null;
+    }
+
+    public void passive(Spirit other) {
+        
+    }
 }

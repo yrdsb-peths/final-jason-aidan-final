@@ -29,4 +29,8 @@ public class RockSpirit extends Spirit
     public void passive(Spirit other) {
         
     }
+
+    public Soul getUpgraded() {
+        return null;
+    }
 }

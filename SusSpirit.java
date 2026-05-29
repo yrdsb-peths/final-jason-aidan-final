@@ -29,4 +29,8 @@ public class SusSpirit extends Spirit
         
         // Any additional initialization code for FireSpirit can go here
     }
+
+    public Soul getUpgraded() {
+        return null;
+    }
 }
