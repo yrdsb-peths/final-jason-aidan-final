@@ -15,6 +15,8 @@ public class Spirit extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
+    int level;
+
     String name;
     int health;
     int attack;
@@ -24,6 +26,7 @@ public class Spirit extends Actor
     int poisonedDuration; // # of turns
     int healingAmount;
     int healingDuration; // # of turns
+    
     Element type;
 
     GreenfootImage image;
@@ -48,6 +51,8 @@ public class Spirit extends Actor
         StarSpirit.class,
         SusSpirit.class
     );
+
+    
 
     public void passive(Spirit other) {
         System.out.println("This spirit has no passive ability.");
@@ -99,9 +104,19 @@ public class Spirit extends Actor
             this.health += this.healingAmount;
             this.healingDuration--;
         }
-
-
     }
 
+    public void levelUp(int x) {
+        level += x;
+    }
 
+    public void levelUp() {
+        level ++;
+    }
+
+    public void fixLevel() {
+        // 10% increase in stats per level
+        this.health = this.health * (1 + level / 10);
+        this.attack = this.attack * (1 + level / 10);
+    }
 }

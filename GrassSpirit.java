@@ -28,8 +28,8 @@ public class GrassSpirit extends Spirit
     }
 
     public void passive(Spirit other) {
-        this.health += 10;
-        this.healingAmount = 5;
+        this.health += 10 * (1+this.level/10);
+        this.healingAmount = 5 * (1+this.level/10);
         this.healingDuration = 3;
         
         // Any additional initialization code for FireSpirit can go here

@@ -27,4 +27,8 @@ public class BigSpirit extends Spirit
         setLocation(200, 300);
         setImage(costume);
     }
+
+    public void passive(Spirit other) {
+        
+    }
 }

@@ -28,7 +28,7 @@ public class FireSpirit extends Spirit
     }
 
     public void passive(Spirit other) {
-        other.burningDamage = 3;
+        other.burningDamage = 3 * (1+this.level/10);
         other.burningDuration = 3;
 
         
