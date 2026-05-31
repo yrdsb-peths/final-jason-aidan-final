@@ -25,7 +25,6 @@ public class BattleScreen extends Actor
     Button chooseNewButton;
     Button fleeButton;
 
-
     HashMap<String, Label> player1Label;
     HashMap<String, Label> player2Label;
     
@@ -40,7 +39,9 @@ public class BattleScreen extends Actor
     ArrayList<Entity> player1Entities;
     ArrayList<Entity> player2Entities;
 
-    Label textBox;
+    DialogueBox dialogueBox;
+
+    static ArrayList<String> messageStack;
 
     GreenfootImage backgroundImage;
     
@@ -54,6 +55,8 @@ public class BattleScreen extends Actor
         this.player2Entities = player2Entities;
 
         this.world = world;
+
+        messageStack = new ArrayList<String>();
         
         initButtons();
         initLabels();
@@ -63,8 +66,7 @@ public class BattleScreen extends Actor
         setBackground();
 
         initTextBox();
-
-
+        drawHealthbar();
         turnNumber = 1;
         
     }
@@ -102,7 +104,7 @@ public class BattleScreen extends Actor
         world.removeObject(fleeButton);
         world.removeObject(p1EntityDisplay);
         world.removeObject(p2EntityDisplay);
-        world.removeObject(textBox);
+        world.removeObject(dialogueBox);
         world.currentState = States.CHOOSING;
         world.screenCreated = false;
         world.removeObject(this);
@@ -121,6 +123,21 @@ public class BattleScreen extends Actor
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
     public void playerAction()
     {
+        if (messageStack.size() > 0) {
+            if (messageStack.get(0) != "") {
+                dialogueBox.setText(messageStack.get(0));
+                drawHealthbar();
+            } else {
+                messageStack.set(0, "");
+                
+            }
+            if (Greenfoot.mouseClicked(world)) {
+                messageStack.remove(0);
+            }
+            return;
+        }
+
+        updateTextBox("Player "+(2 - turnNumber % 2)+"'s turn");
 
         p1Entity = player1Entities.get(0);
         p2Entity = player2Entities.get(0);
@@ -136,6 +153,7 @@ public class BattleScreen extends Actor
             attackButton.isPressed = false;
             opponentEntity.health -= calculateAttack(currentEntity, opponentEntity);
             nextTurn(currentEntity, opponentEntity, 0);
+
 
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
@@ -165,32 +183,43 @@ public class BattleScreen extends Actor
             int rand = Greenfoot.getRandomNumber(100);
             if(rand <= 10)
             {
-                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It missed!");
+                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
+                messageStack.add("> It missed!");
+
             } else if(rand > 10 && rand <= 90)
             {
                 outputDmg = attacker.attack;
-                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It dealt " + (int)outputDmg + " damage!");
+
+                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
+                messageStack.add("> It dealt " + (int)outputDmg + " damage!");
+
             } else if(rand > 90)
             {
                 outputDmg = attacker.attack * 1.5;
-                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was a critical hit, \n dealing " + (int)outputDmg + " damage!");
+
+                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
+                messageStack.add("It was a critical hit, dealing " + (int)outputDmg + " damage!");
             }
         } else if(effectiveness > 0) {
             int randCrit = Greenfoot.getRandomNumber(100);
             if(randCrit < 10) {
                 outputDmg = attacker.attack * 3;
-                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was a critical hit, \n dealing " + (int)outputDmg + " damage!");
+                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
+                messageStack.add("> It was a critical hit, dealing " + (int)outputDmg + " damage!");
             } else { 
                 outputDmg = attacker.attack * 1.5;
-                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was super effective, \n dealing " + (int)outputDmg + " damage!");
+                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
+                messageStack.add("> It was super effective, dealing " + (int)outputDmg + " damage!");
             }
         } else if(effectiveness < 0) {
             int randMiss = Greenfoot.getRandomNumber(100);
             if(randMiss < 10) {
-                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It missed!");
+                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
+                messageStack.add("> It missed!");
             } else { 
                 outputDmg = attacker.attack * 0.5;
-                updateTextBox(attacker.name + " used " + attacker.attackName + "!" + "\n" + "It was not very effective, \n dealing " + (int)outputDmg + " damage.");
+                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
+                messageStack.add("> It was not very effective, dealing " + (int)outputDmg + " damage.");
             }
         }
         return (int)outputDmg;
@@ -198,18 +227,27 @@ public class BattleScreen extends Actor
     
     public void nextTurn(Entity currentEntity, Entity opponentEntity, int buttonPressed)
     {
-        currentEntity.applyStatusEffects();
-        opponentEntity.applyStatusEffects();
+        
+
+
+
+        int turn = 2 - turnNumber % 2;
 
         updateLabels();
         if (buttonPressed == 1) {
-            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " used " + currentEntity.passiveName + "!");
+            messageStack.add("> Player " + (turn) + " used " + currentEntity.passiveName + "!");
         } else if (buttonPressed == 2) {
-            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " switched spirit!");
+            updateTextBox("Player " + (turn) + " switched spirit!");
         } else if (buttonPressed == 3) {
-            updateTextBox("Player " + (turnNumber % 2 == 1 ? "1" : "2") + " fled from the battle!");
+            updateTextBox("Player " + (turn) + " fled from the battle!");
         }
+
+        currentEntity.applyStatusEffects();
+        opponentEntity.applyStatusEffects();
+
         turnNumber++;
+
+        
     }
     
     public void checkIfFainted()
@@ -217,11 +255,12 @@ public class BattleScreen extends Actor
         if(p1Entity.health <= 0)
         {
             p1Entity = player1Entities.remove(0);
-            
+            messageStack.add(p1Entity.name + " has fainted!");
         }
         if(p2Entity.health <= 0)
         {
             p2Entity = player2Entities.remove(0);
+            messageStack.add(p2Entity.name + " has fainted!");
             
         }
 
@@ -274,18 +313,11 @@ public class BattleScreen extends Actor
 
         int fontSize = 20;
 
-        Label health1label = new Label("HP: " + player1Entities.get(0).health, fontSize);
         Label attack1label = new Label("ATT: " + player1Entities.get(0).attack, fontSize);
         Label type1label = new Label("Type: " + player1Entities.get(0).type.toString(), fontSize);
 
-        Label health2label = new Label("HP: " + player2Entities.get(0).health, fontSize);
         Label attack2label = new Label("ATT: " + player2Entities.get(0).attack, fontSize);
         Label type2label = new Label("Type: " + player2Entities.get(0).type.toString(), fontSize);
-
-        health1label.setFillColor(Color.BLACK);
-        health1label.setLineColor(null);
-        health2label.setFillColor(Color.BLACK);
-        health2label.setLineColor(null);
 
         attack1label.setFillColor(Color.BLACK);
         attack1label.setLineColor(null);
@@ -298,22 +330,18 @@ public class BattleScreen extends Actor
         type2label.setLineColor(null);
 
         player1Label = new HashMap<String, Label>(Map.of(
-            "health", health1label,
             "attack", attack1label,
             "type", type1label
         ));
 
         player2Label = new HashMap<String, Label>(Map.of(
-            "health", health2label,
             "attack", attack2label,
             "type", type2label
         ));
 
-        world.addObject(health1label, MyWorld.WIDTH/4 - 20, MyWorld.HEIGHT/2-30);
         world.addObject(attack1label, MyWorld.WIDTH/4 - 100, MyWorld.HEIGHT/2-30);
         world.addObject(type1label, MyWorld.WIDTH/4 - 85, MyWorld.HEIGHT/2);
 
-        world.addObject(health2label, MyWorld.WIDTH/4 * 3, MyWorld.HEIGHT/2-30);
         world.addObject(attack2label, MyWorld.WIDTH/4 * 3 + 80, MyWorld.HEIGHT/2-30);
         world.addObject(type2label, MyWorld.WIDTH/4 * 3 + 20, MyWorld.HEIGHT/2);
 
@@ -322,12 +350,10 @@ public class BattleScreen extends Actor
     {
 
 
-        player1Label.get("health").setValue("HP: " + p1Entity.health);
         player1Label.get("attack").setValue("ATT: " + p1Entity.attack);
         player1Label.get("type").setValue("Type: " + p1Entity.type.toString());
 
 
-        player2Label.get("health").setValue("HP: " + p2Entity.health);
         player2Label.get("attack").setValue("ATT: " + p2Entity.attack);
         player2Label.get("type").setValue("Type: " + p2Entity.type.toString());
     }
@@ -355,14 +381,13 @@ public class BattleScreen extends Actor
 
     public void initTextBox()
     {
-        textBox = new Label("None", 20);
-        textBox.setFillColor(Color.BLACK);
-        textBox.setLineColor(null);
-        world.addObject(textBox, MyWorld.WIDTH/2, MyWorld.HEIGHT-80);
+        dialogueBox = new DialogueBox(220, 110, Color.WHITE, "> Game Starts!", Color.BLACK, new Font(15));
+        world.addObject(dialogueBox, 300, 340);
+        updateTextBox("Player 1's turn");
     }
     public void updateTextBox(String string)
     {
-        textBox.setValue(string);
+        dialogueBox.setText(string);
         
     }
 
@@ -372,17 +397,33 @@ public class BattleScreen extends Actor
         int i = Greenfoot.getRandomNumber(4);
         backgroundImage = new GreenfootImage("background"+(i+1)+".png");
         backgroundImage.scale(600, 400);
-        
-        backgroundImage.setColor(Color.WHITE);
-        backgroundImage.fillRect(190, 285, 220, 110);
 
-        world.setBackground(backgroundImage);
+        int borderWidth = 2;
+        backgroundImage.setColor(Color.BLACK);
+        backgroundImage.fillRect(190 - borderWidth, 285 - borderWidth, 220 + 2 * borderWidth, 110 + 2 * borderWidth);
+        world.setBackground(new GreenfootImage(backgroundImage));
         
     }
 
-    public void updateHealthbar(int health1, int health2)
+
+    public void drawHealthbar()
     {
-        backgroundImage.setColor(Color.GREEN);
-        backgroundImage.fillRect(20, 100, health1, 20);
+        int borderWidth = 2;
+        int health1 = player1Entities.get(0).health;
+        int health2 = player2Entities.get(0).health;
+
+        GreenfootImage tempBackground = new GreenfootImage(backgroundImage);
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(20 - borderWidth, 150 - borderWidth, health1 + 2 * borderWidth, 15 + 2 * borderWidth);
+        tempBackground.setColor(Color.GREEN);
+        tempBackground.fillRect(20, 150, health1, 15);
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(450 - borderWidth, 150 - borderWidth, health2 + 2 * borderWidth, 15 + 2 * borderWidth);
+        tempBackground.setColor(Color.GREEN);
+        tempBackground.fillRect(450, 150, health2, 15);
+
+        world.setBackground(tempBackground);
     }
 }

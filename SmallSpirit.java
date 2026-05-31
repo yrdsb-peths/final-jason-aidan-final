@@ -30,7 +30,7 @@ public class SmallSpirit extends Spirit
         return null;
     }
 
-    public void passive(Spirit other) {
+    public void passive(Entity other) {
         
     }
 }

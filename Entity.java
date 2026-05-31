@@ -8,7 +8,7 @@ import java.util.List;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Entity
+abstract public class Entity
 {
     /**
      * Act - do whatever the Spirit wants to do. This method is called whenever
@@ -27,6 +27,8 @@ public class Entity
     int healingAmount;
     int healingDuration; // # of turns
     double levelModifier;
+    boolean isStunned;
+    int stunDuration;
     
     Element type;
 
@@ -37,12 +39,6 @@ public class Entity
     String passiveDetails = "";
 
     // Creates a fixed list of spirit types that can be used to dynamically create spirit object
-
-    public void passive(Entity other) {
-        System.out.println("This Entity has no passive ability.");
-        // Any additional initialization code for FireSpirit can go here
-    }
-    
     
     public Entity(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)
     {
@@ -61,6 +57,8 @@ public class Entity
         this.passiveDetails = passiveDetails;
         this.image = image;
         this.name = name;
+        this.isStunned = false;
+        this.stunDuration = 10;
         updateModified();
     }
 
@@ -72,21 +70,28 @@ public class Entity
     public void applyStatusEffects()
     
     {
+        System.out.println("applied");
         //apply burn damage and decrease burn duration
         if(this.burningDuration > 0)
         {
+            BattleScreen.messageStack.add(this.name + " has been burned and took " + this.burningDamage + " damage.");
             this.health -= this.burningDamage;
             this.burningDuration--;
+            
         }
         //apply poison damage and decrease poison duration
         if(this.poisonedDuration > 0)
         {
-            this.health -= (int)(this.health * this.poisonedPercentage);
+            
+            int damage = (int)(this.health * this.poisonedPercentage);
+            BattleScreen.messageStack.add(this.name + " has been poisoned and took " + damage + " (" + this.poisonedPercentage + ")damage.");
+            this.health -= damage;
             this.poisonedDuration--;
         }
 
         if (this.healingDuration > 0)
         {
+            BattleScreen.messageStack.add(this.name + " healed " + this.healingAmount + "hp.");
             this.health += this.healingAmount;
             this.healingDuration--;
         }
@@ -113,4 +118,7 @@ public class Entity
         this.attack = (int) (this.attack * levelModifier);
         System.out.println(this.health + " " + levelModifier);
     }
+
+    abstract public void passive(Entity other);
+
 }

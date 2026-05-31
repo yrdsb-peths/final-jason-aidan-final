@@ -26,7 +26,7 @@ public class PoisonSpirit extends Spirit
 
     }
 
-    public void passive(Spirit other) {
+    public void passive(Entity other) {
         other.poisonedPercentage = 0.2;
         other.poisonedDuration = 3;
     }

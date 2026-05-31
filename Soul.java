@@ -20,9 +20,7 @@ abstract public class Soul extends Entity
     boolean ultimateUsed;
 
 
-    abstract public void passive(Spirit other);
-
-    abstract public void ultimate(Spirit other);
+    abstract public void ultimate(Entity other);
     
     
     public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)

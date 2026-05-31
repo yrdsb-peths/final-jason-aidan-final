@@ -26,7 +26,7 @@ public class GrassSpirit extends Spirit
 
     }
 
-    public void passive(Spirit other) {
+    public void passive(Entity other) {
         this.health += 10 * this.levelModifier;
         this.healingAmount = (int) (5.0 * this.levelModifier);
         this.healingDuration = 3;

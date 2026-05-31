@@ -25,7 +25,7 @@ public class StarSpirit extends Spirit
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, attackName, passiveName, passiveDetails, costume);
     }
 
-    public void passive(Spirit other) {
+    public void passive(Entity other) {
         
         // Any additional initialization code for FireSpirit can go here
     }
