@@ -51,7 +51,8 @@ public class MyWorld extends World {
         } else if (currentState == States.BATTLE) {
 
             if (!screenCreated) {
-                addObject(new BattleScreen(player1Entities, player2Entities, this), WIDTH/2, HEIGHT/2);
+                BattleScreen.newInstance(player1Entities, player2Entities, this);
+                addObject(BattleScreen.getInstance(), WIDTH/2, HEIGHT/2);
                 screenCreated = true;
             }
         }

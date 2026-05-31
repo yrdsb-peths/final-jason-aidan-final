@@ -11,12 +11,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
+
+// Singleton pattern
 public class BattleScreen extends Actor
 {
     /**
      * Act - do whatever the BattleScreen wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+
+
     
     MyWorld world;
     
@@ -39,15 +43,25 @@ public class BattleScreen extends Actor
     ArrayList<Entity> player1Entities;
     ArrayList<Entity> player2Entities;
 
+    // Add a 'U' at the end to indicate upadating healthbar
     DialogueBox dialogueBox;
 
-    static ArrayList<String> messageStack;
+    ArrayList<Action> actionStack;
 
     GreenfootImage backgroundImage;
     
+    private static BattleScreen instance;
+
+    static public void newInstance(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
+        instance = new BattleScreen(player1Entities, player2Entities, world);
+    }
+
+    static public BattleScreen getInstance() {
+        return instance;
+    }
 
 
-    public BattleScreen(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
+    private BattleScreen(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
         
         setImage((GreenfootImage)null);
 
@@ -56,7 +70,7 @@ public class BattleScreen extends Actor
 
         this.world = world;
 
-        messageStack = new ArrayList<String>();
+        actionStack = new ArrayList<Action>();
         
         initButtons();
         initLabels();
@@ -70,6 +84,8 @@ public class BattleScreen extends Actor
         turnNumber = 1;
         
     }
+
+
 
     public void act()
     {
@@ -123,16 +139,22 @@ public class BattleScreen extends Actor
     //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
     public void playerAction()
     {
-        if (messageStack.size() > 0) {
-            if (messageStack.get(0) != "") {
-                dialogueBox.setText(messageStack.get(0));
-                drawHealthbar();
-            } else {
-                messageStack.set(0, "");
-                
+
+        int turn = 2 - turnNumber % 2;
+
+
+        if (actionStack.size() > 0) {
+
+            Action action = actionStack.get(0);
+
+            dialogueBox.setText(action.text);
+
+            if (!action.isCompleted && !(action.func == null)) {
+                action.func.run();
             }
+
             if (Greenfoot.mouseClicked(world)) {
-                messageStack.remove(0);
+                actionStack.remove(0);
             }
             return;
         }
@@ -151,99 +173,42 @@ public class BattleScreen extends Actor
 
         if (attackButton.isPressed) {
             attackButton.isPressed = false;
-            opponentEntity.health -= calculateAttack(currentEntity, opponentEntity);
-            nextTurn(currentEntity, opponentEntity, 0);
-
+            currentEntity.attack(opponentEntity);
+            endAction(currentEntity, opponentEntity);
 
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
-            //System.out.println(currentEntity + " used " + currentEntity.passiveName);
-            currentEntity.passive(opponentEntity);
-            nextTurn(currentEntity, opponentEntity, 1);
+            actionStack.add(new Action(
+                "> Player " + turn + " used " + currentEntity.passiveName + "!",
+                () -> {currentEntity.passive(opponentEntity);}
+            ));
+            endAction(currentEntity, opponentEntity);
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
-            // Handle choosing new spirit logic here
-            nextTurn(currentEntity, opponentEntity, 2);
+            endAction(currentEntity, opponentEntity);
 
         } else if (fleeButton.isPressed) {
             fleeButton.isPressed = false;
             // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
-            nextTurn(currentEntity, opponentEntity, 3);
+            
         }
 
-
-        checkIfFainted();
-    }
-
-    public int calculateAttack(Entity attacker, Entity defender) {
-        double outputDmg = 0.0;
-        int effectiveness = attacker.comparedTo(defender);
-        if(effectiveness == 0) {
-            int rand = Greenfoot.getRandomNumber(100);
-            if(rand <= 10)
-            {
-                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
-                messageStack.add("> It missed!");
-
-            } else if(rand > 10 && rand <= 90)
-            {
-                outputDmg = attacker.attack;
-
-                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
-                messageStack.add("> It dealt " + (int)outputDmg + " damage!");
-
-            } else if(rand > 90)
-            {
-                outputDmg = attacker.attack * 1.5;
-
-                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
-                messageStack.add("It was a critical hit, dealing " + (int)outputDmg + " damage!");
-            }
-        } else if(effectiveness > 0) {
-            int randCrit = Greenfoot.getRandomNumber(100);
-            if(randCrit < 10) {
-                outputDmg = attacker.attack * 3;
-                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
-                messageStack.add("> It was a critical hit, dealing " + (int)outputDmg + " damage!");
-            } else { 
-                outputDmg = attacker.attack * 1.5;
-                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
-                messageStack.add("> It was super effective, dealing " + (int)outputDmg + " damage!");
-            }
-        } else if(effectiveness < 0) {
-            int randMiss = Greenfoot.getRandomNumber(100);
-            if(randMiss < 10) {
-                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
-                messageStack.add("> It missed!");
-            } else { 
-                outputDmg = attacker.attack * 0.5;
-                messageStack.add("> " + attacker.name + " used " + attacker.attackName + "!");
-                messageStack.add("> It was not very effective, dealing " + (int)outputDmg + " damage.");
-            }
-        }
-        return (int)outputDmg;
-    }
-    
-    public void nextTurn(Entity currentEntity, Entity opponentEntity, int buttonPressed)
-    {
         
+        
+    }
 
+    
+    public void endAction(Entity currentEntity, Entity opponentEntity)
+    {
 
-
-        int turn = 2 - turnNumber % 2;
-
-        updateLabels();
-        if (buttonPressed == 1) {
-            messageStack.add("> Player " + (turn) + " used " + currentEntity.passiveName + "!");
-        } else if (buttonPressed == 2) {
-            updateTextBox("Player " + (turn) + " switched spirit!");
-        } else if (buttonPressed == 3) {
-            updateTextBox("Player " + (turn) + " fled from the battle!");
-        }
+        
+        drawHealthbar();
 
         currentEntity.applyStatusEffects();
         opponentEntity.applyStatusEffects();
+
+        checkIfFainted();
 
         turnNumber++;
 
@@ -255,12 +220,12 @@ public class BattleScreen extends Actor
         if(p1Entity.health <= 0)
         {
             p1Entity = player1Entities.remove(0);
-            messageStack.add(p1Entity.name + " has fainted!");
+            actionStack.add(new Action(p1Entity.name + " has fainted!"));
         }
         if(p2Entity.health <= 0)
         {
             p2Entity = player2Entities.remove(0);
-            messageStack.add(p2Entity.name + " has fainted!");
+            actionStack.add(new Action(p2Entity.name + " has fainted!"));
             
         }
 

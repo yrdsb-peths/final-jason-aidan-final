@@ -42,7 +42,6 @@ abstract public class Spirit extends Entity
         super(name, health, attack, type, attackName, passiveName, passiveDetails, image);
     }
 
-    abstract public void passive(Entity other);
 
     abstract public Soul getUpgraded();
 

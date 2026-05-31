@@ -15,7 +15,7 @@ public class FireSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("fire.png");
     static final String NAME = "Fire Spirit";
     static final int BASE_HEALTH = 50;
-    static final int BASE_ATTACK = 10;
+    static final int BASE_ATTACK = 20;
     static final String attackName = "Burn";
     static final String passiveName = "FlameThrower";
     static final String passiveDetails = "Burn your enemies overtime!";
@@ -27,8 +27,8 @@ public class FireSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        other.burningDamage = 3 * (1+this.level/10);
-        other.burningDuration = 3;
+        other.burningDamage = Math.max(other.burningDamage, 5 * (1+this.level/10));
+        other.burningDuration = Math.max(other.burningDuration, 5 * (1+this.level/10));
 
         
         // Any additional initialization code for FireSpirit can go here
