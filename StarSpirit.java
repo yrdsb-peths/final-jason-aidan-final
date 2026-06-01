@@ -17,7 +17,7 @@ public class StarSpirit extends Spirit
     static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Flare";
-    static final String PASSIVE_NAME = "Meteor Rain";
+    static final String PASSIVE_NAME = "Meteor Shower";
     static final String PASSIVE_DETAILS = "Extreme burning to your enemies overtime!";
     
     public StarSpirit()
@@ -28,6 +28,23 @@ public class StarSpirit extends Spirit
     public void passive(Entity other) {
         
         // Any additional initialization code for FireSpirit can go here
+        other.burningDamage = Math.max(other.burningDamage, (int)(5 * levelModifier));
+        int j = 1;
+        for (int i = 0; i < 5; i++) {
+            
+            if (Greenfoot.getRandomNumber(100) < 50) {
+                BattleScreen.getInstance().actionStack.add(
+                    new Action("Meteor strike (x" + j + ")", 
+                    () -> {
+                        other.health -= (int)(10 * levelModifier);
+                        other.burningDuration ++;
+                    }
+                ));
+                j ++;
+
+            }
+            
+        }
     }
 
     public Soul getUpgraded() {
