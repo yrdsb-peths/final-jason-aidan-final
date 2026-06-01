@@ -14,8 +14,8 @@ public class StarSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("star.png");
     static final String NAME = "Star Spirit";
-    static final int BASE_HEALTH = 100;
-    static final int BASE_ATTACK = 20;
+    static final int BASE_HEALTH = 50;
+    static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Flare";
     static final String PASSIVE_NAME = "Meteor Rain";
     static final String PASSIVE_DETAILS = "Extreme burning to your enemies overtime!";

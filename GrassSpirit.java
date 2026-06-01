@@ -14,11 +14,11 @@ public class GrassSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("grass.png");
     static final String NAME = "Grass Spirit";
-    static final int BASE_HEALTH = 50;
-    static final int BASE_ATTACK = 10;
+    static final int BASE_HEALTH = 60;
+    static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Seed";
-    static final String PASSIVE_NAME = "Pollenate";
-    static final String PASSIVE_DETAILS = "Heal 10 health";
+    static final String PASSIVE_NAME = "Grow";
+    static final String PASSIVE_DETAILS = "Heal & regenerate";
 
     public GrassSpirit()
     {
@@ -27,11 +27,9 @@ public class GrassSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        this.health += 10 * this.levelModifier;
         this.healingAmount = (int) (5.0 * this.levelModifier);
-        this.healingDuration = 3;
+        this.healingDuration = 6;
         
-        // Any additional initialization code for FireSpirit can go here
     }
 
     public Soul getUpgraded() {

@@ -15,11 +15,11 @@ public class WaterSpirit extends Spirit
 
     static GreenfootImage costume = new GreenfootImage("water.png");
     static final String NAME = "Water Spirit";
-    static final int BASE_HEALTH = 50;
+    static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 10;
     static final String ATTACK_NAME = "Splash";
-    static final String PASSIVE_NAME = "Rainfall";
-    static final String PASSIVE_DETAILS = "Remove effects and deal 20 damage";
+    static final String PASSIVE_NAME = "Purify";
+    static final String PASSIVE_DETAILS = "Remove effects and heal";
     
     public WaterSpirit()
     {
@@ -28,7 +28,10 @@ public class WaterSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        
+        this.stunDuration = 0;
+        this.burningDuration = 0;
+        this.poisonedDuration = 0;
+        this.health += (int)(10 * levelModifier);
     }
 
     public Soul getUpgraded() {

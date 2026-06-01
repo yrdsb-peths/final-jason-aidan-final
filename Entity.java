@@ -28,6 +28,7 @@ abstract public class Entity
     int healingDuration; // # of turns
     double levelModifier;
     int stunDuration;
+    int defense;
     
     Element type;
 
@@ -140,7 +141,7 @@ abstract public class Entity
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else if (rand > 10 && rand <= 90) {
-                double outputDmg = attack;
+                double outputDmg = Math.max(attack - other.defense, 0);
 
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
@@ -150,7 +151,7 @@ abstract public class Entity
                     }
                 ));
             } else if (rand > 90) {
-                double outputDmg = attack * 1.5;
+                double outputDmg = Math.max(1.5*attack - other.defense, 0);
 
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
@@ -163,7 +164,8 @@ abstract public class Entity
         } else if (effectiveness > 0) {
             int randCrit = Greenfoot.getRandomNumber(100);
             if (randCrit < 10) {
-                double outputDmg = attack * 3;
+                double outputDmg = Math.max(3*attack - other.defense, 0);
+
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was a critical hit, dealing " + (int)outputDmg + " damage!",
@@ -172,7 +174,8 @@ abstract public class Entity
                     }
                 ));
             } else { 
-                double outputDmg = attack * 1.5;
+                double outputDmg = Math.max(1.5*attack - other.defense, 0);
+
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was super effective, dealing " + (int)outputDmg + " damage!",
@@ -187,7 +190,8 @@ abstract public class Entity
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else { 
-                double outputDmg = attack * 0.5;
+                double outputDmg = Math.max(0.5*attack - other.defense, 0);
+
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was not very effective, dealing " + (int)outputDmg + " damage.",

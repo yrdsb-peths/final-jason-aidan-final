@@ -27,8 +27,8 @@ public class FireSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        other.burningDamage = Math.max(other.burningDamage, 5 * (1+this.level/10));
-        other.burningDuration = Math.max(other.burningDuration, 5 * (1+this.level/10));
+        other.burningDamage = Math.max(other.burningDamage, (int)(4 * levelModifier));
+        other.burningDuration = Math.max(other.burningDuration, (int)(4 * levelModifier));
 
         
         // Any additional initialization code for FireSpirit can go here

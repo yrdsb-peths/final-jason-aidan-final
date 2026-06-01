@@ -70,7 +70,8 @@ public class Element
         Map.entry(big, 0),
         Map.entry(small, 1),
         Map.entry(dark, 0),
-        Map.entry(star, 1)
+        Map.entry(star, 1),
+        Map.entry(sus, -1)
     )),
 
     Map.entry(electric, Map.ofEntries(

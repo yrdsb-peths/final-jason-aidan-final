@@ -14,19 +14,25 @@ public class RockSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("rock.png");
     static final String NAME = "Rock Spirit";
-    static final int BASE_HEALTH = 70;
-    static final int BASE_ATTACK = 8;
+    static final int BASE_HEALTH = 60;
+    static final int BASE_ATTACK = 10;
     static final String ATTACK_NAME = "Crumble";
     static final String PASSIVE_NAME = "Boulder Shell";
     static final String PASSIVE_DETAILS = "Reduce the damage taken";
     
     public RockSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 
     public void passive(Entity other) {
+        if (defense >= 10 * levelModifier) {
+            BattleScreen.getInstance().actionStack.add(new Action("Max defense of " + defense + " reached!"));
+        } else {
+            defense += 3 * levelModifier;
+        }
+        
         
     }
 
