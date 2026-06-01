@@ -27,7 +27,7 @@ public class BattleScreen extends Actor
     Button attackButton;
     Button passiveButton;
     Button chooseNewButton;
-    Button fleeButton;
+    Button ultButton;
 
     HashMap<String, Label> player1Label;
     HashMap<String, Label> player2Label;
@@ -117,7 +117,7 @@ public class BattleScreen extends Actor
         world.removeObject(attackButton);
         world.removeObject(passiveButton);
         world.removeObject(chooseNewButton);
-        world.removeObject(fleeButton);
+        world.removeObject(ultButton);
         world.removeObject(p1EntityDisplay);
         world.removeObject(p2EntityDisplay);
         world.removeObject(dialogueBox);
@@ -154,6 +154,9 @@ public class BattleScreen extends Actor
         Entity currentEntity = turnNumber % 2 == 1 ? p1Entity : p2Entity;
         Entity opponentEntity = turnNumber % 2 == 0 ? p1Entity : p2Entity;
 
+        ArrayList<Entity> currentEntities = turnNumber % 2 == 1 ? player1Entities : player2Entities;
+        ArrayList<Entity> opponentEntities = turnNumber % 2 == 0 ? player1Entities : player2Entities;
+
         showPlayerButtons();
         updateEntityImage();
 
@@ -179,11 +182,14 @@ public class BattleScreen extends Actor
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
 
-        } else if (fleeButton.isPressed) {
-            fleeButton.isPressed = false;
-            // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
+        } else if (ultButton.isPressed) {
+            ultButton.isPressed = false;
+            if (currentEntity instanceof Soul soul) {
+                
+                soul.ultimate(currentEntities, opponentEntities);
+                attachToActions(() -> endAction());}
+            }
             
-        }
     }
 
     
@@ -219,7 +225,7 @@ public class BattleScreen extends Actor
     
     private void checkIfFainted()
     {
-        if(p1Entity.health <= 0)
+        if (p1Entity.health <= 0)
         {
             
             actionStack.add(new Action(
@@ -230,12 +236,13 @@ public class BattleScreen extends Actor
                         gameOver();
                     } else {
                         p1Entity = player1Entities.get(0);
+                        checkIfFainted();
                     }
                     
                 }
             ));
         }
-        if(p2Entity.health <= 0)
+        if (p2Entity.health <= 0)
         {
             actionStack.add(new Action(
                 p2Entity.name + " has fainted!",
@@ -245,6 +252,7 @@ public class BattleScreen extends Actor
                         gameOver();
                     } else {
                         p2Entity = player2Entities.get(0);
+                        checkIfFainted();
                     }
                     
                 }
@@ -278,7 +286,7 @@ public class BattleScreen extends Actor
         attackButton.setImage(attackImage);
         passiveButton.setImage(passiveImage);
         chooseNewButton.setImage(chooseNewImage);
-        fleeButton.setImage(fleeImage);
+        ultButton.setImage(fleeImage);
 
     }
 
@@ -288,13 +296,13 @@ public class BattleScreen extends Actor
         attackButton = new Button(null, 20);
         passiveButton = new Button(null, 20);
         chooseNewButton = new Button(null, 20);
-        fleeButton = new Button(null, 20);
+        ultButton = new Button(null, 20);
 
 
         world.addObject(attackButton, 90, MyWorld.HEIGHT-90);
         world.addObject(passiveButton, MyWorld.WIDTH-90, MyWorld.HEIGHT-90);
         world.addObject(chooseNewButton, 90, MyWorld.HEIGHT-30);
-        world.addObject(fleeButton, MyWorld.WIDTH-90, MyWorld.HEIGHT-30);
+        world.addObject(ultButton, MyWorld.WIDTH-90, MyWorld.HEIGHT-30);
 
     }
 

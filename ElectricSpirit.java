@@ -15,10 +15,10 @@ public class ElectricSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("electric.png");
     static final String NAME = "Electric Spirit";
     static final int BASE_HEALTH = 70;
-    static final int BASE_ATTACK = 20;
+    static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Shock";
     static final String PASSIVE_NAME = "Charge";
-    static final String PASSIVE_DETAILS = "Do increased damaged & double the stun chance per charge (start at 25%)";
+    static final String PASSIVE_DETAILS = "Do increased damaged & double the stun chance per charge (base 12.5%)";
 
     int charge;
     
@@ -38,13 +38,13 @@ public class ElectricSpirit extends Spirit
         super.attack(other);
         attack = attack / (charge + 1);
 
-        if (Greenfoot.getRandomNumber(100) <= charge * 25) {
+        if (Greenfoot.getRandomNumber(100) <= Math.pow(2, charge) * 12.5) {
             other.stunDuration = 1;
         }
         charge = 0;
     }
 
     public Soul getUpgraded() {
-        return null;
+        return new ThunderSoul();
     }
 }

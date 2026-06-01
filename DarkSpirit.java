@@ -14,8 +14,8 @@ public class DarkSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("dark.png");
     static final String NAME = "Dark Spirit";
-    static final int BASE_HEALTH = 100;
-    static final int BASE_ATTACK = 20;
+    static final int BASE_HEALTH = 80;
+    static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Shadow";
     static final String PASSIVE_NAME = "Total Blackout";
     static final String PASSIVE_DETAILS = "Weaken your opponent's attack & defense.";
@@ -23,6 +23,7 @@ public class DarkSpirit extends Spirit
     public DarkSpirit()
     {
         super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        this.evasion = 0.2;
 
     }
 

@@ -1,6 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Write a description of class Spirit here.
@@ -35,12 +36,12 @@ abstract public class Soul extends Entity
         this.ultimateDetails = ultimateDetails;
     }
 
-    abstract public void ultimate(Entity other);
+    abstract public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others);
 
-    public void applyUltimate(Entity other) {
+    public void applyUltimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         BattleScreen.getInstance().actionStack.add(new Action(
             "> " + name + " used " + ultimateName + ".",
-            () -> {passive(other);}
+            () -> {ultimate(allies, others);}
         ));
     }
 }

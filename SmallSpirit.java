@@ -32,8 +32,19 @@ public class SmallSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        this.attack = (int) (this.attack * 0.9);
-        this.health = (int) (this.health * 0.9);
+
         this.evasion = 1 - (1 - this.evasion)/3;
+        if (this.evasion > 0.9) {
+            this.evasion = 0.9;
+            BattleScreen.getInstance().actionStack.add(
+                new Action("Your evasion has reached the max of 90%!", 
+                () -> {
+                }
+            ));
+            
+        } else {
+            this.health = (int) (this.health * 0.9);
+            this.attack = (int) (this.attack * 0.9);
+        }
     }
 }

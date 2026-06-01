@@ -18,7 +18,7 @@ public class StarSpirit extends Spirit
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Flare";
     static final String PASSIVE_NAME = "Meteor Shower";
-    static final String PASSIVE_DETAILS = "Extreme burning to your enemies overtime!";
+    static final String PASSIVE_DETAILS = "Successive meteor strikes with a chance to hit each strike";
     
     public StarSpirit()
     {
@@ -26,9 +26,14 @@ public class StarSpirit extends Spirit
     }
 
     public void passive(Entity other) {
+    }
+
+    // overriding applyPassive to add successive meteor strikes with a chance to hit each strike
+    public void applyPassive(Entity other) {
         
         // Any additional initialization code for FireSpirit can go here
-        other.burningDamage = Math.max(other.burningDamage, (int)(5 * levelModifier));
+        super.applyPassive(other);
+        other.burningDamage = Math.max(other.burningDamage, (int)(3 * levelModifier));
         int j = 1;
         for (int i = 0; i < 5; i++) {
             

@@ -18,7 +18,7 @@ public class BigSpirit extends Spirit
     static final int BASE_HEALTH = 120;
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Stomp";
-    static final String PASSIVE_NAME = "Ground Pound";
+    static final String PASSIVE_NAME = "Grow";
     static final String PASSIVE_DETAILS = "Increase your damage output by 10 damage";
     
     public BigSpirit()
@@ -28,7 +28,8 @@ public class BigSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        
+        this.attack = (int) (this.attack * 1.1);
+        this.health = (int) (this.health * 1.1);
     }
 
     public Soul getUpgraded() {
