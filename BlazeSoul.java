@@ -28,7 +28,7 @@ public class BlazeSoul extends Soul
     
     public BlazeSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, ULTIMATE_NAME, ULTIMATE_DETAILS, COSTUME);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, COSTUME);
 
     }
 
@@ -49,5 +49,18 @@ public class BlazeSoul extends Soul
             others.get(0).burningDuration += 5;
             ultimateUsed = true;
         }
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
+    }
+
+    public String getUltimateDetails() {
+        return "";
     }
 }

@@ -22,7 +22,7 @@ public class PoisonSpirit extends Spirit
     
     public PoisonSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.poison, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.poison, ATTACK_NAME, PASSIVE_NAME, costume);
 
     }
 
@@ -33,5 +33,14 @@ public class PoisonSpirit extends Spirit
 
     public Soul getUpgraded() {
         return null;
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

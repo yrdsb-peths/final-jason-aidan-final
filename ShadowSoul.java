@@ -25,7 +25,7 @@ public class ShadowSoul extends Soul
     
     public ShadowSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, ULTIMATE_NAME, ULTIMATE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, costume);
         this.evasion = 0.2;
 
     }
@@ -46,5 +46,18 @@ public class ShadowSoul extends Soul
             }
         }     
         ultimateUsed = true;
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
+    }
+
+    public String getUltimateDetails() {
+        return "";
     }
 }

@@ -20,20 +20,12 @@ abstract public class Soul extends Entity
 
     boolean ultimateUsed;
     String ultimateName;
-    String ultimateDetails;
-
-
     
-
-
-    
-    
-    public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, String ultimateName, String ultimateDetails, GreenfootImage image)
+    public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String ultimateName, GreenfootImage image)
     {
-        super(name, health, attack, type, attackName, passiveName, passiveDetails, image);
+        super(name, health, attack, type, attackName, passiveName, image);
         this.ultimateUsed = false;
         this.ultimateName = ultimateName;
-        this.ultimateDetails = ultimateDetails;
     }
 
     abstract public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others);
@@ -44,4 +36,5 @@ abstract public class Soul extends Entity
             () -> {ultimate(allies, others);}
         ));
     }
+
 }

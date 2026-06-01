@@ -24,7 +24,7 @@ public class ElectricSpirit extends Spirit
     
     public ElectricSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, costume);
         charge = 0;
 
     }
@@ -46,5 +46,14 @@ public class ElectricSpirit extends Spirit
 
     public Soul getUpgraded() {
         return new ThunderSoul();
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

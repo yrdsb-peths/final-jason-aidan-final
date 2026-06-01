@@ -28,7 +28,7 @@ public class ThunderSoul extends Soul
     
     public ThunderSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, ULTIMATE_NAME, ULTIMATE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, costume);
         charge = 0;
 
     }
@@ -70,5 +70,18 @@ public class ThunderSoul extends Soul
             charge = 0;
         }     
         
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
+    }
+
+    public String getUltimateDetails() {
+        return "";
     }
 }

@@ -29,7 +29,7 @@ public class TideSoul extends Soul
     
     public TideSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, ULTIMATE_NAME, ULTIMATE_DETAILS, COSTUME);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, COSTUME);
         this.floodStacks = 2;
     }
 
@@ -63,5 +63,18 @@ public class TideSoul extends Soul
             others.get(0).takeDamage(effectiveDamage);
             ultimateUsed = true;
         }
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
+    }
+
+    public String getUltimateDetails() {
+        return "";
     }
 }

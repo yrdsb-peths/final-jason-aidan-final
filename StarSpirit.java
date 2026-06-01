@@ -22,7 +22,7 @@ public class StarSpirit extends Spirit
     
     public StarSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, ATTACK_NAME, PASSIVE_NAME, costume);
     }
 
     public void passive(Entity other) {
@@ -57,5 +57,14 @@ public class StarSpirit extends Spirit
 
     public Soul getUpgraded() {
         return null;
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

@@ -22,7 +22,7 @@ public class DarkSpirit extends Spirit
     
     public DarkSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, costume);
         this.evasion = 0.2;
 
     }
@@ -34,5 +34,14 @@ public class DarkSpirit extends Spirit
 
     public Soul getUpgraded() {
         return new ShadowSoul();
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

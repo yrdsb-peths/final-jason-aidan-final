@@ -22,7 +22,7 @@ public class OrdinarySpirit extends Spirit
     
     public OrdinarySpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, ATTACK_NAME, PASSIVE_NAME, costume);
 
     }
 
@@ -32,5 +32,14 @@ public class OrdinarySpirit extends Spirit
 
     public Soul getUpgraded() {
         return null;
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

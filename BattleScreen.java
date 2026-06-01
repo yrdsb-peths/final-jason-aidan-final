@@ -133,6 +133,10 @@ public class BattleScreen extends Actor
 
         if (actionStack.size() > 0) {
 
+            if (isHovering()) {
+                displayHoverText();
+                return;
+            }
             Action action = actionStack.get(0);
             dialogueBox.setText(action.text);
 
@@ -146,7 +150,11 @@ public class BattleScreen extends Actor
             return;
         }
 
-        dialogueBox.setText("Player "+turn+"'s turn");
+        if (isHovering()) {
+            displayHoverText();
+        } else {
+            dialogueBox.setText("Player "+turn+"'s turn");
+        }
 
         p1Entity = player1Entities.get(0);
         p2Entity = player2Entities.get(0);
@@ -170,14 +178,12 @@ public class BattleScreen extends Actor
             attackButton.isPressed = false;
             currentEntity.attack(opponentEntity);
             attachToActions(() -> endAction());
-            
 
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
             // don't ever use 'passive' like currentEntity.passive(opponentEntity);
             currentEntity.applyPassive(opponentEntity);
             attachToActions(() -> endAction());
-            
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
@@ -195,7 +201,6 @@ public class BattleScreen extends Actor
     
     private void endAction()
     {
-        System.out.println("end action");
         int previousStackSize = actionStack.size();
 
         p1Entity.applyStatusEffects();
@@ -258,6 +263,22 @@ public class BattleScreen extends Actor
                 }
             ));
             
+        }
+    }
+
+    private boolean isHovering() {
+        return attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
+    }
+
+    private void displayHoverText() {
+        if (attackButton.isHovering) {
+            dialogueBox.setText(p1Entity.getAttackDetails());
+        } else if (passiveButton.isHovering) {
+            dialogueBox.setText(p1Entity.getPassiveDetails());
+        } else if (chooseNewButton.isHovering) {
+
+        } else if (ultButton.isHovering) {
+            dialogueBox.setText(p1Entity.getUltimateDetails());
         }
     }
 

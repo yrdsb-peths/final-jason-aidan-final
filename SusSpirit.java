@@ -22,7 +22,7 @@ public class SusSpirit extends Spirit
     
     public SusSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.sus, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.sus, ATTACK_NAME, PASSIVE_NAME, costume);
     }
 
     public void passive(Entity other) {
@@ -32,5 +32,14 @@ public class SusSpirit extends Spirit
 
     public Soul getUpgraded() {
         return null;
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

@@ -33,16 +33,16 @@ public class Button extends Actor
             delayLeft = delay; // Set the delay for how long the button stays pressed
         }
 
-        if (Greenfoot.mouseMoved(this)) {
-            isHovering = true;
-        } else {
-            isHovering = false;
-        }
-
         delayLeft--;
 
-        if (delayLeft <= 0) {
-            isPressed = false; // Reset the button state after the delay
+        if (!isHovering && Greenfoot.mouseMoved(this)) {
+            isHovering = true;
+            // getImage().setTransparency(200);
+        }
+        
+        if (isHovering && Greenfoot.mouseMoved(null) && !Greenfoot.mouseMoved(this)) {
+            isHovering = false;
+            // getImage().setTransparency(255);
         }
     }
 

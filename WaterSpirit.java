@@ -23,7 +23,7 @@ public class WaterSpirit extends Spirit
     
     public WaterSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, costume);
 
     }
 
@@ -36,6 +36,15 @@ public class WaterSpirit extends Spirit
 
     public Soul getUpgraded() {
         return new TideSoul();
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 
 }

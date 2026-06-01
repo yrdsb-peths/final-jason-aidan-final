@@ -37,12 +37,16 @@ abstract public class Spirit extends Entity
     
     
     
-    public Spirit(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)
+    public Spirit(String name, int health, int attack, Element type, String attackName, String passiveName, GreenfootImage image)
     {
-        super(name, health, attack, type, attackName, passiveName, passiveDetails, image);
+        super(name, health, attack, type, attackName, passiveName, image);
     }
 
 
     abstract public Soul getUpgraded();
+
+    public String getUltimateDetails() {
+        return "Spirits below level 5 don't have an ultimate.";
+    }
 
 }

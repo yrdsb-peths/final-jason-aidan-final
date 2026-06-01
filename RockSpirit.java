@@ -22,7 +22,7 @@ public class RockSpirit extends Spirit
     
     public RockSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, costume);
 
     }
 
@@ -38,5 +38,14 @@ public class RockSpirit extends Spirit
 
     public Soul getUpgraded() {
         return null;
+    }
+
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

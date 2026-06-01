@@ -22,7 +22,7 @@ public class FireSpirit extends Spirit
     
     public FireSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, costume);
 
     }
 
@@ -39,4 +39,11 @@ public class FireSpirit extends Spirit
     }
 
 
+    public String getAttackDetails() {
+        return "Test";
+    }
+
+    public String getPassiveDetails() {
+        return "Test 1";
+    }
 }

@@ -1,7 +1,4 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
-import java.util.HashMap;
 
 /**
  * Write a description of class Spirit here.
@@ -39,11 +36,10 @@ abstract public class Entity
     
     String attackName = "";
     String passiveName = "";
-    String passiveDetails = "";
 
     // Creates a fixed list of spirit types that can be used to dynamically create spirit object
     
-    public Entity(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)
+    public Entity(String name, int health, int attack, Element type, String attackName, String passiveName, GreenfootImage image)
     {
 
         burningDuration = 0;
@@ -59,7 +55,6 @@ abstract public class Entity
         this.type = type;
         this.attackName = attackName;
         this.passiveName = passiveName;
-        this.passiveDetails = passiveDetails;
         this.image = image;
         this.name = name;
         updateModifier();
@@ -245,5 +240,12 @@ abstract public class Entity
     }
 
     abstract public void passive(Entity other);
+
+    abstract public String getAttackDetails();
+
+    abstract public String getPassiveDetails();
+
+    abstract public String getUltimateDetails();
+
 
 }

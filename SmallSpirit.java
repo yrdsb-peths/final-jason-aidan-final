@@ -23,7 +23,7 @@ public class SmallSpirit extends Spirit
     
     public SmallSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.small, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.small, ATTACK_NAME, PASSIVE_NAME, costume);
         this.evasion = 0;
     }
 
@@ -46,5 +46,13 @@ public class SmallSpirit extends Spirit
             this.health = (int) (this.health * 0.75);
             this.attack = (int) (this.attack * 0.75);
         }
+    }
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
     }
 }

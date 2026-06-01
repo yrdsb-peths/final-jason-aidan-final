@@ -22,7 +22,7 @@ public class GrassSpirit extends Spirit
 
     public GrassSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, ATTACK_NAME, PASSIVE_NAME, costume);
 
     }
 
@@ -36,4 +36,12 @@ public class GrassSpirit extends Spirit
         return null;
     }
 
+
+    public String getAttackDetails() {
+        return "";
+    }
+
+    public String getPassiveDetails() {
+        return "";
+    }
 }
