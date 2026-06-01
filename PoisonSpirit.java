@@ -37,10 +37,10 @@ public class PoisonSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        return "Toxin deals " + attack + " poison damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Corrosive Acid poisons enemy for 15% health over 3 turns.";
     }
 }

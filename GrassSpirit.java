@@ -38,10 +38,10 @@ public class GrassSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        return "Seed deals " + attack + " grass damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Grow: heals " + (int)(5 * this.levelModifier) + " HP for 6 turns.";
     }
 }

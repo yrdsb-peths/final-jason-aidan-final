@@ -49,10 +49,10 @@ public class SmallSpirit extends Spirit
     }
 
     public String getAttackDetails() {
-        return "";
+        return "Bite: deals " + attack + " damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Shrink: raises evasion from " + (int) (this.evasion * 100) + "% to " + (int) ((1 - (1 - this.evasion)/3) * 100) + "% while reducing your stats by 1/4.";
     }
 }

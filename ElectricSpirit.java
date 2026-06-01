@@ -50,10 +50,14 @@ public class ElectricSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        if (charge == 0) {
+            return "Shock: deals " + attack + " electric damage.";
+        } else {
+            return "Shock: deals " + (attack * (charge + 1)) + " electric damage. " + (Math.pow(2, charge) * 12.5) + "% chance to stun.";
+        }
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Charge: boosts next attack and stun chance. Can stack.";
     }
 }

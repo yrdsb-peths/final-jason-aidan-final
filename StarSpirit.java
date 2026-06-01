@@ -61,10 +61,10 @@ public class StarSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        return "Flare: deals " + attack + " star damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Meteor Shower: successively deals " + (int)(attack * levelModifier / 2) + " meteor damage and applies a small burn.";
     }
 }

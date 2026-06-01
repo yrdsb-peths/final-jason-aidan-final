@@ -40,10 +40,10 @@ public class FireSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "Test";
+        return "Burn: deals " + attack + " fire damage.";
     }
 
     public String getPassiveDetails() {
-        return "Test 1";
+        return "Ignite: burns enemy for " + (int)(7 * this.levelModifier) + " damage over " + (int)(4 * this.levelModifier) + " turns.";
     }
 }

@@ -38,10 +38,10 @@ public class DarkSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        return "Shadow deals " + attack + " dark damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Total Blackout: lowers enemy attack (" + (3 * levelModifier) + ") and defense (" + (5 * levelModifier) + ").";
     }
 }

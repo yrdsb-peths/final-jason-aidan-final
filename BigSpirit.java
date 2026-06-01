@@ -37,10 +37,10 @@ public class BigSpirit extends Spirit
     }
 
     public String getAttackDetails() {
-        return "";
+        return "Stomp: deals " + attack + " damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Grow: increases attack and health by 10%.";
     }
 }

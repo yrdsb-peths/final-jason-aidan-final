@@ -27,10 +27,10 @@ public class RockSpirit extends Spirit
     }
 
     public void passive(Entity other) {
+        defense += 3 * levelModifier;
         if (defense >= 10 * levelModifier) {
+            defense = (int) (10 * levelModifier);
             BattleScreen.getInstance().actionStack.add(new Action("Max defense of " + defense + " reached!"));
-        } else {
-            defense += 3 * levelModifier;
         }
         
         
@@ -42,10 +42,10 @@ public class RockSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        return "Crumble: deals " + attack + " rock damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Boulder Shell: raises defense by " + (int)(3 * levelModifier) + ". Max: " + (int)(10 * levelModifier) + ".";
     }
 }

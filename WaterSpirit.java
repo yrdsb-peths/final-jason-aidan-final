@@ -40,11 +40,11 @@ public class WaterSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        return "Splash: deals " + attack + " water damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Purify: removes status effects and heals " + (int)(10 * levelModifier) + " health.";
     }
 
 }

@@ -57,7 +57,7 @@ public class TideSoul extends Soul
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         if (!this.ultimateUsed) {
-            this.health += floodStacks * 10 * levelModifier / 2;
+            this.health += floodStacks * 5 * levelModifier;
 
             double effectiveDamage = effectivenessMultiplier(others.get(0)) * (int)(floodStacks * levelModifier) * 10;
             others.get(0).takeDamage(effectiveDamage);
@@ -67,14 +67,14 @@ public class TideSoul extends Soul
 
 
     public String getAttackDetails() {
-        return "";
+        return "Wave: deals " + attack + " water damage and gains 1 flood stack.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Cleanse: removes effects, heals " + (int)(15 * levelModifier) + " health, and gains 2 flood stacks.";
     }
 
     public String getUltimateDetails() {
-        return "";
+        return "Tsunami: heals " + (int)(floodStacks * 5 * levelModifier) + " health and does " + (int)(floodStacks * 5 * levelModifier) + " water damage. Based on flood stacks.";
     }
 }

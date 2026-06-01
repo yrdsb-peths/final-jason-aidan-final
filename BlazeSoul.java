@@ -53,14 +53,14 @@ public class BlazeSoul extends Soul
 
 
     public String getAttackDetails() {
-        return "";
+        return "Burn: deals " + attack + " fire damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Ignite: burns enemy for " + (int)(15 * this.levelModifier) + " damage over 5 turns.";
     }
 
     public String getUltimateDetails() {
-        return "";
+        return "Burst: deals " + (int)(attack * 2 * this.levelModifier) + " fire damage, burns the target, and costs some health.";
     }
 }

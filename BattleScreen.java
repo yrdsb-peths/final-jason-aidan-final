@@ -73,7 +73,6 @@ public class BattleScreen extends Actor
         actionStack = new ArrayList<Action>();
         
         initButtons();
-        initLabels();
         initEntityDisplay();
 
 
@@ -108,12 +107,6 @@ public class BattleScreen extends Actor
             // Player 1 wins
             System.out.println("Player 1 wins!");
         }
-        player1Label.forEach((key, label) -> {
-            world.removeObject(label);
-        });
-        player2Label.forEach((key, label) -> {
-            world.removeObject(label);
-        });
         world.removeObject(attackButton);
         world.removeObject(passiveButton);
         world.removeObject(chooseNewButton);
@@ -129,12 +122,21 @@ public class BattleScreen extends Actor
     private void playerAction()
     {
 
+        p1Entity = player1Entities.get(0);
+        p2Entity = player2Entities.get(0);
+        
+        Entity currentEntity = turnNumber % 2 == 1 ? p1Entity : p2Entity;
+        Entity opponentEntity = turnNumber % 2 == 0 ? p1Entity : p2Entity;
+
+        ArrayList<Entity> currentEntities = turnNumber % 2 == 1 ? player1Entities : player2Entities;
+        ArrayList<Entity> opponentEntities = turnNumber % 2 == 0 ? player1Entities : player2Entities;
+
         int turn = 2 - turnNumber % 2;
 
         if (actionStack.size() > 0) {
 
             if (isHovering()) {
-                displayHoverText();
+                displayHoverText(currentEntity);
                 return;
             }
             Action action = actionStack.get(0);
@@ -151,19 +153,10 @@ public class BattleScreen extends Actor
         }
 
         if (isHovering()) {
-            displayHoverText();
+            displayHoverText(currentEntity);
         } else {
             dialogueBox.setText("Player "+turn+"'s turn");
         }
-
-        p1Entity = player1Entities.get(0);
-        p2Entity = player2Entities.get(0);
-        
-        Entity currentEntity = turnNumber % 2 == 1 ? p1Entity : p2Entity;
-        Entity opponentEntity = turnNumber % 2 == 0 ? p1Entity : p2Entity;
-
-        ArrayList<Entity> currentEntities = turnNumber % 2 == 1 ? player1Entities : player2Entities;
-        ArrayList<Entity> opponentEntities = turnNumber % 2 == 0 ? player1Entities : player2Entities;
 
         showPlayerButtons();
         updateEntityImage();
@@ -270,21 +263,20 @@ public class BattleScreen extends Actor
         return attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
     }
 
-    private void displayHoverText() {
+    private void displayHoverText(Entity currentEntity) {
         if (attackButton.isHovering) {
-            dialogueBox.setText(p1Entity.getAttackDetails());
+            dialogueBox.setText(currentEntity.getAttackDetails());
         } else if (passiveButton.isHovering) {
-            dialogueBox.setText(p1Entity.getPassiveDetails());
+            dialogueBox.setText(currentEntity.getPassiveDetails());
         } else if (chooseNewButton.isHovering) {
 
         } else if (ultButton.isHovering) {
-            dialogueBox.setText(p1Entity.getUltimateDetails());
+            dialogueBox.setText(currentEntity.getUltimateDetails());
         }
     }
 
     public void updateAllVisuals() {
         updateEntityImage();
-        updateLabels();
         drawHealthbar();
     }
     
@@ -327,56 +319,6 @@ public class BattleScreen extends Actor
 
     }
 
-
-    private void initLabels()
-    {
-
-        int fontSize = 20;
-
-        Label attack1label = new Label("ATT: " + player1Entities.get(0).attack, fontSize);
-        Label type1label = new Label("Type: " + player1Entities.get(0).type.toString(), fontSize);
-
-        Label attack2label = new Label("ATT: " + player2Entities.get(0).attack, fontSize);
-        Label type2label = new Label("Type: " + player2Entities.get(0).type.toString(), fontSize);
-
-        attack1label.setFillColor(Color.BLACK);
-        attack1label.setLineColor(null);
-        attack2label.setFillColor(Color.BLACK);
-        attack2label.setLineColor(null);
-
-        type1label.setFillColor(Color.BLACK);
-        type1label.setLineColor(null);
-        type2label.setFillColor(Color.BLACK);
-        type2label.setLineColor(null);
-
-        player1Label = new HashMap<String, Label>(Map.of(
-            "attack", attack1label,
-            "type", type1label
-        ));
-
-        player2Label = new HashMap<String, Label>(Map.of(
-            "attack", attack2label,
-            "type", type2label
-        ));
-
-        world.addObject(attack1label, MyWorld.WIDTH/4 - 100, MyWorld.HEIGHT/2-30);
-        world.addObject(type1label, MyWorld.WIDTH/4 - 85, MyWorld.HEIGHT/2);
-
-        world.addObject(attack2label, MyWorld.WIDTH/4 * 3 + 80, MyWorld.HEIGHT/2-30);
-        world.addObject(type2label, MyWorld.WIDTH/4 * 3 + 20, MyWorld.HEIGHT/2);
-
-    }
-    private void updateLabels()
-    {
-
-
-        player1Label.get("attack").setValue("ATT: " + p1Entity.attack);
-        player1Label.get("type").setValue("Type: " + p1Entity.type.toString());
-
-
-        player2Label.get("attack").setValue("ATT: " + p2Entity.attack);
-        player2Label.get("type").setValue("Type: " + p2Entity.type.toString());
-    }
     private void initEntityDisplay() {
         p1EntityDisplay = new ImageDisplay();
         p2EntityDisplay = new ImageDisplay();

@@ -144,9 +144,9 @@ abstract public class Entity
     public String effectivenessTag(Entity defender) {
         int effectiveness = this.type.comparedTo(defender.type);
        if (effectiveness > 0) {
-            return " (very effective) ";
+            return " (very effective)";
         } else if (effectiveness < 0) {
-            return " (not very effective) ";
+            return " (not very effective)";
         }
         return "";
     }

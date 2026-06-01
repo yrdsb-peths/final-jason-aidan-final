@@ -36,7 +36,7 @@ public class SusSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "";
+        return "sus deals: " + attack + " damage.";
     }
 
     public String getPassiveDetails() {

@@ -50,14 +50,14 @@ public class ShadowSoul extends Soul
 
 
     public String getAttackDetails() {
-        return "";
+        return "Shadow: deals " + attack + " dark damage.";
     }
 
     public String getPassiveDetails() {
-        return "";
+        return "Total Blackout: lowers enemy attack " + (5 * levelModifier) + " and defense " + (7 * levelModifier) + ".";
     }
 
     public String getUltimateDetails() {
-        return "";
+        return "Eclipse: deals " + (20 * levelModifier) + " dark damage. Lowers all enemies' attack " + (5 * levelModifier) + " and defense " + (7 * levelModifier) + ", and accuracy.";
     }
 }
