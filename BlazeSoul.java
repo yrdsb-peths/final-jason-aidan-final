@@ -44,7 +44,7 @@ public class BlazeSoul extends Soul
             this.burningDamage = (int) (3 * this.levelModifier);
             this.burningDuration = 3;
 
-            others.get(0).health -= 50 * this.levelModifier;
+            others.get(0).health -= (int)(effectivenessMultiplier(others.get(0)) * (int)(attack * 2 * this.levelModifier));
             others.get(0).burningDamage = (int) (15 * this.levelModifier);
             others.get(0).burningDuration += 5;
             ultimateUsed = true;

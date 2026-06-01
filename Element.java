@@ -231,6 +231,31 @@ public class Element
         return typeEffectiveness.get(this).get(other);
     }
 
+    static public int calculateTypeDamage(Element attackerType, Element defenderType, int damage) {
+        int effectiveness = attackerType.comparedTo(defenderType);
+        if (effectiveness == 0) {
+            return damage;
+        } else if (effectiveness > 0) {
+            return (int)(1.5*damage);
+        } else if (effectiveness < 0) {
+            return (int)(0.5*damage);
+        }
+        return damage;
+    }
+
+    static public String calculateTypeDamageString(Element attackerType, Element defenderType, int damage) {
+        int effectiveness = attackerType.comparedTo(defenderType);
+        String str = "";
+        if (effectiveness == 0) {
+            str += calculateTypeDamage(attackerType, defenderType, damage) + " damage ";
+        } else if (effectiveness > 0) {
+            str += calculateTypeDamage(attackerType, defenderType, damage) + " damage (+)";
+        } else if (effectiveness < 0) {
+            str += calculateTypeDamage(attackerType, defenderType, damage) + " damage (-)";
+        }
+        return str;
+    }
+
     public String toString() {
         return stringName;
     }

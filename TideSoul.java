@@ -15,24 +15,30 @@ public class TideSoul extends Soul
      */
     static final GreenfootImage COSTUME = new GreenfootImage("tide.png");
     static final String NAME = "Tide Spirit";
-    static final int BASE_HEALTH = 80;
-    static final int BASE_ATTACK = 35;
+    static final int BASE_HEALTH = 150;
+    static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Wave";
     static final String PASSIVE_NAME = "Cleanse";
 
     static final String ULTIMATE_NAME = "Tsunami";
-    static final String ULTIMATE_DETAILS = "Returns absorbed damage.";
+    static final String ULTIMATE_DETAILS = "Heal or damage based on health. More effective with more stacks.";
 
-    static final String PASSIVE_DETAILS = "Remove effects and heal. Absorb damage from stuns, burns, and poisons.";
+    static final String PASSIVE_DETAILS = "Remove effects and heal. Increased stacks from stuns, burns, and poisons.";
 
-    int floodStacks = 0;
+    int floodStacks;
     
     public TideSoul()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, ULTIMATE_NAME, ULTIMATE_DETAILS, COSTUME);
+        this.floodStacks = 2;
     }
 
-    public void cleanse(Entity other) {
+    public void attack(Entity other) {
+        super.attack(other);
+        floodStacks++;
+    }   
+
+    public void passive(Entity other) {
         if (other.stunDuration > 0) {
             floodStacks++;
         }
@@ -45,18 +51,17 @@ public class TideSoul extends Soul
         other.stunDuration = 0;
         other.burningDuration = 0;
         other.poisonedDuration = 0;
-        this.health += (int)(20 * levelModifier);
-    }
-
-    public void passive(Entity other) {
-        other.burningDamage = (int) (15 * this.levelModifier);
-        other.burningDuration = 5;
-        // Any additional initialization code for TideSoul can go here
+        this.health += (int)(15 * levelModifier);
+        floodStacks+=2;
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         if (!this.ultimateUsed) {
-            
+            this.health += floodStacks * 10 * levelModifier / 2;
+
+            double effectiveDamage = effectivenessMultiplier(others.get(0)) * (int)(floodStacks * levelModifier) * 10;
+            others.get(0).takeDamage(effectiveDamage);
+            ultimateUsed = true;
         }
     }
 }

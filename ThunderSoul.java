@@ -16,8 +16,8 @@ public class ThunderSoul extends Soul
      */
     static GreenfootImage costume = new GreenfootImage("electric.png");
     static final String NAME = "Electric Spirit";
-    static final int BASE_HEALTH = 120;
-    static final int BASE_ATTACK = 25;
+    static final int BASE_HEALTH = 90;
+    static final int BASE_ATTACK = 30;
     static final String ATTACK_NAME = "Shock";
     static final String PASSIVE_NAME = "Charge";
     static final String PASSIVE_DETAILS = "Do increased damaged & double the stun chance per charge (base 25%)";
@@ -51,16 +51,17 @@ public class ThunderSoul extends Soul
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         if (!this.ultimateUsed) {
 
-            int damage = (int)((20 + attack * (charge + 1) / 3) * levelModifier);
+            int damage = (int)((15 + attack * (charge + 1) / 10) * levelModifier);
             // Logic to hit additional enemies based on charge can be implemented here
 
             for (int i = 0; i < Math.min(charge+1, others.size()); i++) {
 
                 final int index = i;
+                final double effectiveDamage = effectivenessMultiplier(others.get(index)) * damage;
                 BattleScreen.getInstance().actionStack.add(
-                    new Action("Thunderstorm hits " + others.get(index).name + ", dealing " + damage + " damage", 
+                    new Action("Thunderstorm hits " + others.get(index).name + " for " + effectiveDamage + " damage" + effectivenessTag(others.get(index)) + "!",
                     () -> {
-                        others.get(index).health -= damage;
+                        others.get(index).takeDamage(effectiveDamage);
                     }
                 ));
             }

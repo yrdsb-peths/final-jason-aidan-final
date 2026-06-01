@@ -35,13 +35,16 @@ public class StarSpirit extends Spirit
         super.applyPassive(other);
         other.burningDamage = Math.max(other.burningDamage, (int)(3 * levelModifier));
         int j = 1;
+
+        final double effectiveDamage = effectivenessMultiplier(other) * (int)(attack * levelModifier / 2);
+
         for (int i = 0; i < 5; i++) {
             
             if (Greenfoot.getRandomNumber(100) < 50) {
                 BattleScreen.getInstance().actionStack.add(
-                    new Action("Meteor strike (x" + j + ")", 
+                    new Action("Meteor strike (x" + j + ")" + effectivenessTag(other) + "!", 
                     () -> {
-                        other.health -= (int)(10 * levelModifier);
+                        other.takeDamage(effectiveDamage);
                         other.burningDuration ++;
                     }
                 ));

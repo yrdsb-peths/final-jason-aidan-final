@@ -24,7 +24,7 @@ public class SmallSpirit extends Spirit
     public SmallSpirit()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.small, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
-        this.evasion = 0.3;
+        this.evasion = 0;
     }
 
     public Soul getUpgraded() {
@@ -43,8 +43,8 @@ public class SmallSpirit extends Spirit
             ));
             
         } else {
-            this.health = (int) (this.health * 0.9);
-            this.attack = (int) (this.attack * 0.9);
+            this.health = (int) (this.health * 0.75);
+            this.attack = (int) (this.attack * 0.75);
         }
     }
 }

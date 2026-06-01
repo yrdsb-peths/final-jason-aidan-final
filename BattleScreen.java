@@ -186,7 +186,7 @@ public class BattleScreen extends Actor
             ultButton.isPressed = false;
             if (currentEntity instanceof Soul soul) {
                 
-                soul.ultimate(currentEntities, opponentEntities);
+                soul.applyUltimate(currentEntities, opponentEntities);
                 attachToActions(() -> endAction());}
             }
             

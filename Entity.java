@@ -1,6 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Write a description of class Spirit here.
@@ -135,19 +136,42 @@ abstract public class Entity
         System.out.println(this.health + " " + levelModifier);
     }
 
+    public double effectivenessMultiplier(Entity defender) {
+        int effectiveness = this.type.comparedTo(defender.type);
+        if (effectiveness > 0) {
+            return 1.5;
+        } else if (effectiveness < 0) {
+            return 0.5;
+        }
+        return 1;
+    }
+
+    public String effectivenessTag(Entity defender) {
+        int effectiveness = this.type.comparedTo(defender.type);
+       if (effectiveness > 0) {
+            return " (very effective) ";
+        } else if (effectiveness < 0) {
+            return " (not very effective) ";
+        }
+        return "";
+    }
+
+    public void takeDamage(int damage) {
+        this.health -= Math.max(damage - this.defense, 0);
+    }
+
+    public void takeDamage(double damage) {
+        this.health -= (int) Math.max(damage - this.defense, 0);
+    }
+
     public void attack(Entity other) {
 
-        System.out.println(other.evasion);
         BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
 
         if (Greenfoot.getRandomNumber(100) <= 100*other.evasion) {
-            System.out.println("missed by evasion");
             BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             return;
         }
-
-        
-
 
         int effectiveness = comparedTo(other);
 
@@ -157,41 +181,41 @@ abstract public class Entity
                 
                 BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else if (rand > 10 && rand <= 90) {
-                double outputDmg = Math.max(attack - other.defense, 0);
+                double outputDmg = attack;
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It dealt " + (int)outputDmg + " damage!",
                     () -> {
-                        other.health -= outputDmg;
+                        other.takeDamage((int)outputDmg);
                     }
                 ));
             } else if (rand > 90) {
-                double outputDmg = Math.max(1.5*attack - other.defense, 0);
+                double outputDmg = 1.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was a critical hit, dealing " + (int)outputDmg + " damage!",
                     () -> {
-                        other.health -= outputDmg;
+                        other.takeDamage((int)outputDmg);
                     }
                 ));
             }
         } else if (effectiveness > 0) {
             int randCrit = Greenfoot.getRandomNumber(100);
             if (randCrit < 10) {
-                double outputDmg = Math.max(3*attack - other.defense, 0);
+                double outputDmg = 3*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was a critical hit, dealing " + (int)outputDmg + " damage!",
                     () -> {
-                        other.health -= outputDmg;
+                        other.takeDamage((int)outputDmg);
                     }
                 ));
             } else { 
-                double outputDmg = Math.max(1.5*attack - other.defense, 0);
+                double outputDmg = 1.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was super effective, dealing " + (int)outputDmg + " damage!",
                     () -> {
-                        other.health -= outputDmg;
+                        other.takeDamage((int)outputDmg);
                     }
                 ));
             }
@@ -200,12 +224,12 @@ abstract public class Entity
             if (randMiss < 10) {
                 BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else { 
-                double outputDmg = Math.max(0.5*attack - other.defense, 0);
+                double outputDmg = 0.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was not very effective, dealing " + (int)outputDmg + " damage.",
                     () -> {
-                        other.health -= outputDmg;
+                        other.takeDamage((int)outputDmg);
                     }
                 ));
             }
