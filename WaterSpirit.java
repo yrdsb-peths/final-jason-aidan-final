@@ -15,7 +15,7 @@ public class WaterSpirit extends Spirit
 
     static GreenfootImage costume = new GreenfootImage("water.png");
     static final String NAME = "Water Spirit";
-    static final int BASE_HEALTH = 100;
+    static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
     static final String ATTACK_NAME = "Splash";
     static final String PASSIVE_NAME = "Purify";

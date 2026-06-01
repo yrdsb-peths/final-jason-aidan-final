@@ -15,7 +15,7 @@ public class ElectricSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("electric.png");
     static final String NAME = "Electric Spirit";
     static final int BASE_HEALTH = 70;
-    static final int BASE_ATTACK = 15;
+    static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Shock";
     static final String PASSIVE_NAME = "Charge";
     static final String PASSIVE_DETAILS = "Do increased damaged & double the stun chance per charge (start at 25%)";

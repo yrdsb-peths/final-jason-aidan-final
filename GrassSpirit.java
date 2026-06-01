@@ -14,8 +14,8 @@ public class GrassSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("grass.png");
     static final String NAME = "Grass Spirit";
-    static final int BASE_HEALTH = 60;
-    static final int BASE_ATTACK = 15;
+    static final int BASE_HEALTH = 50;
+    static final int BASE_ATTACK = 10;
     static final String ATTACK_NAME = "Seed";
     static final String PASSIVE_NAME = "Grow";
     static final String PASSIVE_DETAILS = "Heal & regenerate";
