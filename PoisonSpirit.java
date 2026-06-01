@@ -14,11 +14,11 @@ public class PoisonSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("poison.png");
     static final String NAME = "Poison Spirit";
-    static final int BASE_HEALTH = 70;
+    static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Toxin";
     static final String PASSIVE_NAME = "Corrosive Acid";
-    static final String PASSIVE_DETAILS = "Poison your enemies overtime!";
+    static final String PASSIVE_DETAILS = "Poisons for 10% overtime!";
     
     public PoisonSpirit()
     {
@@ -27,7 +27,7 @@ public class PoisonSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        other.poisonedPercentage = 0.2;
+        other.poisonedPercentage = 0.1;
         other.poisonedDuration = 3;
     }
 
