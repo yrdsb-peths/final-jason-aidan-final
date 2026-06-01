@@ -29,6 +29,8 @@ abstract public class Entity
     double levelModifier;
     int stunDuration;
     int defense;
+    double evasion;
+    // number from 0-1 representing chance to dodge an attack
     
     Element type;
 
@@ -49,6 +51,8 @@ abstract public class Entity
         poisonedPercentage = 0;
         healingAmount = 0;
         healingDuration = 0;
+        evasion = 0;
+        stunDuration = 0;
         this.health = health;
         this.attack = attack;
         this.type = type;
@@ -57,7 +61,6 @@ abstract public class Entity
         this.passiveDetails = passiveDetails;
         this.image = image;
         this.name = name;
-        this.stunDuration = 0;
         updateModifier();
     }
 
@@ -133,17 +136,28 @@ abstract public class Entity
     }
 
     public void attack(Entity other) {
+
+        System.out.println(other.evasion);
+        BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
+
+        if (Greenfoot.getRandomNumber(100) <= 100*other.evasion) {
+            System.out.println("missed by evasion");
+            BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
+            return;
+        }
+
+        
+
+
         int effectiveness = comparedTo(other);
 
         if (effectiveness == 0) {
             int rand = Greenfoot.getRandomNumber(100);
             if (rand <= 10) {
-                BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
+                
                 BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else if (rand > 10 && rand <= 90) {
                 double outputDmg = Math.max(attack - other.defense, 0);
-
-                BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It dealt " + (int)outputDmg + " damage!",
                     () -> {
@@ -153,7 +167,6 @@ abstract public class Entity
             } else if (rand > 90) {
                 double outputDmg = Math.max(1.5*attack - other.defense, 0);
 
-                BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was a critical hit, dealing " + (int)outputDmg + " damage!",
                     () -> {
@@ -166,7 +179,6 @@ abstract public class Entity
             if (randCrit < 10) {
                 double outputDmg = Math.max(3*attack - other.defense, 0);
 
-                BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was a critical hit, dealing " + (int)outputDmg + " damage!",
                     () -> {
@@ -176,7 +188,6 @@ abstract public class Entity
             } else { 
                 double outputDmg = Math.max(1.5*attack - other.defense, 0);
 
-                BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was super effective, dealing " + (int)outputDmg + " damage!",
                     () -> {
@@ -187,12 +198,10 @@ abstract public class Entity
         } else if (effectiveness < 0) {
             int randMiss = Greenfoot.getRandomNumber(100);
             if (randMiss < 10) {
-                BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else { 
                 double outputDmg = Math.max(0.5*attack - other.defense, 0);
 
-                BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
                 BattleScreen.getInstance().actionStack.add(new Action(
                     "> It was not very effective, dealing " + (int)outputDmg + " damage.",
                     () -> {
