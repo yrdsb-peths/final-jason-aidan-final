@@ -74,12 +74,12 @@ public class BattleScreen extends Actor
         
         initButtons();
         initLabels();
-        p1EntityDisplay = new ImageDisplay();
-        p2EntityDisplay = new ImageDisplay();
+        initEntityDisplay();
 
-        setBackground();
 
-        initTextBox();
+        initBackground();
+
+        initDialogueBox();
         drawHealthbar();
         turnNumber = 1;
         
@@ -98,7 +98,7 @@ public class BattleScreen extends Actor
         }
     }
 
-    public void gameOver()
+    private void gameOver()
     {
         if(player1Entities.size() == 0)
         {
@@ -126,18 +126,7 @@ public class BattleScreen extends Actor
         world.removeObject(this);
     }
 
-    //returns true if the given list has no spirits
-    public boolean isEmptyEntities(ArrayList<Entity> list)
-    {
-        if(list.size() == 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    //players "playerIndex" turn, player can attack, use passive, choose new spirit, or flee battle
-    public void playerAction()
+    private void playerAction()
     {
 
         int turn = 2 - turnNumber % 2;
@@ -145,21 +134,25 @@ public class BattleScreen extends Actor
 
         if (actionStack.size() > 0) {
 
-            Action action = actionStack.get(0);
 
+            Action action = actionStack.get(0);
             dialogueBox.setText(action.text);
 
-            if (!action.isCompleted && !(action.func == null)) {
+            if (!action.isCompleted && action.func != null) {
+                System.out.println("Completed: " + action.isCompleted);
                 action.func.run();
+                System.out.println("Completed: " + action.isCompleted);
             }
 
-            if (Greenfoot.mouseClicked(world)) {
+            if (Greenfoot.mouseClicked(null)) {
                 actionStack.remove(0);
             }
             return;
+        } else {
+            System.out.println("Checking buttons");
         }
 
-        updateTextBox("Player "+(2 - turnNumber % 2)+"'s turn");
+        dialogueBox.setText("Player "+turn+"'s turn");
 
         p1Entity = player1Entities.get(0);
         p2Entity = player2Entities.get(0);
@@ -168,72 +161,106 @@ public class BattleScreen extends Actor
         Entity opponentEntity = turnNumber % 2 == 0 ? p1Entity : p2Entity;
 
         showPlayerButtons();
-        updateImageDisplays();
+        updateEntityImage();
 
 
         if (attackButton.isPressed) {
             attackButton.isPressed = false;
             currentEntity.attack(opponentEntity);
-            endAction(currentEntity, opponentEntity);
+            attachToActions(() -> endAction());
+            
 
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
-            actionStack.add(new Action(
-                "> Player " + turn + " used " + currentEntity.passiveName + "!",
-                () -> {currentEntity.passive(opponentEntity);}
-            ));
-            endAction(currentEntity, opponentEntity);
+            // don't ever use 'passive' like currentEntity.passive(opponentEntity);
+            currentEntity.applyPassive(opponentEntity);
+            attachToActions(() -> endAction());
+            
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
-            endAction(currentEntity, opponentEntity);
 
         } else if (fleeButton.isPressed) {
             fleeButton.isPressed = false;
             // Handle fleeing logic here, such as ending the game or declaring the other player as the winner
             
         }
-
-        
-        
     }
 
     
-    public void endAction(Entity currentEntity, Entity opponentEntity)
+    private void endAction()
     {
+        System.out.println("end action");
+        int previousStackSize = actionStack.size();
 
-        
-        drawHealthbar();
+        p1Entity.applyStatusEffects();
+        p2Entity.applyStatusEffects();
 
-        currentEntity.applyStatusEffects();
-        opponentEntity.applyStatusEffects();
+        if (actionStack.size() > previousStackSize) {
 
-        checkIfFainted();
+            attachToActions(() -> { 
+                checkIfFainted(); 
+                turnNumber++; 
+            });
+        } else {
 
-        turnNumber++;
-
-        
+            checkIfFainted(); 
+            turnNumber++;
+        }
+    }
+    // attaches a func to last action without creates a new one
+    private void attachToActions(Runnable func) {
+        if (actionStack.size() > 0) {
+            Action modifiedAction = new Action(actionStack.getLast(), () -> func.run());
+            actionStack.set(actionStack.size()-1, modifiedAction);
+        } else {
+            func.run();
+        }
     }
     
-    public void checkIfFainted()
+    private void checkIfFainted()
     {
         if(p1Entity.health <= 0)
         {
-            p1Entity = player1Entities.remove(0);
-            actionStack.add(new Action(p1Entity.name + " has fainted!"));
+            
+            actionStack.add(new Action(
+                p1Entity.name + " has fainted!",
+                () -> {
+                    p1Entity = player1Entities.remove(0); 
+                    if (player1Entities.size() == 0) {
+                        gameOver();
+                    } else {
+                        p1Entity = player1Entities.get(0);
+                    }
+                    
+                }
+            ));
         }
         if(p2Entity.health <= 0)
         {
-            p2Entity = player2Entities.remove(0);
-            actionStack.add(new Action(p2Entity.name + " has fainted!"));
+            actionStack.add(new Action(
+                p2Entity.name + " has fainted!",
+                () -> {
+                    p2Entity = player2Entities.remove(0);
+                    if (player2Entities.size() == 0) {
+                        gameOver();
+                    } else {
+                        p2Entity = player2Entities.get(0);
+                    }
+                    
+                }
+            ));
             
         }
+    }
 
-        updateImageDisplays();
+    public void updateAllVisuals() {
+        updateEntityImage();
         updateLabels();
+        drawHealthbar();
     }
     
-    public void showPlayerButtons()
+    private void showPlayerButtons()
     {
         int num = 2 - turnNumber % 2;
 
@@ -256,7 +283,7 @@ public class BattleScreen extends Actor
 
     }
 
-    public void initButtons()
+    private void initButtons()
     {
 
         attackButton = new Button(null, 20);
@@ -273,7 +300,7 @@ public class BattleScreen extends Actor
     }
 
 
-    public void initLabels()
+    private void initLabels()
     {
 
         int fontSize = 20;
@@ -311,7 +338,7 @@ public class BattleScreen extends Actor
         world.addObject(type2label, MyWorld.WIDTH/4 * 3 + 20, MyWorld.HEIGHT/2);
 
     }
-    public void updateLabels()
+    private void updateLabels()
     {
 
 
@@ -322,8 +349,14 @@ public class BattleScreen extends Actor
         player2Label.get("attack").setValue("ATT: " + p2Entity.attack);
         player2Label.get("type").setValue("Type: " + p2Entity.type.toString());
     }
-
-    public void updateImageDisplays()
+    private void initEntityDisplay() {
+        p1EntityDisplay = new ImageDisplay();
+        p2EntityDisplay = new ImageDisplay();
+        
+        world.addObject(p1EntityDisplay, MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
+        world.addObject(p2EntityDisplay, MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
+    }
+    private void updateEntityImage()
     {
         
         int scaleX = 100;
@@ -339,26 +372,17 @@ public class BattleScreen extends Actor
         p1EntityDisplay.setImage(p1Image);
         p2EntityDisplay.setImage(p2Image);
 
-
-        world.addObject(p1EntityDisplay, MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
-        world.addObject(p2EntityDisplay, MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
     }
 
-    public void initTextBox()
+    private void initDialogueBox()
     {
         dialogueBox = new DialogueBox(220, 110, Color.WHITE, "> Game Starts!", Color.BLACK, new Font(15));
         world.addObject(dialogueBox, 300, 340);
-        updateTextBox("Player 1's turn");
-    }
-    public void updateTextBox(String string)
-    {
-        dialogueBox.setText(string);
-        
+        dialogueBox.setText("Player 1's turn");
     }
 
-    public void setBackground()
+    private void initBackground()
     {
-
         int i = Greenfoot.getRandomNumber(4);
         backgroundImage = new GreenfootImage("background"+(i+1)+".png");
         backgroundImage.scale(600, 400);
@@ -370,9 +394,12 @@ public class BattleScreen extends Actor
         
     }
 
-
-    public void drawHealthbar()
+    private void drawHealthbar()
     {
+        if (player1Entities.size() == 0 || player2Entities.size() == 0) {
+            return;
+        }
+        
         int borderWidth = 2;
         int health1 = player1Entities.get(0).health;
         int health2 = player2Entities.get(0).health;

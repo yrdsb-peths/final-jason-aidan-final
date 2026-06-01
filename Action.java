@@ -20,10 +20,21 @@ public class Action
         this.text = text;
         this.func = () -> {
             func.run(); 
-            BattleScreen.getInstance().drawHealthbar();
+            BattleScreen.getInstance().updateAllVisuals();
             isCompleted = true;
         };
         this.isCompleted = false;
+
+    }
+
+    public Action(Action action, Runnable cFunc)
+    {
+        this(action.text, () -> {
+            action.func.run();
+            cFunc.run();
+        });
+
+        this.isCompleted = action.isCompleted;
     }
 
     public Action(String text)

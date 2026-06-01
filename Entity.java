@@ -59,7 +59,7 @@ abstract public class Entity
         this.name = name;
         this.isStunned = false;
         this.stunDuration = 10;
-        updateModified();
+        updateModifier();
     }
 
     public int comparedTo(Entity other)
@@ -70,7 +70,6 @@ abstract public class Entity
     public void applyStatusEffects()
     
     {
-        System.out.println("applied");
         //apply burn damage and decrease burn duration
         if(this.burningDuration > 0)
         {
@@ -113,21 +112,22 @@ abstract public class Entity
 
     public void levelUp(int x) {
         level += x;
-        updateModified();
+        updateModifier();
     }
 
     public void levelUp() {
 
         level ++;
-        updateModified();
+        updateModifier();
     }
 
-    public void updateModified() {
+    public void updateModifier() {
+        // 10% increase in stats per level
         levelModifier = (1.0 + (double) level / 10);
     }
 
     public void fixLevel() {
-        // 10% increase in stats per level
+        
         this.health = (int) (this.health * levelModifier);
         this.attack = (int) (this.attack * levelModifier);
         System.out.println(this.health + " " + levelModifier);
@@ -140,7 +140,7 @@ abstract public class Entity
             int rand = Greenfoot.getRandomNumber(100);
             if (rand <= 10) {
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
-                BattleScreen.getInstance().actionStack.add(new Action("> It missed!"));
+                BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else if (rand > 10 && rand <= 90) {
                 double outputDmg = attack;
 
@@ -187,7 +187,7 @@ abstract public class Entity
             int randMiss = Greenfoot.getRandomNumber(100);
             if (randMiss < 10) {
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
-                BattleScreen.getInstance().actionStack.add(new Action("> It missed!"));
+                BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
             } else { 
                 double outputDmg = attack * 0.5;
                 BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
@@ -199,6 +199,14 @@ abstract public class Entity
                 ));
             }
         }
+    }
+
+    // basically a wrapper
+    public void applyPassive(Entity other) {
+        BattleScreen.getInstance().actionStack.add(new Action(
+            "> " + name + " used " + passiveName + ".",
+            () -> {passive(other);}
+        ));
     }
 
     abstract public void passive(Entity other);

@@ -70,7 +70,7 @@ public class ChooseScreen extends Actor
             chooseSpirit(chooser1, chooser2);
             updateDisplay();
 
-            boolean finishedChoosing = player1Entities.size() == MyWorld.maxEntities && player2Entities.size() == MyWorld.maxEntities;
+            boolean finishedChoosing = player1Entities.size() == MyWorld.MAX_ENTITIES && player2Entities.size() == MyWorld.MAX_ENTITIES;
 
 
             if (finishedChoosing && submitButton.isPressed) {
@@ -103,10 +103,10 @@ public class ChooseScreen extends Actor
 
     public void initSelectedDisplay() {
 
-        player1Displays = new Button[MyWorld.maxEntities];
-        player2Displays = new Button[MyWorld.maxEntities];
+        player1Displays = new Button[MyWorld.MAX_ENTITIES];
+        player2Displays = new Button[MyWorld.MAX_ENTITIES];
 
-        for (int i = 0; i < MyWorld.maxEntities; i++) {
+        for (int i = 0; i < MyWorld.MAX_ENTITIES; i++) {
             
             player1Displays[i] = new Button(null, 10);
             world.addObject(player1Displays[i], 20 + 40 * i, 300);
@@ -153,7 +153,7 @@ public class ChooseScreen extends Actor
 
     public void updateDisplay() {
         
-        for (int i = 0; i < MyWorld.maxEntities; i++) {
+        for (int i = 0; i < MyWorld.MAX_ENTITIES; i++) {
             if (player1Displays[i] == null || player2Displays[i] == null) {
                 continue;
             }
@@ -193,7 +193,7 @@ public class ChooseScreen extends Actor
                 i++;
             }
 
-            Chooser chooser = new Chooser(costumeList, MyWorld.maxEntities, spacing, 4);
+            Chooser chooser = new Chooser(costumeList, MyWorld.MAX_ENTITIES, spacing, 4);
 
             // chooser.switches[0].status 
 
@@ -209,7 +209,7 @@ public class ChooseScreen extends Actor
     }
 
     public void removeDisplays() {
-        for (int i = 0; i < MyWorld.maxEntities; i++) {
+        for (int i = 0; i < MyWorld.MAX_ENTITIES; i++) {
             world.removeObject(player1Displays[i]);
             world.removeObject(player2Displays[i]);
         }
