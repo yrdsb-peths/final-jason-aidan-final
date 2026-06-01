@@ -16,13 +16,13 @@ public class FireSpirit extends Spirit
     static final String NAME = "Fire Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 20;
-    static final String attackName = "Burn";
-    static final String passiveName = "FlameThrower";
-    static final String passiveDetails = "Burn your enemies overtime!";
+    static final String ATTACK_NAME = "Burn";
+    static final String PASSIVE_NAME = "FlameThrower";
+    static final String PASSIVE_DETAILS = "Burn your enemies overtime!";
     
     public FireSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 

@@ -27,7 +27,6 @@ abstract public class Entity
     int healingAmount;
     int healingDuration; // # of turns
     double levelModifier;
-    boolean isStunned;
     int stunDuration;
     
     Element type;
@@ -57,8 +56,7 @@ abstract public class Entity
         this.passiveDetails = passiveDetails;
         this.image = image;
         this.name = name;
-        this.isStunned = false;
-        this.stunDuration = 10;
+        this.stunDuration = 0;
         updateModifier();
     }
 

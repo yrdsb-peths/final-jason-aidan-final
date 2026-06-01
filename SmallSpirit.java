@@ -17,13 +17,13 @@ public class SmallSpirit extends Spirit
     static final String NAME = "Small Spirit";
     static final int BASE_HEALTH = 40;
     static final int BASE_ATTACK = 10;
-    static final String attackName = "Bite";
-    static final String passiveName = "Swift Dodge";
-    static final String passiveDetails = "Your Opponent now has a change to miss!";
+    static final String ATTACK_NAME = "Bite";
+    static final String PASSIVE_NAME = "Swift Dodge";
+    static final String PASSIVE_DETAILS = "Your Opponent now has a change to miss!";
     
     public SmallSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.small, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.small, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
     }
 
     public Soul getUpgraded() {

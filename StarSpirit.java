@@ -16,13 +16,13 @@ public class StarSpirit extends Spirit
     static final String NAME = "Star Spirit";
     static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 20;
-    static final String attackName = "Flare";
-    static final String passiveName = "Meteor Rain";
-    static final String passiveDetails = "Extreme burning to your enemies overtime!";
+    static final String ATTACK_NAME = "Flare";
+    static final String PASSIVE_NAME = "Meteor Rain";
+    static final String PASSIVE_DETAILS = "Extreme burning to your enemies overtime!";
     
     public StarSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
     }
 
     public void passive(Entity other) {

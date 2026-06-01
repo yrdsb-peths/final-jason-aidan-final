@@ -12,18 +12,21 @@ public class BlazeSoul extends Soul
     /**
      * Constructor for objects of class Blaze
      */
-    static GreenfootImage costume = new GreenfootImage("blaze.png");
+    static final GreenfootImage COSTUME = new GreenfootImage("blaze.png");
     static final String NAME = "Fire Spirit";
     static final int BASE_HEALTH = 80;
     static final int BASE_ATTACK = 20;
-    static final String attackName = "Burn";
-    static final String passiveName = "FlameThrower";
-    static final String ultimateName = "Burst";
-    static final String passiveDetails = "Burn your enemies overtime!";
+    static final String ATTACK_NAME = "Burn";
+    static final String PASSIVE_NAME = "Ignite";
+
+    static final String ULTIMATE_NAME = "Burst";
+    static final String ULTIMATE_DETAILS = "High damage + burning, self-damaging.";
+
+    static final String PASSIVE_DETAILS = "Set your enemy on fire.";
     
     public BlazeSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, ULTIMATE_NAME, ULTIMATE_DETAILS, COSTUME);
 
     }
 

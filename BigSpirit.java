@@ -17,13 +17,13 @@ public class BigSpirit extends Spirit
     static final String NAME = "Big Spirit";
     static final int BASE_HEALTH = 120;
     static final int BASE_ATTACK = 20;
-    static final String attackName = "Stomp";
-    static final String passiveName = "Ground Pound";
-    static final String passiveDetails = "Increase your damage output by 10 damage";
+    static final String ATTACK_NAME = "Stomp";
+    static final String PASSIVE_NAME = "Ground Pound";
+    static final String PASSIVE_DETAILS = "Increase your damage output by 10 damage";
     
     public BigSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.big, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.big, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 

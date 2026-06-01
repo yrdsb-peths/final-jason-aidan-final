@@ -16,13 +16,13 @@ public class OrdinarySpirit extends Spirit
     static final String NAME = "Ordinary Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
-    static final String attackName = "Thing";
-    static final String passiveName = "Transformation";
-    static final String passiveDetails = "You'll find out soon...";
+    static final String ATTACK_NAME = "Thing";
+    static final String PASSIVE_NAME = "Transformation";
+    static final String PASSIVE_DETAILS = "You'll find out soon...";
     
     public OrdinarySpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 

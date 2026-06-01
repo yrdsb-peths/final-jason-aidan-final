@@ -16,13 +16,13 @@ public class PoisonSpirit extends Spirit
     static final String NAME = "Poison Spirit";
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 20;
-    static final String attackName = "Toxin";
-    static final String passiveName = "Corrosive Acid";
-    static final String passiveDetails = "Poison your enemies overtime!";
+    static final String ATTACK_NAME = "Toxin";
+    static final String PASSIVE_NAME = "Corrosive Acid";
+    static final String PASSIVE_DETAILS = "Poison your enemies overtime!";
     
     public PoisonSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.poison, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.poison, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 

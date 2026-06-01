@@ -16,13 +16,13 @@ public class SusSpirit extends Spirit
     static final String NAME = "Sus Spirit";
     static final int BASE_HEALTH = 120;
     static final int BASE_ATTACK = 10;
-    static final String attackName = "sus";
-    static final String passiveName = "sus";
-    static final String passiveDetails = "sus";
+    static final String ATTACK_NAME = "sus";
+    static final String PASSIVE_NAME = "sus";
+    static final String PASSIVE_DETAILS = "sus";
     
     public SusSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.sus, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.sus, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
     }
 
     public void passive(Entity other) {

@@ -16,13 +16,13 @@ public class RockSpirit extends Spirit
     static final String NAME = "Rock Spirit";
     static final int BASE_HEALTH = 70;
     static final int BASE_ATTACK = 8;
-    static final String attackName = "Crumble";
-    static final String passiveName = "Boulder Shell";
-    static final String passiveDetails = "Reduce the damage taken";
+    static final String ATTACK_NAME = "Crumble";
+    static final String PASSIVE_NAME = "Boulder Shell";
+    static final String PASSIVE_DETAILS = "Reduce the damage taken";
     
     public RockSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.rock, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 

@@ -131,25 +131,19 @@ public class BattleScreen extends Actor
 
         int turn = 2 - turnNumber % 2;
 
-
         if (actionStack.size() > 0) {
-
 
             Action action = actionStack.get(0);
             dialogueBox.setText(action.text);
 
             if (!action.isCompleted && action.func != null) {
-                System.out.println("Completed: " + action.isCompleted);
                 action.func.run();
-                System.out.println("Completed: " + action.isCompleted);
             }
 
             if (Greenfoot.mouseClicked(null)) {
                 actionStack.remove(0);
             }
             return;
-        } else {
-            System.out.println("Checking buttons");
         }
 
         dialogueBox.setText("Player "+turn+"'s turn");
@@ -162,6 +156,11 @@ public class BattleScreen extends Actor
 
         showPlayerButtons();
         updateEntityImage();
+
+        if (currentEntity.stunDuration > 0) {
+            currentEntity.stunDuration --;
+            actionStack.add(new Action(currentEntity.name + " is stunned.", () -> endAction()));
+        }
 
 
         if (attackButton.isPressed) {

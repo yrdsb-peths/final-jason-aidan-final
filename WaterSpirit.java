@@ -17,13 +17,13 @@ public class WaterSpirit extends Spirit
     static final String NAME = "Water Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
-    static final String attackName = "Splash";
-    static final String passiveName = "Rainfall";
-    static final String passiveDetails = "Remove effects and deal 20 damage";
+    static final String ATTACK_NAME = "Splash";
+    static final String PASSIVE_NAME = "Rainfall";
+    static final String PASSIVE_DETAILS = "Remove effects and deal 20 damage";
     
     public WaterSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 

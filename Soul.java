@@ -18,14 +18,29 @@ abstract public class Soul extends Entity
     // Creates a fixed list of spirit types that can be used to dynamically create spirit objects
 
     boolean ultimateUsed;
+    String ultimateName;
+    String ultimateDetails;
 
 
-    abstract public void ultimate(Entity other);
+    
+
+
     
     
-    public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, GreenfootImage image)
+    public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String passiveDetails, String ultimateName, String ultimateDetails, GreenfootImage image)
     {
         super(name, health, attack, type, attackName, passiveName, passiveDetails, image);
-        ultimateUsed = false;
+        this.ultimateUsed = false;
+        this.ultimateName = ultimateName;
+        this.ultimateDetails = ultimateDetails;
+    }
+
+    abstract public void ultimate(Entity other);
+
+    public void applyUltimate(Entity other) {
+        BattleScreen.getInstance().actionStack.add(new Action(
+            "> " + name + " used " + ultimateName + ".",
+            () -> {passive(other);}
+        ));
     }
 }

@@ -16,13 +16,13 @@ public class GrassSpirit extends Spirit
     static final String NAME = "Grass Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
-    static final String attackName = "Seed";
-    static final String passiveName = "Pollenate";
-    static final String passiveDetails = "Heal 10 health";
+    static final String ATTACK_NAME = "Seed";
+    static final String PASSIVE_NAME = "Pollenate";
+    static final String PASSIVE_DETAILS = "Heal 10 health";
 
     public GrassSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, attackName, passiveName, passiveDetails, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 

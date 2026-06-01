@@ -16,13 +16,13 @@ public class DarkSpirit extends Spirit
     static final String NAME = "Dark Spirit";
     static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 20;
-    static final String attackName = "Shadow";
-    static final String passiveName = "Total Blackout";
-    static final String passiveDetails = "Exttreme poison to your enemies overtime";
+    static final String ATTACK_NAME = "Shadow";
+    static final String PASSIVE_NAME = "Total Blackout";
+    static final String PASSIVE_DETAILS = "Exttreme poison to your enemies overtime";
     
     public DarkSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, attackName, passiveName, passiveDetails, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, PASSIVE_DETAILS, costume);
 
     }
 
