@@ -32,7 +32,7 @@ public class ChooseScreen extends Actor
     int player1points;
     int player2points;
 
-    static int MAX_CHOOSE_POINTS = 10;
+    static int MAX_CHOOSE_POINTS = 20;
 
 
     /**
@@ -246,7 +246,11 @@ public class ChooseScreen extends Actor
                     entities.get(i).levelUp();
 
                     if (entities.get(i).level > 5 && entities.get(i) instanceof Spirit level1) {
-                        entities.set(i, level1.getUpgraded()); 
+                        Soul upgrade = level1.getUpgraded();
+                        if (upgrade != null) {
+                            entities.set(i, upgrade); 
+                        }
+                        
                     }
                     updateDisplay();
                     displays[i].isPressed = false;
