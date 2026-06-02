@@ -48,39 +48,36 @@ public class ThunderSoul extends Soul
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
-        if (!this.ultimateUsed) {
 
-            int damage = (int)((30 + attack * (charge + 1) / 10) * levelModifier);
-            // Logic to hit additional enemies based on charge can be implemented here
+        int damage = (int)((30 + attack * (charge + 1) / 10) * levelModifier);
+        // Logic to hit additional enemies based on charge can be implemented here
 
-            for (int i = 0; i < Math.min(charge+1, others.size()); i++) {
+        for (int i = 0; i < Math.min(charge+1, others.size()); i++) {
 
-                final int index = i;
-                final double effectiveDamage = effectivenessMultiplier(others.get(index)) * damage;
-                BattleScreen.getInstance().actionStack.add(
-                    new Action("Thunderstorm hits " + others.get(index).name + " for " + (int)effectiveDamage + " damage" + effectivenessTag(others.get(index)) + "!",
-                    () -> {
-                        others.get(index).takeDamage(effectiveDamage);
-                    }
-                ));
-            }
-            ultimateUsed = true;
+            final int index = i;
+            final double effectiveDamage = effectivenessMultiplier(others.get(index)) * damage;
+            BattleScreen.getInstance().actionStack.add(
+                new Action("Thunderstorm hits " + others.get(index).name + " for " + (int)effectiveDamage + " damage" + effectivenessTag(others.get(index)) + "!",
+                () -> {
+                    others.get(index).takeDamage(effectiveDamage);
+                }
+            ));
+        }
 
-            charge = 0;
-        }     
+        charge = 0;
         
     }
 
 
     public String getAttackDetails() {
-        return "Shock: deals " + attack + " electric damage; expends charges.";
+        return "Shock: deals " + attack * (charge + 1) + " electric damage; expends charges.";
     }
 
     public String getPassiveDetails() {
         return "Charge: Boosts attack or thunderstorm once. Can stack.";
     }
 
-    public String getUltimateDetails() {
+    public String unwrappedGetUltimateDetails() {
         if (charge == 0) {
             return "Thunderstorm: strikes the next enemy with " + (int)(30 + attack / 10) + " electric damage.";
         }

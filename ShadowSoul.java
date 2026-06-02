@@ -37,15 +37,12 @@ public class ShadowSoul extends Soul
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         others.get(0).health -= 20 * levelModifier;
-        if (!ultimateUsed) {
-            for (Entity other : others) {
-                passive(other);
-            }
-            for (Entity ally : allies) {
-                ally.evasion = Math.max(0.2, ally.evasion);
-            }
-        }     
-        ultimateUsed = true;
+        for (Entity other : others) {
+            passive(other);
+        }
+        for (Entity ally : allies) {
+            ally.evasion = Math.max(0.2, ally.evasion);
+        }
     }
 
 
@@ -54,10 +51,10 @@ public class ShadowSoul extends Soul
     }
 
     public String getPassiveDetails() {
-        return "Total Blackout: lowers enemy attack " + (5 * levelModifier) + " and defense " + (7 * levelModifier) + ".";
+        return "Total Blackout: lowers enemy attack (" + (int)(5 * levelModifier) + ") and defense (" + (int)(7 * levelModifier) + ").";
     }
 
-    public String getUltimateDetails() {
-        return "Eclipse: deals " + (20 * levelModifier) + " dark damage. Lowers all enemies' attack " + (5 * levelModifier) + " and defense " + (7 * levelModifier) + ", and accuracy.";
+    public String unwrappedGetUltimateDetails() {
+        return "Eclipse: deals " + (int)(20 * levelModifier) + " dark damage. Lowers all enemies' attack (" + (int)(5 * levelModifier) + "), defense (" + (int)(7 * levelModifier) + "), and accuracy.";
     }
 }

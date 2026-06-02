@@ -36,7 +36,7 @@ public class StarSpirit extends Spirit
         other.burningDamage = Math.max(other.burningDamage, (int)(3 * levelModifier));
         int j = 1;
 
-        final double effectiveDamage = effectivenessMultiplier(other) * (int)(attack * levelModifier / 2);
+        final double effectiveDamage = effectivenessMultiplier(other) * (int)(attack * levelModifier / 3);
 
         for (int i = 0; i < 5; i++) {
             
@@ -65,6 +65,6 @@ public class StarSpirit extends Spirit
     }
 
     public String getPassiveDetails() {
-        return "Meteor Shower: successively deals " + (int)(attack * levelModifier / 2) + " meteor damage and applies a small burn.";
+        return "Meteor Shower: successively deals " + (int)(attack * levelModifier / 3) + " meteor damage and applies a small burn.";
     }
 }

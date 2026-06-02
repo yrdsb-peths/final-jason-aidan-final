@@ -17,7 +17,7 @@ public class FireSpirit extends Spirit
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Burn";
-    static final String PASSIVE_NAME = "FlameThrower";
+    static final String PASSIVE_NAME = "Scorch";
     static final String PASSIVE_DETAILS = "Burn your enemies overtime!";
     
     public FireSpirit()
@@ -44,6 +44,6 @@ public class FireSpirit extends Spirit
     }
 
     public String getPassiveDetails() {
-        return "Ignite: burns enemy for " + (int)(7 * this.levelModifier) + " damage over " + (int)(4 * this.levelModifier) + " turns.";
+        return "Scorch: burns enemy for " + (int)(7 * this.levelModifier) + " damage over " + (int)(4 * this.levelModifier) + " turns.";
     }
 }

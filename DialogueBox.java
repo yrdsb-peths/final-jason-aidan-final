@@ -10,14 +10,20 @@ import java.util.List;
  */
 
 
+import greenfoot.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class DialogueBox extends Actor {
-    // Store properties as fields so they can be reused when text changes
     private int width;
     private int height;
     private Color boxColor;
     private Color textColor;
     private Font font;
     private String text;
+    
+    // Track whether the dialogue box is currently visible
+    private boolean isVisible = true;
 
     public DialogueBox(int width, int height, Color boxColor, String text, Color textColor, Font font) {
         this.width = width;
@@ -27,16 +33,42 @@ public class DialogueBox extends Actor {
         this.textColor = textColor;
         this.font = font;
         
-        // Draw the initial textbox image
         updateImage();
     }
 
     /**
-     * Changes the text and automatically redraws the textbox.
+     * Changes the text and redraws the textbox.
      */
     public void setText(String newText) {
         this.text = newText;
-        updateImage(); // Re-trigger the drawing logic with the new text
+        updateImage(); 
+    }
+
+    /**
+     * Makes the dialogue box visible on screen.
+     */
+    public void show() {
+        this.isVisible = true;
+        if (getImage() != null) {
+            getImage().setTransparency(255); // Reset transparency to fully visible
+        }
+    }
+
+    /**
+     * Hides the dialogue box without removing the actor from the world.
+     */
+    public void hide() {
+        this.isVisible = false;
+        if (getImage() != null) {
+            getImage().setTransparency(0); // Set transparency to completely invisible
+        }
+    }
+
+    /**
+     * Returns true if the dialogue box is currently visible.
+     */
+    public boolean isCurrentlyVisible() {
+        return this.isVisible;
     }
 
     /**
@@ -88,6 +120,13 @@ public class DialogueBox extends Actor {
             if (currentY < (height - padding)) {
                 img.drawString(lines.get(i), startX, currentY);
             }
+        }
+        
+        // 6. Ensure the newly generated image respects the current visibility state
+        if (!isVisible) {
+            img.setTransparency(0);
+        } else {
+            img.setTransparency(255);
         }
         
         setImage(img);

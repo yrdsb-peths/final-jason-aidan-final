@@ -43,8 +43,9 @@ public class BattleScreen extends Actor
     ArrayList<Entity> player1Entities;
     ArrayList<Entity> player2Entities;
 
-    // Add a 'U' at the end to indicate upadating healthbar
     DialogueBox dialogueBox;
+
+    DialogueBox infoBox;
 
     ArrayList<Action> actionStack;
 
@@ -79,6 +80,7 @@ public class BattleScreen extends Actor
         initBackground();
 
         initDialogueBox();
+        initInfoBox();
         drawHealthbar();
         turnNumber = 1;
         
@@ -134,28 +136,42 @@ public class BattleScreen extends Actor
         int turn = 2 - turnNumber % 2;
 
         if (actionStack.size() > 0) {
-
-            if (isHovering()) {
-                displayHoverText(currentEntity);
-                return;
-            }
-            Action action = actionStack.get(0);
-            dialogueBox.setText(action.text);
-
-            if (!action.isCompleted && action.func != null) {
-                action.func.run();
-            }
-
-            if (Greenfoot.mouseClicked(null)) {
-                actionStack.remove(0);
-            }
+            nextAction(currentEntity);
             return;
         }
 
+        buttonActionLogic(currentEntity, opponentEntity, currentEntities, opponentEntities, turn);
+ 
+    }
+
+    private void nextAction(Entity currentEntity) {
+        dialogueBox.show();
+        infoBox.hide();
+        hideButtons();
+
+        if (isHovering()) {
+            displayHoverText(currentEntity);
+            return;
+        }
+        Action action = actionStack.get(0);
+        dialogueBox.setText(action.text);
+
+        if (!action.isCompleted && action.func != null) {
+            action.func.run();
+        }
+
+        if (Greenfoot.mouseClicked(null)) {
+            actionStack.remove(0);
+        }
+    }
+
+    private void buttonActionLogic(Entity currentEntity, Entity opponentEntity, ArrayList<Entity> currentEntities, ArrayList<Entity> opponentEntities, int turn) {
+        dialogueBox.hide();
+        infoBox.show();
         if (isHovering()) {
             displayHoverText(currentEntity);
         } else {
-            dialogueBox.setText("Player "+turn+"'s turn");
+            infoBox.setText("Player "+turn+"'s turn");
         }
 
         showPlayerButtons();
@@ -183,12 +199,12 @@ public class BattleScreen extends Actor
 
         } else if (ultButton.isPressed) {
             ultButton.isPressed = false;
-            if (currentEntity instanceof Soul soul) {
+            if (currentEntity instanceof Soul soul && !soul.ultimateUsed) {
                 
                 soul.applyUltimate(currentEntities, opponentEntities);
-                attachToActions(() -> endAction());}
+                attachToActions(() -> endAction());
             }
-            
+        }
     }
 
     
@@ -265,19 +281,24 @@ public class BattleScreen extends Actor
 
     private void displayHoverText(Entity currentEntity) {
         if (attackButton.isHovering) {
-            dialogueBox.setText(currentEntity.getAttackDetails());
+            infoBox.setText(currentEntity.getAttackDetails());
         } else if (passiveButton.isHovering) {
-            dialogueBox.setText(currentEntity.getPassiveDetails());
+            infoBox.setText(currentEntity.getPassiveDetails());
         } else if (chooseNewButton.isHovering) {
 
         } else if (ultButton.isHovering) {
-            dialogueBox.setText(currentEntity.getUltimateDetails());
+            infoBox.setText(currentEntity.getUltimateDetails());
         }
     }
 
     public void updateAllVisuals() {
         updateEntityImage();
         drawHealthbar();
+    }
+
+    private void initInfoBox() {
+        infoBox = new DialogueBox(220, 110, Color.WHITE, " ", Color.BLACK, new Font(14));
+        world.addObject(infoBox, 300, 340);
     }
     
     private void showPlayerButtons()
@@ -317,6 +338,13 @@ public class BattleScreen extends Actor
         world.addObject(chooseNewButton, 90, MyWorld.HEIGHT-30);
         world.addObject(ultButton, MyWorld.WIDTH-90, MyWorld.HEIGHT-30);
 
+    }
+
+    private void hideButtons() {
+        attackButton.setImage((GreenfootImage)null);
+        passiveButton.setImage((GreenfootImage)null);
+        chooseNewButton.setImage((GreenfootImage)null);
+        ultButton.setImage((GreenfootImage)null);
     }
 
     private void initEntityDisplay() {

@@ -33,8 +33,18 @@ abstract public class Soul extends Entity
     public void applyUltimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         BattleScreen.getInstance().actionStack.add(new Action(
             "> " + name + " used " + ultimateName + ".",
-            () -> {ultimate(allies, others);}
+            () -> {ultimate(allies, others); ultimateUsed = true;}
         ));
+    }
+
+    abstract public String unwrappedGetUltimateDetails();
+
+    public String getUltimateDetails() {
+        if (ultimateUsed) {
+            return "Ultimate is already used.";
+        } else {
+            return unwrappedGetUltimateDetails();
+        }
     }
 
 }

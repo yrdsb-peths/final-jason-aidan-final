@@ -72,7 +72,7 @@ abstract public class Entity
         if(this.burningDuration > 0)
         {
             BattleScreen.getInstance().actionStack.add(new Action(
-                this.name + " took " + this.burningDamage + " burning damage.",
+                "> " + this.name + " took " + this.burningDamage + " burning damage.",
                 () -> {
                     this.health -= this.burningDamage;
                     this.burningDuration--;
@@ -86,7 +86,7 @@ abstract public class Entity
             
             int damage = (int)(this.health * this.poisonedPercentage);
             BattleScreen.getInstance().actionStack.add(new Action(
-                this.name + " took " + damage + " (" + (this.poisonedPercentage*100) + "% of health) poison damage.",
+                "> " + this.name + " took " + damage + " (" + (this.poisonedPercentage*100) + "% of health) poison damage.",
                 () -> {
                     this.health -= damage;
                     this.poisonedDuration--;
@@ -99,7 +99,7 @@ abstract public class Entity
         {
 
             BattleScreen.getInstance().actionStack.add(new Action(
-                this.name + " healed " + this.healingAmount + "hp.",
+                "> " + this.name + " healed " + this.healingAmount + " HP.",
                 () -> {
                     this.health += this.healingAmount;
                     this.healingDuration--;
@@ -199,7 +199,7 @@ abstract public class Entity
                 double outputDmg = 3*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> It was a critical hit, dealing " + (int)outputDmg + " damage!",
+                    "> Critical hit, dealing " + (int)outputDmg + " damage!",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }
@@ -208,7 +208,7 @@ abstract public class Entity
                 double outputDmg = 1.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> It was super effective, dealing " + (int)outputDmg + " damage!",
+                    "> Super effective, dealing " + (int)outputDmg + " damage!",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }
@@ -222,7 +222,7 @@ abstract public class Entity
                 double outputDmg = 0.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> It was not very effective, dealing " + (int)outputDmg + " damage.",
+                    "> Not very effective, dealing " + (int)outputDmg + " damage.",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }

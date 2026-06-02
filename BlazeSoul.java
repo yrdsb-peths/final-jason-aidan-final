@@ -19,7 +19,7 @@ public class BlazeSoul extends Soul
     static final int BASE_HEALTH = 80;
     static final int BASE_ATTACK = 35;
     static final String ATTACK_NAME = "Burn";
-    static final String PASSIVE_NAME = "Ignite";
+    static final String PASSIVE_NAME = "Scorch";
 
     static final String ULTIMATE_NAME = "Burst";
     static final String ULTIMATE_DETAILS = "High damage + burning, self-damaging.";
@@ -39,16 +39,13 @@ public class BlazeSoul extends Soul
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
-        if (!this.ultimateUsed) {
-            this.health -= 10 * this.levelModifier;
-            this.burningDamage = (int) (3 * this.levelModifier);
-            this.burningDuration = 3;
+        this.health -= 10 * this.levelModifier;
+        this.burningDamage = (int) (3 * this.levelModifier);
+        this.burningDuration = 3;
 
-            others.get(0).health -= (int)(effectivenessMultiplier(others.get(0)) * (int)(attack * 2 * this.levelModifier));
-            others.get(0).burningDamage = (int) (15 * this.levelModifier);
-            others.get(0).burningDuration += 5;
-            ultimateUsed = true;
-        }
+        others.get(0).health -= (int)(effectivenessMultiplier(others.get(0)) * (int)(attack * 2 * this.levelModifier));
+        others.get(0).burningDamage = (int) (15 * this.levelModifier);
+        others.get(0).burningDuration += 5;
     }
 
 
@@ -57,10 +54,10 @@ public class BlazeSoul extends Soul
     }
 
     public String getPassiveDetails() {
-        return "Ignite: burns enemy for " + (int)(15 * this.levelModifier) + " damage over 5 turns.";
+        return "Scorch: burns enemy for " + (int)(15 * this.levelModifier) + " damage over 5 turns.";
     }
 
-    public String getUltimateDetails() {
-        return "Burst: deals " + (int)(attack * 2 * this.levelModifier) + " fire damage, burns the target, and costs some health.";
+    public String unwrappedGetUltimateDetails() {
+        return "Burst: deals " + (int)(attack * 2 * this.levelModifier) + " fire damage and burns the target.";
     }
 }

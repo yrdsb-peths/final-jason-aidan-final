@@ -28,7 +28,7 @@ public class DarkSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        other.defense = Math.max(other.defense -= 5 * levelModifier, -10);
+        other.defense = Math.max(other.defense -= 5 * levelModifier, -20);
         other.attack = Math.max(other.attack -= 3 * levelModifier, 1);
     }
 
@@ -42,6 +42,6 @@ public class DarkSpirit extends Spirit
     }
 
     public String getPassiveDetails() {
-        return "Total Blackout: lowers enemy attack (" + (3 * levelModifier) + ") and defense (" + (5 * levelModifier) + ").";
+        return "Total Blackout: lowers enemy attack (" + (int)(3 * levelModifier) + ") and defense (" + (int)(5 * levelModifier) + ").";
     }
 }
