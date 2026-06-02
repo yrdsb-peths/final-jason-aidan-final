@@ -350,19 +350,19 @@ public class BattleScreen extends Actor
         GreenfootImage attackImage = new GreenfootImage("attack_P" + num + ".png");
         GreenfootImage passiveImage = new GreenfootImage("passive_P" + num + ".png");
         GreenfootImage chooseNewImage = new GreenfootImage("chooseNew_P" + num + ".png");
-        GreenfootImage fleeImage = new GreenfootImage("flee_P" + num + ".png");
+        GreenfootImage ultImage = new GreenfootImage("ultimate_P" + num + ".png");
         int scaleX = 180;
         int scaleY = 60;
 
         attackImage.scale(scaleX,scaleY);
         passiveImage.scale(scaleX,scaleY);
         chooseNewImage.scale(scaleX,scaleY);
-        fleeImage.scale(scaleX,scaleY);
+        ultImage.scale(scaleX,scaleY);
 
         attackButton.setImage(attackImage);
         passiveButton.setImage(passiveImage);
         chooseNewButton.setImage(chooseNewImage);
-        ultButton.setImage(fleeImage);
+        ultButton.setImage(ultImage);
 
     }
 
