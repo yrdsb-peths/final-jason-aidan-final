@@ -15,7 +15,7 @@ public class SusSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("sus.png");
     static final String NAME = "Sus Spirit";
     static final int BASE_HEALTH = 100;
-    static final int BASE_ATTACK = 40;
+    static final int BASE_ATTACK = 60;
     static final String ATTACK_NAME = "sus";
     static final String PASSIVE_NAME = "sus";
     static final String PASSIVE_DETAILS = "sus";

@@ -54,6 +54,8 @@ public class TideSoul extends Soul
         other.stunDuration = 0;
         other.burningDuration = 0;
         other.poisonedDuration = 0;
+        this.defense = Math.max(this.defense, 0);
+        this.attack = Math.max(this.attack, BASE_ATTACK);
         this.health += (int)(HEALING_AMOUNT * levelModifier);
         floodStacks+=3;
     }
