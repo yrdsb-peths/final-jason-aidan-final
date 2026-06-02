@@ -50,7 +50,7 @@ abstract public class Spirit extends Entity
     abstract public Soul getUpgraded();
 
     public String getUltimateDetails() {
-        return "Spirits below level 5 don't have an ultimate.";
+        return "Non-evolved spirits don't have an ultimate.";
     }
 
 }

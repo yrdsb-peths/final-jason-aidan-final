@@ -279,18 +279,57 @@ public class BattleScreen extends Actor
     }
 
     private boolean isHovering() {
-        return attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
+        boolean isHovering_ = attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
+        if (isHovering_) {
+            return true;
+        }
+        if (attackButton.getImage() != null)
+        {
+            attackButton.getImage().setTransparency(255);
+        }
+        if (passiveButton.getImage() != null)
+        {
+            passiveButton.getImage().setTransparency(255);
+        }
+        if (chooseNewButton.getImage() != null)
+        {
+            chooseNewButton.getImage().setTransparency(255);
+        }
+        if (ultButton.getImage() != null)
+        {
+            ultButton.getImage().setTransparency(255);
+        }
+        
+        return false;
     }
 
     private void displayHoverText(Entity currentEntity) {
+
+        
         if (attackButton.isHovering) {
             infoBox.setText(currentEntity.getAttackDetails());
+            if (attackButton.getImage() != null)
+            {
+                attackButton.getImage().setTransparency(200);
+            }
         } else if (passiveButton.isHovering) {
             infoBox.setText(currentEntity.getPassiveDetails());
+            if (passiveButton.getImage() != null)
+            {
+                passiveButton.getImage().setTransparency(200);
+            }
         } else if (chooseNewButton.isHovering) {
-
+            if (chooseNewButton.getImage() != null)
+            {
+                chooseNewButton.getImage().setTransparency(200);
+            }
         } else if (ultButton.isHovering) {
             infoBox.setText(currentEntity.getUltimateDetails());
+            ultButton.getImage().setTransparency(200);
+            if (ultButton.getImage() != null)
+            {
+                ultButton.getImage().setTransparency(200);
+            }
         }
     }
 

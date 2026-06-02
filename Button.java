@@ -37,12 +37,17 @@ public class Button extends Actor
 
         if (!isHovering && Greenfoot.mouseMoved(this)) {
             isHovering = true;
-            // getImage().setTransparency(200);
+            if (getImage() != null) {
+                getImage().setTransparency(200);
+            }
+            
         }
         
         if (isHovering && Greenfoot.mouseMoved(null) && !Greenfoot.mouseMoved(this) || this.getImage() == null) {
             isHovering = false;
-            // getImage().setTransparency(255);
+            if (getImage() != null) {
+                getImage().setTransparency(255);
+            }
         }
     }
 

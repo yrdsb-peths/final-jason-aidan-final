@@ -19,9 +19,9 @@ public class BlazeSoul extends Soul
     static final int BASE_HEALTH = 80;
     static final int BASE_ATTACK = 35;
     static final String ATTACK_NAME = "Burn";
-    static final String PASSIVE_NAME = "Scorch";
+    static final String PASSIVE_NAME = "FlameThrower";
 
-    static final String ULTIMATE_NAME = "Burst";
+    static final String ULTIMATE_NAME = "Firestorm";
     static final String ULTIMATE_DETAILS = "High damage + burning, self-damaging.";
 
     static final String PASSIVE_DETAILS = "Set your enemy on fire.";
@@ -56,10 +56,10 @@ public class BlazeSoul extends Soul
     }
 
     public String unwrappedGetPassiveDetails() {
-        return "Scorch: burns enemy for " + (int)(15 * this.levelModifier) + " damage over 6 turns. Does not stack.";
+        return "FlameThrower: burns enemy for " + (int)(15 * this.levelModifier) + " damage over 6 turns. Does not stack.";
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "Burst: deals " + (int)(attack * 2 * this.levelModifier) + " fire damage and burns the target.";
+        return "Firestorm: deals " + (int)(attack * 2 * this.levelModifier) + " fire damage and burns the target.";
     }
 }

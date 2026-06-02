@@ -98,6 +98,7 @@ public class ChooseScreen extends Actor
                 world.removeObject(this);
             }
             
+            
         }
     }
 

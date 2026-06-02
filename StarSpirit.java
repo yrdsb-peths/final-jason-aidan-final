@@ -20,12 +20,12 @@ public class StarSpirit extends Spirit
     static final String PASSIVE_NAME = "Meteor Shower";
     static final String PASSIVE_DETAILS = "Successive meteor strikes with a chance to hit each strike";
 
-    static final int MAX_METEOR_STRIKES = 8;
-    static final double METEOR_STRIKE_CHANCE = 0.7;
+    static final int MAX_METEOR_STRIKES = 7;
+    static final double METEOR_STRIKE_CHANCE = 0.6;
     static final int METEOR_STRIKE_DAMAGE_DIVISOR = 2;
     static final int METEOR_BURNING_DAMAGE = 3;
 
-    static final int PASSIVE_COOLDOWN = 4;
+    static final int PASSIVE_COOLDOWN = 6;
     
     public StarSpirit()
     {
