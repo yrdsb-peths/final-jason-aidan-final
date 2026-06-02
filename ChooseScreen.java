@@ -49,7 +49,7 @@ public class ChooseScreen extends Actor
 
         setImage((GreenfootImage)null);
 
-        GreenfootImage image = new GreenfootImage("submit_button.png");
+        GreenfootImage image = new GreenfootImage("lvlUp.png");
         image.scale(150,150);
         submitButton = new Button(image, 20);
         world.addObject(submitButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/4 * 3);
