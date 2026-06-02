@@ -12,7 +12,7 @@ public class ShadowSoul extends Soul
      * Act - do whatever the DarkSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    static GreenfootImage costume = new GreenfootImage("dark.png");
+    static GreenfootImage costume = new GreenfootImage("shadow.png");
     static final String NAME = "Shadow Soul";
     static final int BASE_HEALTH = 130;
     static final int BASE_ATTACK = 15;

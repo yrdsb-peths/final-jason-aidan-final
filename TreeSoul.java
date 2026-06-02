@@ -26,7 +26,7 @@ public class TreeSoul extends Soul {
     
     public TreeSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
     }
 
     public void attack(Entity other) {
@@ -55,23 +55,23 @@ public class TreeSoul extends Soul {
             Entity nextEntity = allies.get(1);
 
             BattleScreen.getInstance().actionStack.add(new Action(
-                "> " + nextEntity.name + " inherits " + health/3 + " health!", 
+                "> " + nextEntity.name + " inherits " + health/2 + " health!", 
                 () -> {
-                    nextEntity.health += health/3;
+                    nextEntity.health += health/2;
                 }
             ));
 
             BattleScreen.getInstance().actionStack.add(new Action(
-                "> " + nextEntity.name + " inherits " + attack/3 + " attack!", 
+                "> " + nextEntity.name + " inherits " + attack/2 + " attack!", 
                 () -> {
-                    nextEntity.attack += attack/3;
+                    nextEntity.attack += attack/2;
                 }
             ));
 
             BattleScreen.getInstance().actionStack.add(new Action(
-                "> " + nextEntity.name + " inherits " + defense/3 + " defense!", 
+                "> " + nextEntity.name + " inherits " + defense/2 + " defense!", 
                 () -> {
-                    nextEntity.defense += defense/3;
+                    nextEntity.defense += defense/2;
                 }
             ));
 
@@ -93,6 +93,6 @@ public class TreeSoul extends Soul {
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "The next entity inherits a third of your stats.";
+        return "The next entity inherits half of your stats.";
     }
 }

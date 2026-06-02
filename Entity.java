@@ -134,7 +134,7 @@ abstract public class Entity
 
     public void updateModifier() {
         // 10% increase in stats per level
-        levelModifier = (1.0 + (double) level / 10);
+        levelModifier = Math.sqrt(1.0 + (double) level / 10);
     }
 
     public void fixLevel() {

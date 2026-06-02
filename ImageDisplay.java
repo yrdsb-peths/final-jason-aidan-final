@@ -14,6 +14,10 @@ public class ImageDisplay extends Actor
      */
     public ImageDisplay() {
     }
+
+    public ImageDisplay(GreenfootImage image) {
+        setImage(image);
+    }
     
     public void act()
     {

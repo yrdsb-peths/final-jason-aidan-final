@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
@@ -50,6 +51,9 @@ public class BattleScreen extends Actor
     ArrayList<Action> actionStack;
 
     GreenfootImage backgroundImage;
+
+    ArrayList<ImageDisplay> statusEffectsDisplay1;
+    ArrayList<ImageDisplay> statusEffectsDisplay2;
     
     private static BattleScreen instance;
 
@@ -72,6 +76,8 @@ public class BattleScreen extends Actor
         this.world = world;
 
         actionStack = new ArrayList<Action>();
+        statusEffectsDisplay1 = new ArrayList<ImageDisplay>();
+        statusEffectsDisplay2 = new ArrayList<ImageDisplay>();
         
         initButtons();
         initEntityDisplay();
@@ -81,7 +87,7 @@ public class BattleScreen extends Actor
 
         initDialogueBox();
         initInfoBox();
-        drawHealthbar();
+        drawStatsBars();
         turnNumber = 1;
         
     }
@@ -168,14 +174,23 @@ public class BattleScreen extends Actor
     private void buttonActionLogic(Entity currentEntity, Entity opponentEntity, ArrayList<Entity> currentEntities, ArrayList<Entity> opponentEntities, int turn) {
         dialogueBox.hide();
         infoBox.show();
+
+        showPlayerButtons();
+        updateEntityImage();
+
+        if (attackButton.getImage() != null)
+        {
+            attackButton.getImage().setTransparency(255);
+            passiveButton.getImage().setTransparency(255);
+            chooseNewButton.getImage().setTransparency(255);
+            ultButton.getImage().setTransparency(255);
+        }
+        
         if (isHovering()) {
             displayHoverText(currentEntity);
         } else {
             infoBox.setText("Player "+turn+"'s turn");
         }
-
-        showPlayerButtons();
-        updateEntityImage();
 
         if (currentEntity.stunDuration > 0) {
             currentEntity.stunDuration --;
@@ -279,28 +294,7 @@ public class BattleScreen extends Actor
     }
 
     private boolean isHovering() {
-        boolean isHovering_ = attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
-        if (isHovering_) {
-            return true;
-        }
-        if (attackButton.getImage() != null)
-        {
-            attackButton.getImage().setTransparency(255);
-        }
-        if (passiveButton.getImage() != null)
-        {
-            passiveButton.getImage().setTransparency(255);
-        }
-        if (chooseNewButton.getImage() != null)
-        {
-            chooseNewButton.getImage().setTransparency(255);
-        }
-        if (ultButton.getImage() != null)
-        {
-            ultButton.getImage().setTransparency(255);
-        }
-        
-        return false;
+        return attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
     }
 
     private void displayHoverText(Entity currentEntity) {
@@ -325,7 +319,6 @@ public class BattleScreen extends Actor
             }
         } else if (ultButton.isHovering) {
             infoBox.setText(currentEntity.getUltimateDetails());
-            ultButton.getImage().setTransparency(200);
             if (ultButton.getImage() != null)
             {
                 ultButton.getImage().setTransparency(200);
@@ -335,7 +328,8 @@ public class BattleScreen extends Actor
 
     public void updateAllVisuals() {
         updateEntityImage();
-        drawHealthbar();
+        drawStatsBars();
+        updateStatusEffectDisplay();
     }
 
     private void initInfoBox() {
@@ -434,7 +428,7 @@ public class BattleScreen extends Actor
         
     }
 
-    private void drawHealthbar()
+    private void drawStatsBars()
     {
         if (player1Entities.size() == 0 || player2Entities.size() == 0) {
             return;
@@ -456,6 +450,85 @@ public class BattleScreen extends Actor
         tempBackground.setColor(Color.GREEN);
         tempBackground.fillRect(450, 150, health2, 15);
 
+        int attack1 = player1Entities.get(0).attack;
+        int attack2 = player2Entities.get(0).attack;
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(20 - borderWidth, 180 - borderWidth, attack1 + 2 * borderWidth, 15 + 2 * borderWidth);
+        tempBackground.setColor(Color.RED);
+        tempBackground.fillRect(20, 180, attack1, 15);
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(450 - borderWidth, 180 - borderWidth, attack2 + 2 * borderWidth, 15 + 2 * borderWidth);
+        tempBackground.setColor(Color.RED);
+        tempBackground.fillRect(450, 180, attack2, 15);
+
+        world.setBackground(tempBackground);
+
         world.setBackground(tempBackground);
     }
+
+    private void updateStatusEffectDisplay() {
+        if (p1Entity == null && p2Entity == null) {
+            return;
+        }
+
+        for (ImageDisplay display : statusEffectsDisplay1) {
+            world.removeObject(display);
+        }
+
+        for (ImageDisplay display : statusEffectsDisplay2) {
+            world.removeObject(display);
+        }
+
+        statusEffectsDisplay1.clear();
+        statusEffectsDisplay2.clear();
+
+        int gap = 40;
+
+        int x1 = 30;
+        int x2 = 460;
+
+        int y = 220;
+
+        if (p1Entity.burningDuration > 0) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("burning.png"));
+            statusEffectsDisplay1.add(image);
+            world.addObject(image, x1, y);
+            x1 += gap;
+
+        }
+        if (p2Entity.burningDuration > 0) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("burning.png"));
+            statusEffectsDisplay2.add(image);
+            world.addObject(image, x2, y);
+            x2 += gap;
+
+        }
+        if (p1Entity.poisonedDuration > 0) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("poisoned.png"));
+            statusEffectsDisplay1.add(image);
+            world.addObject(image, x1, y);
+            x1 += gap;
+        }
+        if (p2Entity.poisonedDuration > 0) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("poisoned.png"));
+            statusEffectsDisplay2.add(image);
+            world.addObject(image, x2, y);
+            x2 += gap;
+        }
+        if (p1Entity.healingDuration > 0) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
+            statusEffectsDisplay1.add(image);
+            world.addObject(image, x1, y);
+            x1 += gap;        
+        }
+        if (p2Entity.healingDuration > 0) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
+            statusEffectsDisplay2.add(image);
+            world.addObject(image, x2, y);
+            x2 += gap;          
+        }
+    }
+
 }

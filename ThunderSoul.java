@@ -13,13 +13,13 @@ public class ThunderSoul extends Soul
      * Act - do whatever the ElectricSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    static GreenfootImage costume = new GreenfootImage("electric.png");
+    static GreenfootImage costume = new GreenfootImage("thunder.png");
     static final String NAME = "Electric Spirit";
     static final int BASE_HEALTH = 90;
     static final int BASE_ATTACK = 30;
     static final String ATTACK_NAME = "Shock";
     static final String PASSIVE_NAME = "Charge";
-    static final String PASSIVE_DETAILS = "Do increased damaged & double the stun chance per charge (base 25%)";
+    static final String PASSIVE_DETAILS = "Do increased damaged & double the stun chance (base 25%)";
     static final String ULTIMATE_NAME = "Thunderstorm";
     static final String ULTIMATE_DETAILS = "Massive electric damage, reaches enemies depending on charge";
 
