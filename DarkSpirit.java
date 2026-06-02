@@ -14,22 +14,27 @@ public class DarkSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("dark.png");
     static final String NAME = "Dark Spirit";
-    static final int BASE_HEALTH = 100;
+    static final int BASE_HEALTH = 80;
     static final int BASE_ATTACK = 10;
     static final String ATTACK_NAME = "Shadow";
     static final String PASSIVE_NAME = "Total Blackout";
     static final String PASSIVE_DETAILS = "Weaken your opponent's attack & defense.";
+    static final int PASSIVE_COOLDOWN = 4;
+
+    static final double EVASION_INCREASE = 0.1;
+    static final int ATTACK_DEBUFF = 3;
+    static final int DEFENSE_DEBUFF = 5;
     
     public DarkSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, costume);
-        this.evasion = 0.2;
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
+        this.evasion = EVASION_INCREASE;
 
     }
 
     public void passive(Entity other) {
-        other.defense = Math.max(other.defense -= 5 * levelModifier, -20);
-        other.attack = Math.max(other.attack -= 3 * levelModifier, 1);
+        other.defense = Math.max(other.defense - (int)(DEFENSE_DEBUFF * levelModifier), -20);
+        other.attack = Math.max(other.attack - (int)(ATTACK_DEBUFF * levelModifier), 3);
     }
 
     public Soul getUpgraded() {
@@ -41,7 +46,7 @@ public class DarkSpirit extends Spirit
         return "Shadow deals " + attack + " dark damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Total Blackout: lowers enemy attack (" + (int)(3 * levelModifier) + ") and defense (" + (int)(5 * levelModifier) + ").";
+    public String unwrappedGetPassiveDetails() {
+        return "Total Blackout: lowers enemy attack (" + (int)(ATTACK_DEBUFF * levelModifier) + ") and defense (" + (int)(DEFENSE_DEBUFF * levelModifier) + ").";
     }
 }

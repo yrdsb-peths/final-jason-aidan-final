@@ -14,11 +14,15 @@ public class SusSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("sus.png");
     static final String NAME = "Sus Spirit";
-    static final int BASE_HEALTH = 150;
-    static final int BASE_ATTACK = 0;
+    static final int BASE_HEALTH = 100;
+    static final int BASE_ATTACK = 40;
     static final String ATTACK_NAME = "sus";
     static final String PASSIVE_NAME = "sus";
     static final String PASSIVE_DETAILS = "sus";
+
+    static final double MISS_CHANCE_CHANGE = 0.9;
+
+    int attackChance = 0;
     
     public SusSpirit()
     {
@@ -26,8 +30,16 @@ public class SusSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        
-        // Any additional initialization code for FireSpirit can go here
+        attackChance = (int)(100 - (100 - attackChance) * MISS_CHANCE_CHANGE);
+    }
+
+    // override
+    public void attack(Entity other) {
+        if (Greenfoot.getRandomNumber(100) < attackChance) {
+            super.attack(other);
+        } else {
+            BattleScreen.getInstance().actionStack.add(new Action("The attack didn't trigger.", () -> {}));
+        }
     }
 
     public Soul getUpgraded() {
@@ -36,10 +48,10 @@ public class SusSpirit extends Spirit
 
 
     public String getAttackDetails() {
-        return "sus deals: " + attack + " damage.";
+        return attackChance + "% chance to deal " + attack + " damage.";
     }
 
-    public String getPassiveDetails() {
-        return "";
+    public String unwrappedGetPassiveDetails() {
+        return "Sus: Increases attack chance from " + (int)(attackChance) + "% to " + (int)(100 - (100 - attackChance) * MISS_CHANCE_CHANGE) + "%.";
     }
 }

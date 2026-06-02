@@ -18,16 +18,17 @@ public class PoisonSpirit extends Spirit
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Toxin";
     static final String PASSIVE_NAME = "Corrosive Acid";
-    static final String PASSIVE_DETAILS = "Poisons for 15% overtime!";
-    
+    static final String PASSIVE_DETAILS = "Poisons for 20% overtime!";
+    static final int PASSIVE_COOLDOWN = 6;
+
     public PoisonSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.poison, ATTACK_NAME, PASSIVE_NAME, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.poison, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
 
     }
 
     public void passive(Entity other) {
-        other.poisonedPercentage = 0.15;
+        other.poisonedPercentage = 0.20;
         other.poisonedDuration = 3;
     }
 
@@ -40,7 +41,7 @@ public class PoisonSpirit extends Spirit
         return "Toxin deals " + attack + " poison damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Corrosive Acid poisons enemy for 15% health over 3 turns.";
+    public String unwrappedGetPassiveDetails() {
+        return "Corrosive Acid poisons enemy for 20% health over 3 turns.";
     }
 }

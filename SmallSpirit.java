@@ -15,8 +15,8 @@ public class SmallSpirit extends Spirit
     
     static GreenfootImage costume = new GreenfootImage("small.png");
     static final String NAME = "Small Spirit";
-    static final int BASE_HEALTH = 40;
-    static final int BASE_ATTACK = 10;
+    static final int BASE_HEALTH = 50;
+    static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Bite";
     static final String PASSIVE_NAME = "Shrink";
     static final String PASSIVE_DETAILS = "Your Opponent now has a change to miss!";
@@ -33,7 +33,7 @@ public class SmallSpirit extends Spirit
 
     public void passive(Entity other) {
 
-        this.evasion = 1 - (1 - this.evasion)/3;
+        this.evasion = 1 - (1 - this.evasion) * 0.75;
         if (this.evasion > 0.9) {
             this.evasion = 0.9;
             BattleScreen.getInstance().actionStack.add(
@@ -52,7 +52,7 @@ public class SmallSpirit extends Spirit
         return "Bite: deals " + attack + " damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Shrink: raises evasion from " + (int) (this.evasion * 100) + "% to " + (int) ((1 - (1 - this.evasion)/3) * 100) + "% while reducing your stats by 1/4.";
+    public String unwrappedGetPassiveDetails() {
+        return "Shrink: raises evasion from " + (int) (this.evasion * 100) + "% to " + (int) ((1 - (1 - this.evasion) * 0.75) * 100) + "% while reducing your stats by 1/4.";
     }
 }

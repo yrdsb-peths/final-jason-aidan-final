@@ -19,21 +19,22 @@ public class RockSpirit extends Spirit
     static final String ATTACK_NAME = "Crumble";
     static final String PASSIVE_NAME = "Boulder Shell";
     static final String PASSIVE_DETAILS = "Reduce the damage taken";
-    
+
+    static final int MAX_DEFENSE = 15;
+    static final int DEFENSE_INCREASE = 5;
+    static final int PASSIVE_COOLDOWN = 4;
+
     public RockSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, costume);
-
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
     }
 
     public void passive(Entity other) {
-        defense += 3 * levelModifier;
-        if (defense >= 10 * levelModifier) {
-            defense = (int) (10 * levelModifier);
+        defense += DEFENSE_INCREASE * levelModifier;
+        if (defense >= MAX_DEFENSE * levelModifier) {
+            defense = (int) (MAX_DEFENSE * levelModifier);
             BattleScreen.getInstance().actionStack.add(new Action("Max defense of " + defense + " reached!"));
         }
-        
-        
     }
 
     public Soul getUpgraded() {
@@ -45,7 +46,7 @@ public class RockSpirit extends Spirit
         return "Crumble: deals " + attack + " rock damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Boulder Shell: raises defense by " + (int)(3 * levelModifier) + ". Max: " + (int)(10 * levelModifier) + ".";
+    public String unwrappedGetPassiveDetails() {
+        return "Boulder Shell: raises defense by " + (int)(DEFENSE_INCREASE * levelModifier) + ". Max: " + (int)(MAX_DEFENSE * levelModifier) + ".";
     }
 }

@@ -28,6 +28,8 @@ abstract public class Entity
     int stunDuration;
     int defense;
     double evasion;
+    int passiveCooldown; // # of turns until passive can be used again
+    int passiveCooldownLeft; // # of turns left until passive can be used again
     // number from 0-1 representing chance to dodge an attack
     
     Element type;
@@ -50,6 +52,8 @@ abstract public class Entity
         healingDuration = 0;
         evasion = 0;
         stunDuration = 0;
+        passiveCooldown = 0;
+        passiveCooldownLeft = 0;
         this.health = health;
         this.attack = attack;
         this.type = type;
@@ -60,6 +64,12 @@ abstract public class Entity
         updateModifier();
     }
 
+    public Entity(String name, int health, int attack, Element type, String attackName, String passiveName, int passiveCooldown, GreenfootImage image)
+    {
+        this(name, health, attack, type, attackName, passiveName, image);
+        this.passiveCooldown = passiveCooldown;
+    }
+
     public int comparedTo(Entity other)
     {
         return this.type.comparedTo(other.type);
@@ -68,6 +78,9 @@ abstract public class Entity
     public void applyStatusEffects()
     
     {
+        if (this.passiveCooldownLeft > 0) {
+            this.passiveCooldownLeft--;
+        }
         //apply burn damage and decrease burn duration
         if(this.burningDuration > 0)
         {
@@ -159,12 +172,22 @@ abstract public class Entity
         this.health -= (int) Math.max(damage - this.defense, 0);
     }
 
+    public int effectiveDamage(double damage, Entity other) {
+        return (int) Math.max(damage - other.defense, 0);
+    }
+
+    public int effectiveDamage(int damage) {
+        return (int) Math.max(damage - this.defense, 0);
+    }
+
     public void attack(Entity other) {
 
         BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
 
+        System.out.println(other.evasion);
+
         if (Greenfoot.getRandomNumber(100) <= 100*other.evasion) {
-            BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
+            BattleScreen.getInstance().actionStack.add(new Action("> The attack was evaded!", () -> {}));
             return;
         }
 
@@ -178,7 +201,7 @@ abstract public class Entity
             } else if (rand > 10 && rand <= 90) {
                 double outputDmg = attack;
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> It dealt " + (int)outputDmg + " damage!",
+                    "> It dealt " + effectiveDamage(outputDmg, other) + " damage!",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }
@@ -187,7 +210,7 @@ abstract public class Entity
                 double outputDmg = 1.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> It was a critical hit, dealing " + (int)outputDmg + " damage!",
+                    "> It was a critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }
@@ -199,7 +222,7 @@ abstract public class Entity
                 double outputDmg = 3*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> Critical hit, dealing " + (int)outputDmg + " damage!",
+                    "> Critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }
@@ -208,7 +231,7 @@ abstract public class Entity
                 double outputDmg = 1.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> Super effective, dealing " + (int)outputDmg + " damage!",
+                    "> Super effective, dealing " + effectiveDamage(outputDmg, other) + " damage!",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }
@@ -222,7 +245,7 @@ abstract public class Entity
                 double outputDmg = 0.5*attack;
 
                 BattleScreen.getInstance().actionStack.add(new Action(
-                    "> Not very effective, dealing " + (int)outputDmg + " damage.",
+                    "> Not very effective, dealing " + effectiveDamage(outputDmg, other) + " damage.",
                     () -> {
                         other.takeDamage((int)outputDmg);
                     }
@@ -235,15 +258,22 @@ abstract public class Entity
     public void applyPassive(Entity other) {
         BattleScreen.getInstance().actionStack.add(new Action(
             "> " + name + " used " + passiveName + ".",
-            () -> {passive(other);}
+            () -> {passive(other); this.passiveCooldownLeft = passiveCooldown;}
         ));
+    }
+
+    public String getPassiveDetails() {
+        if (passiveCooldownLeft > 0) {
+            return passiveName + " is on cooldown.";
+        }
+        return unwrappedGetPassiveDetails();
     }
 
     abstract public void passive(Entity other);
 
     abstract public String getAttackDetails();
 
-    abstract public String getPassiveDetails();
+    abstract public String unwrappedGetPassiveDetails();
 
     abstract public String getUltimateDetails();
 

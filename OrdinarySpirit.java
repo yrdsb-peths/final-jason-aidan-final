@@ -39,7 +39,7 @@ public class OrdinarySpirit extends Spirit
         return "Thing: deals " + attack + " damage.";
     }
 
-    public String getPassiveDetails() {
+    public String unwrappedGetPassiveDetails() {
         return "Transformation has an unknown effect.";
     }
 }

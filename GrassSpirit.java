@@ -14,26 +14,30 @@ public class GrassSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("grass.png");
     static final String NAME = "Grass Spirit";
-    static final int BASE_HEALTH = 50;
-    static final int BASE_ATTACK = 10;
+    static final int BASE_HEALTH = 60;
+    static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Seed";
     static final String PASSIVE_NAME = "Grow";
     static final String PASSIVE_DETAILS = "Heal & regenerate";
 
+    static final int PASSIVE_COOLDOWN = 6;
+    static final int HEALING_AMOUNT = 5;
+    static final int HEALING_DURATION = 6;
+
     public GrassSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, ATTACK_NAME, PASSIVE_NAME, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.grass, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
 
     }
 
     public void passive(Entity other) {
-        this.healingAmount = (int) (5.0 * this.levelModifier);
-        this.healingDuration = 6;
+        this.healingAmount = (int) (HEALING_AMOUNT * this.levelModifier);
+        this.healingDuration = HEALING_DURATION;
         
     }
 
     public Soul getUpgraded() {
-        return null;
+        return new TreeSoul();
     }
 
 
@@ -41,7 +45,7 @@ public class GrassSpirit extends Spirit
         return "Seed deals " + attack + " grass damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Grow: heals " + (int)(5 * this.levelModifier) + " HP for 6 turns.";
+    public String unwrappedGetPassiveDetails() {
+        return "Grow: heals " + (int)(HEALING_AMOUNT * this.levelModifier) + " HP for " + HEALING_DURATION + " turns. Does not stack.";
     }
 }

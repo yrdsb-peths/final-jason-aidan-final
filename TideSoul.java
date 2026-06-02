@@ -14,9 +14,9 @@ public class TideSoul extends Soul
      * Constructor for objects of class Blaze
      */
     static final GreenfootImage COSTUME = new GreenfootImage("tide.png");
-    static final String NAME = "Tide Spirit";
+    static final String NAME = "Tide Soul";
     static final int BASE_HEALTH = 150;
-    static final int BASE_ATTACK = 20;
+    static final int BASE_ATTACK = 25;
     static final String ATTACK_NAME = "Wave";
     static final String PASSIVE_NAME = "Cleanse";
 
@@ -25,11 +25,14 @@ public class TideSoul extends Soul
 
     static final String PASSIVE_DETAILS = "Remove effects and heal. Increased stacks from stuns, burns, and poisons.";
 
+    static final int HEALING_AMOUNT = 40;
+    static final int PASSIVE_COOLDOWN = 6;
+
     int floodStacks;
     
     public TideSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, COSTUME);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
         this.floodStacks = 2;
     }
 
@@ -51,8 +54,8 @@ public class TideSoul extends Soul
         other.stunDuration = 0;
         other.burningDuration = 0;
         other.poisonedDuration = 0;
-        this.health += (int)(15 * levelModifier);
-        floodStacks+=2;
+        this.health += (int)(HEALING_AMOUNT * levelModifier);
+        floodStacks+=3;
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
@@ -68,8 +71,8 @@ public class TideSoul extends Soul
         return "Wave: deals " + attack + " water damage and gains 1 flood stack.";
     }
 
-    public String getPassiveDetails() {
-        return "Cleanse: removes effects, heals " + (int)(15 * levelModifier) + " health, and gains 2 flood stacks.";
+    public String unwrappedGetPassiveDetails() {
+        return "Cleanse: removes negative effects & debuffs, heals " + (int)(HEALING_AMOUNT * levelModifier) + " health, and gains 3 flood stacks.";
     }
 
     public String unwrappedGetUltimateDetails() {

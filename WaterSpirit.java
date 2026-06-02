@@ -16,14 +16,17 @@ public class WaterSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("water.png");
     static final String NAME = "Water Spirit";
     static final int BASE_HEALTH = 70;
-    static final int BASE_ATTACK = 10;
+    static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Splash";
     static final String PASSIVE_NAME = "Purify";
     static final String PASSIVE_DETAILS = "Remove effects and heal";
+
+    static final int HEALING_AMOUNT = 20;
+    static final int PASSIVE_COOLDOWN = 4;
     
     public WaterSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
 
     }
 
@@ -31,7 +34,10 @@ public class WaterSpirit extends Spirit
         this.stunDuration = 0;
         this.burningDuration = 0;
         this.poisonedDuration = 0;
-        this.health += (int)(10 * levelModifier);
+        this.defense = Math.max(this.defense, 0);
+        this.attack = Math.max(this.attack, BASE_ATTACK);
+        this.health += (int)(HEALING_AMOUNT * levelModifier);
+        
     }
 
     public Soul getUpgraded() {
@@ -43,8 +49,8 @@ public class WaterSpirit extends Spirit
         return "Splash: deals " + attack + " water damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Purify: removes status effects and heals " + (int)(10 * levelModifier) + " health.";
+    public String unwrappedGetPassiveDetails() {
+        return "Purify: removes negative effects & debuffs and heals " + (int)(HEALING_AMOUNT * levelModifier) + " health.";
     }
 
 }

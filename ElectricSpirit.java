@@ -57,7 +57,7 @@ public class ElectricSpirit extends Spirit
         }
     }
 
-    public String getPassiveDetails() {
+    public String unwrappedGetPassiveDetails() {
         return "Charge: boosts next attack and stun chance. Can stack.";
     }
 }

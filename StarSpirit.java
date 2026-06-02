@@ -14,16 +14,25 @@ public class StarSpirit extends Spirit
      */
     static GreenfootImage costume = new GreenfootImage("star.png");
     static final String NAME = "Star Spirit";
-    static final int BASE_HEALTH = 100;
+    static final int BASE_HEALTH = 80;
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Flare";
     static final String PASSIVE_NAME = "Meteor Shower";
     static final String PASSIVE_DETAILS = "Successive meteor strikes with a chance to hit each strike";
+
+    static final int MAX_METEOR_STRIKES = 8;
+    static final double METEOR_STRIKE_CHANCE = 0.7;
+    static final int METEOR_STRIKE_DAMAGE_DIVISOR = 2;
+    static final int METEOR_BURNING_DAMAGE = 3;
+
+    static final int PASSIVE_COOLDOWN = 4;
     
     public StarSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, ATTACK_NAME, PASSIVE_NAME, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
     }
+
+
 
     public void passive(Entity other) {
     }
@@ -33,14 +42,14 @@ public class StarSpirit extends Spirit
         
         // Any additional initialization code for FireSpirit can go here
         super.applyPassive(other);
-        other.burningDamage = Math.max(other.burningDamage, (int)(3 * levelModifier));
+        other.burningDamage = Math.max(other.burningDamage, (int)(METEOR_BURNING_DAMAGE * levelModifier));
         int j = 1;
 
-        final double effectiveDamage = effectivenessMultiplier(other) * (int)(attack * levelModifier / 3);
+        final double effectiveDamage = effectivenessMultiplier(other) * (int)(attack * levelModifier / METEOR_STRIKE_DAMAGE_DIVISOR);
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < MAX_METEOR_STRIKES; i++) {
             
-            if (Greenfoot.getRandomNumber(100) < 50) {
+            if (Greenfoot.getRandomNumber(100) < METEOR_STRIKE_CHANCE * 100) {
                 BattleScreen.getInstance().actionStack.add(
                     new Action("Meteor strike (x" + j + ")" + effectivenessTag(other) + "!", 
                     () -> {
@@ -64,7 +73,7 @@ public class StarSpirit extends Spirit
         return "Flare: deals " + attack + " star damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Meteor Shower: successively deals " + (int)(attack * levelModifier / 3) + " meteor damage and applies a small burn.";
+    public String unwrappedGetPassiveDetails() {
+        return "Meteor Shower: successively deals " + (int)(attack * levelModifier / METEOR_STRIKE_DAMAGE_DIVISOR) + " meteor damage and applies a small burn.";
     }
 }

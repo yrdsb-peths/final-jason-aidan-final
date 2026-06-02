@@ -73,7 +73,7 @@ public class ThunderSoul extends Soul
         return "Shock: deals " + attack * (charge + 1) + " electric damage; expends charges.";
     }
 
-    public String getPassiveDetails() {
+    public String unwrappedGetPassiveDetails() {
         return "Charge: Boosts attack or thunderstorm once. Can stack.";
     }
 

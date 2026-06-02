@@ -13,7 +13,7 @@ public class ShadowSoul extends Soul
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     static GreenfootImage costume = new GreenfootImage("dark.png");
-    static final String NAME = "Dark Spirit";
+    static final String NAME = "Shadow Soul";
     static final int BASE_HEALTH = 130;
     static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Shadow";
@@ -22,17 +22,23 @@ public class ShadowSoul extends Soul
 
     static final String ULTIMATE_NAME = "Eclipse";
     static final String ULTIMATE_DETAILS = "Weaken all opponents' attack & defense.";
+
+    static final int PASSIVE_COOLDOWN = 4;
+
+    static final double EVASION_INCREASE = 0.2;
+    static final int ATTACK_DEBUFF = 5;
+    static final int DEFENSE_DEBUFF = 7;
     
     public ShadowSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, costume);
-        this.evasion = 0.2;
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.dark, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, costume);
+        this.evasion = EVASION_INCREASE;
 
     }
 
     public void passive(Entity other) {
-        other.defense = Math.max(other.defense -= 7 * levelModifier, -10);
-        other.attack = Math.max(other.attack -= 5 * levelModifier, 1);
+        other.defense = Math.max(other.defense -= DEFENSE_DEBUFF * levelModifier, -20);
+        other.attack = Math.max(other.attack -= ATTACK_DEBUFF * levelModifier, 3);
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
@@ -41,7 +47,7 @@ public class ShadowSoul extends Soul
             passive(other);
         }
         for (Entity ally : allies) {
-            ally.evasion = Math.max(0.2, ally.evasion);
+            ally.evasion = Math.max(EVASION_INCREASE, ally.evasion);
         }
     }
 
@@ -50,11 +56,11 @@ public class ShadowSoul extends Soul
         return "Shadow: deals " + attack + " dark damage.";
     }
 
-    public String getPassiveDetails() {
-        return "Total Blackout: lowers enemy attack (" + (int)(5 * levelModifier) + ") and defense (" + (int)(7 * levelModifier) + ").";
+    public String unwrappedGetPassiveDetails() {
+        return "Total Blackout: lowers enemy attack (" + (int)(ATTACK_DEBUFF * levelModifier) + ") and defense (" + (int)(DEFENSE_DEBUFF * levelModifier) + ").";
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "Eclipse: deals " + (int)(20 * levelModifier) + " dark damage. Lowers all enemies' attack (" + (int)(5 * levelModifier) + "), defense (" + (int)(7 * levelModifier) + "), and accuracy.";
+        return "Eclipse: deals " + (int)(20 * levelModifier) + " dark damage. Lowers all enemies' attack (" + (int)(ATTACK_DEBUFF * levelModifier) + "), defense (" + (int)(DEFENSE_DEBUFF * levelModifier) + "), and accuracy.";
     }
 }

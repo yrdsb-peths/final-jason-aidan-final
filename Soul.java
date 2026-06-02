@@ -28,6 +28,13 @@ abstract public class Soul extends Entity
         this.ultimateName = ultimateName;
     }
 
+    public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String ultimateName, int passiveCooldown, GreenfootImage image)
+    {
+        super(name, health, attack, type, attackName, passiveName, passiveCooldown, image);
+        this.ultimateUsed = false;
+        this.ultimateName = ultimateName;
+    }
+
     abstract public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others);
 
     public void applyUltimate(ArrayList<Entity> allies, ArrayList<Entity> others) {

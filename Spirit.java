@@ -36,6 +36,10 @@ abstract public class Spirit extends Entity
 
     
     
+    public Spirit(String name, int health, int attack, Element type, String attackName, String passiveName, int passiveCooldown, GreenfootImage image)
+    {
+        super(name, health, attack, type, attackName, passiveName, passiveCooldown, image);
+    }
     
     public Spirit(String name, int health, int attack, Element type, String attackName, String passiveName, GreenfootImage image)
     {

@@ -191,6 +191,9 @@ public class BattleScreen extends Actor
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
             // don't ever use 'passive' like currentEntity.passive(opponentEntity);
+            if (currentEntity.passiveCooldownLeft > 0) {
+                return;
+            }
             currentEntity.applyPassive(opponentEntity);
             attachToActions(() -> endAction());
 
