@@ -61,6 +61,6 @@ public class ShadowSoul extends Soul
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "Eclipse: deals " + (int)(20 * levelModifier) + " dark damage. Lowers all enemies' attack (" + (int)(ATTACK_DEBUFF * levelModifier) + "), defense (" + (int)(DEFENSE_DEBUFF * levelModifier) + "), and accuracy.";
+        return "Eclipse: deals " + (int)(20 * levelModifier) + " dark damage. Lowers ALL enemies' attack (" + (int)(ATTACK_DEBUFF * levelModifier) + "), defense (" + (int)(DEFENSE_DEBUFF * levelModifier) + "), and accuracy.";
     }
 }

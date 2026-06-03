@@ -1,4 +1,6 @@
 #Greenfoot project file
+class.BattleScreen.image=background1.png
+class.ChooseScreen.image=backgroundStarter.png
 class.FireSpirit.image=button-red.png
 dependency1.from=MyWorld
 dependency1.to=Entity
@@ -6,20 +8,35 @@ dependency1.type=UsesDependency
 dependency10.from=ChooseScreen
 dependency10.to=Soul
 dependency10.type=UsesDependency
+<<<<<<< Updated upstream
 dependency100.from=BattleScreen
 dependency100.to=DialogueBox
+=======
+dependency100.from=BlazeSoul
+dependency100.to=Entity
+>>>>>>> Stashed changes
 dependency100.type=UsesDependency
 dependency101.from=BlazeSoul
 dependency101.to=Element
 dependency101.type=UsesDependency
+<<<<<<< Updated upstream
 dependency102.from=BattleScreen
 dependency102.to=Soul
+=======
+dependency102.from=Action
+dependency102.to=BattleScreen
+>>>>>>> Stashed changes
 dependency102.type=UsesDependency
 dependency11.from=Switch
 dependency11.to=Chooser
 dependency11.type=UsesDependency
+<<<<<<< Updated upstream
 dependency12.from=Entity
 dependency12.to=Element
+=======
+dependency12.from=BattleScreen
+dependency12.to=MyWorld
+>>>>>>> Stashed changes
 dependency12.type=UsesDependency
 dependency13.from=BattleScreen
 dependency13.to=Button
@@ -39,14 +56,24 @@ dependency17.type=UsesDependency
 dependency18.from=BattleScreen
 dependency18.to=Action
 dependency18.type=UsesDependency
+<<<<<<< Updated upstream
 dependency19.from=Spirit
 dependency19.to=GrassSpirit
+=======
+dependency19.from=BattleScreen
+dependency19.to=Soul
+>>>>>>> Stashed changes
 dependency19.type=UsesDependency
 dependency2.from=MyWorld
 dependency2.to=ChooseScreen
 dependency2.type=UsesDependency
+<<<<<<< Updated upstream
 dependency20.from=Spirit
 dependency20.to=ElectricSpirit
+=======
+dependency20.from=Entity
+dependency20.to=Element
+>>>>>>> Stashed changes
 dependency20.type=UsesDependency
 dependency21.from=Entity
 dependency21.to=Action
@@ -72,14 +99,24 @@ dependency27.type=UsesDependency
 dependency28.from=Spirit
 dependency28.to=ElectricSpirit
 dependency28.type=UsesDependency
+<<<<<<< Updated upstream
 dependency29.from=SusSpirit
 dependency29.to=Entity
+=======
+dependency29.from=Spirit
+dependency29.to=RockSpirit
+>>>>>>> Stashed changes
 dependency29.type=UsesDependency
 dependency3.from=MyWorld
 dependency3.to=BattleScreen
 dependency3.type=UsesDependency
+<<<<<<< Updated upstream
 dependency30.from=SusSpirit
 dependency30.to=Action
+=======
+dependency30.from=Spirit
+dependency30.to=PoisonSpirit
+>>>>>>> Stashed changes
 dependency30.type=UsesDependency
 dependency31.from=Spirit
 dependency31.to=OrdinarySpirit
@@ -96,28 +133,36 @@ dependency34.type=UsesDependency
 dependency35.from=Spirit
 dependency35.to=StarSpirit
 dependency35.type=UsesDependency
+<<<<<<< Updated upstream
 dependency36.from=GrassSpirit
 dependency36.to=TreeSoul
+=======
+dependency36.from=Spirit
+dependency36.to=SusSpirit
+>>>>>>> Stashed changes
 dependency36.type=UsesDependency
 dependency37.from=GrassSpirit
 dependency37.to=Element
 dependency37.type=UsesDependency
+<<<<<<< Updated upstream
 dependency38.from=DarkSpirit
 dependency38.to=Entity
 dependency38.type=UsesDependency
 dependency39.from=SusSpirit
 dependency39.to=Soul
 =======
+=======
+>>>>>>> Stashed changes
 dependency38.from=GrassSpirit
 dependency38.to=Soul
 dependency38.type=UsesDependency
 dependency39.from=GrassSpirit
 dependency39.to=TreeSoul
->>>>>>> Stashed changes
 dependency39.type=UsesDependency
 dependency4.from=Chooser
 dependency4.to=Switch
 dependency4.type=UsesDependency
+<<<<<<< Updated upstream
 dependency40.from=DarkSpirit
 dependency40.to=ShadowSoul
 dependency40.type=UsesDependency
@@ -138,6 +183,28 @@ dependency45.to=Element
 dependency45.type=UsesDependency
 dependency46.from=SmallSpirit
 dependency46.to=BattleScreen
+=======
+dependency40.from=GrassSpirit
+dependency40.to=Element
+dependency40.type=UsesDependency
+dependency41.from=SusSpirit
+dependency41.to=Entity
+dependency41.type=UsesDependency
+dependency42.from=SusSpirit
+dependency42.to=Action
+dependency42.type=UsesDependency
+dependency43.from=SusSpirit
+dependency43.to=Soul
+dependency43.type=UsesDependency
+dependency44.from=SusSpirit
+dependency44.to=Element
+dependency44.type=UsesDependency
+dependency45.from=SusSpirit
+dependency45.to=BattleScreen
+dependency45.type=UsesDependency
+dependency46.from=DarkSpirit
+dependency46.to=Entity
+>>>>>>> Stashed changes
 dependency46.type=UsesDependency
 dependency47.from=DarkSpirit
 dependency47.to=Soul
@@ -145,14 +212,23 @@ dependency47.type=UsesDependency
 dependency48.from=DarkSpirit
 dependency48.to=ShadowSoul
 dependency48.type=UsesDependency
+<<<<<<< Updated upstream
 dependency49.from=FireSpirit
+=======
+dependency49.from=DarkSpirit
+>>>>>>> Stashed changes
 dependency49.to=Element
 dependency49.type=UsesDependency
 dependency5.from=ChooseScreen
 dependency5.to=MyWorld
 dependency5.type=UsesDependency
+<<<<<<< Updated upstream
 dependency50.from=OrdinarySpirit
 dependency50.to=Entity
+=======
+dependency50.from=SmallSpirit
+dependency50.to=Soul
+>>>>>>> Stashed changes
 dependency50.type=UsesDependency
 dependency51.from=SmallSpirit
 dependency51.to=Entity
@@ -178,16 +254,28 @@ dependency57.type=UsesDependency
 dependency58.from=OrdinarySpirit
 dependency58.to=Entity
 dependency58.type=UsesDependency
+<<<<<<< Updated upstream
 dependency59.from=PoisonSpirit
 dependency59.to=Element
+=======
+dependency59.from=OrdinarySpirit
+dependency59.to=Soul
+>>>>>>> Stashed changes
 dependency59.type=UsesDependency
 dependency6.from=ChooseScreen
 dependency6.to=Entity
 dependency6.type=UsesDependency
+<<<<<<< Updated upstream
 dependency60.from=RockSpirit
 dependency60.to=Entity
 dependency60.type=UsesDependency
 dependency61.from=WaterSpirit
+=======
+dependency60.from=OrdinarySpirit
+dependency60.to=Element
+dependency60.type=UsesDependency
+dependency61.from=PoisonSpirit
+>>>>>>> Stashed changes
 dependency61.to=Entity
 dependency61.type=UsesDependency
 dependency62.from=WaterSpirit
@@ -211,14 +299,24 @@ dependency67.type=UsesDependency
 dependency68.from=RockSpirit
 dependency68.to=Entity
 dependency68.type=UsesDependency
+<<<<<<< Updated upstream
 dependency69.from=StarSpirit
 dependency69.to=BattleScreen
+=======
+dependency69.from=RockSpirit
+dependency69.to=Action
+>>>>>>> Stashed changes
 dependency69.type=UsesDependency
 dependency7.from=ChooseScreen
 dependency7.to=Chooser
 dependency7.type=UsesDependency
+<<<<<<< Updated upstream
 dependency70.from=BigSpirit
 dependency70.to=Entity
+=======
+dependency70.from=RockSpirit
+dependency70.to=Soul
+>>>>>>> Stashed changes
 dependency70.type=UsesDependency
 dependency71.from=RockSpirit
 dependency71.to=Element
@@ -244,14 +342,24 @@ dependency77.type=UsesDependency
 dependency78.from=BigSpirit
 dependency78.to=Entity
 dependency78.type=UsesDependency
+<<<<<<< Updated upstream
 dependency79.from=Soul
 dependency79.to=BattleScreen
+=======
+dependency79.from=BigSpirit
+dependency79.to=Soul
+>>>>>>> Stashed changes
 dependency79.type=UsesDependency
 dependency8.from=ChooseScreen
 dependency8.to=Button
 dependency8.type=UsesDependency
+<<<<<<< Updated upstream
 dependency80.from=TideSoul
 dependency80.to=Entity
+=======
+dependency80.from=BigSpirit
+dependency80.to=Element
+>>>>>>> Stashed changes
 dependency80.type=UsesDependency
 dependency81.from=ElectricSpirit
 dependency81.to=Entity
@@ -277,13 +385,22 @@ dependency87.type=UsesDependency
 dependency88.from=TideSoul
 dependency88.to=Entity
 dependency88.type=UsesDependency
+<<<<<<< Updated upstream
 dependency89.from=TreeSoul
 dependency89.to=BattleScreen
+=======
+dependency89.from=TideSoul
+dependency89.to=Element
+>>>>>>> Stashed changes
 dependency89.type=UsesDependency
 dependency9.from=ChooseScreen
 dependency9.to=Spirit
 dependency9.type=UsesDependency
+<<<<<<< Updated upstream
 dependency90.from=ShadowSoul
+=======
+dependency90.from=ThunderSoul
+>>>>>>> Stashed changes
 dependency90.to=Entity
 dependency90.type=UsesDependency
 dependency91.from=ThunderSoul
@@ -313,11 +430,19 @@ dependency98.type=UsesDependency
 dependency99.from=ShadowSoul
 dependency99.to=Element
 dependency99.type=UsesDependency
+<<<<<<< Updated upstream
 editor.fx.0.height=722
 editor.fx.0.width=1280
 editor.fx.0.x=95
 editor.fx.0.y=33
 height=719
+=======
+editor.fx.0.height=739
+editor.fx.0.width=816
+editor.fx.0.x=275
+editor.fx.0.y=-6
+height=736
+>>>>>>> Stashed changes
 package.numDependencies=102
 package.numTargets=33
 project.charset=UTF-8
@@ -330,7 +455,7 @@ publish.title=
 publish.url=
 readme.height=60
 readme.name=@README
-readme.width=48
+readme.width=49
 readme.x=10
 readme.y=10
 simulation.speed=50
@@ -342,66 +467,42 @@ target1.width=120
 target1.x=0
 target1.y=0
 target10.height=70
-<<<<<<< Updated upstream
-target10.name=ChoseScreen
-=======
 target10.name=SmallSpirit
->>>>>>> Stashed changes
 target10.showInterface=false
 target10.type=ClassTarget
 target10.width=120
 target10.x=0
 target10.y=0
 target11.height=70
-<<<<<<< Updated upstream
-target11.name=SmallSpirit
-=======
 target11.name=Chooser
->>>>>>> Stashed changes
 target11.showInterface=false
 target11.type=ClassTarget
 target11.width=120
 target11.x=0
 target11.y=0
 target12.height=70
-<<<<<<< Updated upstream
-target12.name=Chooser
-=======
 target12.name=Button
->>>>>>> Stashed changes
 target12.showInterface=false
 target12.type=ClassTarget
 target12.width=120
 target12.x=0
 target12.y=0
 target13.height=70
-<<<<<<< Updated upstream
-target13.name=Button
-=======
 target13.name=FireSpirit
->>>>>>> Stashed changes
 target13.showInterface=false
 target13.type=ClassTarget
 target13.width=120
 target13.x=0
 target13.y=0
 target14.height=70
-<<<<<<< Updated upstream
-target14.name=FireSpirit
-=======
 target14.name=OrdinarySpirit
->>>>>>> Stashed changes
 target14.showInterface=false
 target14.type=ClassTarget
 target14.width=120
 target14.x=0
 target14.y=0
 target15.height=70
-<<<<<<< Updated upstream
-target15.name=OrdinarySpirit
-=======
 target15.name=ImageDisplay
->>>>>>> Stashed changes
 target15.showInterface=false
 target15.type=ClassTarget
 target15.width=120
@@ -415,33 +516,21 @@ target16.width=120
 target16.x=0
 target16.y=0
 target17.height=70
-<<<<<<< Updated upstream
-target17.name=ImageDisplay
-=======
 target17.name=SwitchA
->>>>>>> Stashed changes
 target17.showInterface=false
 target17.type=ClassTarget
 target17.width=120
 target17.x=0
 target17.y=0
 target18.height=70
-<<<<<<< Updated upstream
-target18.name=WaterSpirit
-=======
 target18.name=PoisonSpirit
->>>>>>> Stashed changes
 target18.showInterface=false
 target18.type=ClassTarget
 target18.width=120
 target18.x=0
 target18.y=0
 target19.height=70
-<<<<<<< Updated upstream
-target19.name=PoisonSpirit
-=======
 target19.name=WaterSpirit
->>>>>>> Stashed changes
 target19.showInterface=false
 target19.type=ClassTarget
 target19.width=120
@@ -567,11 +656,7 @@ target4.width=120
 target4.x=0
 target4.y=0
 target5.height=70
-<<<<<<< Updated upstream
-target5.name=GrassSpirit
-=======
 target5.name=SusSpirit
->>>>>>> Stashed changes
 target5.showInterface=false
 target5.type=ClassTarget
 target5.width=120
@@ -606,6 +691,13 @@ target9.width=120
 target9.x=0
 target9.y=0
 version=3.1.0
+<<<<<<< Updated upstream
 width=1280
 xPosition=0
 yPosition=29
+=======
+width=1382
+world.lastInstantiated=MyWorld
+xPosition=0
+yPosition=0
+>>>>>>> Stashed changes

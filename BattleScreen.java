@@ -255,7 +255,10 @@ public class BattleScreen extends Actor
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
-
+            //show player list
+            //allow for player to click and swap spirits
+            //spirits keep stats upon swaping
+            
         } else if (ultButton.isPressed) {
             ultButton.isPressed = false;
             if (currentEntity instanceof Soul soul && !soul.ultimateUsed) {
