@@ -76,6 +76,8 @@ public class ChooseScreen extends Actor
             if (finishedChoosing && submitButton.isPressed) {
                 this.state = 1;
                 submitButton.isPressed = false;
+                submitButton.setImage("submit_button.png");
+                submitButton.getImage().scale(150, 150);
             }
 
         } else if (this.state == 1) {

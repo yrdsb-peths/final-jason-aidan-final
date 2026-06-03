@@ -14,6 +14,8 @@ public class Action
     String text;
     Runnable func;
     Boolean isCompleted;
+
+
     
     public Action(String text, Runnable func)
     {
@@ -36,6 +38,12 @@ public class Action
 
         this.isCompleted = action.isCompleted;
     }
+
+    // public Action(Runnable cFunc)
+    // {
+    //     this("", cFunc);
+
+    // }
 
     public Action(String text)
     {

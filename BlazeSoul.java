@@ -17,7 +17,7 @@ public class BlazeSoul extends Soul
     static final GreenfootImage COSTUME = new GreenfootImage("blaze.png");
     static final String NAME = "Blaze Soul";
     static final int BASE_HEALTH = 80;
-    static final int BASE_ATTACK = 35;
+    static final int BASE_ATTACK = 25;
     static final String ATTACK_NAME = "Burn";
     static final String PASSIVE_NAME = "FlameThrower";
 
@@ -35,7 +35,7 @@ public class BlazeSoul extends Soul
     }
 
     public void passive(Entity other) {
-        other.burningDamage = (int) (15 * this.levelModifier);
+        other.burningDamage = (int) (10 * this.levelModifier);
         other.burningDuration = 6;
         // Any additional initialization code for FireSpirit can go here
     }
@@ -46,7 +46,7 @@ public class BlazeSoul extends Soul
         this.burningDuration = 3;
 
         others.get(0).health -= (int)(effectivenessMultiplier(others.get(0)) * (int)(attack * BURST_MULTIPLIER * this.levelModifier));
-        others.get(0).burningDamage = (int) (25 * this.levelModifier);
+        others.get(0).burningDamage = (int) (15 * this.levelModifier);
         others.get(0).burningDuration += 6;
     }
 

@@ -321,7 +321,7 @@ public class BattleScreen extends Actor
             infoBox.setText(currentEntity.getUltimateDetails());
             if (ultButton.getImage() != null)
             {
-                ultButton.getImage().setTransparency(200);
+                passiveButton.getImage().setTransparency(200);
             }
         }
     }

@@ -22,8 +22,8 @@ public class DarkSpirit extends Spirit
     static final int PASSIVE_COOLDOWN = 4;
 
     static final double EVASION_INCREASE = 0.1;
-    static final int ATTACK_DEBUFF = 3;
-    static final int DEFENSE_DEBUFF = 5;
+    static final int ATTACK_DEBUFF = 2;
+    static final int DEFENSE_DEBUFF = 4;
     
     public DarkSpirit()
     {

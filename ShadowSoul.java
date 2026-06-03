@@ -14,7 +14,7 @@ public class ShadowSoul extends Soul
      */
     static GreenfootImage costume = new GreenfootImage("shadow.png");
     static final String NAME = "Shadow Soul";
-    static final int BASE_HEALTH = 130;
+    static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 15;
     static final String ATTACK_NAME = "Shadow";
     static final String PASSIVE_NAME = "Total Blackout";
@@ -26,8 +26,8 @@ public class ShadowSoul extends Soul
     static final int PASSIVE_COOLDOWN = 4;
 
     static final double EVASION_INCREASE = 0.2;
-    static final int ATTACK_DEBUFF = 5;
-    static final int DEFENSE_DEBUFF = 7;
+    static final int ATTACK_DEBUFF = 4;
+    static final int DEFENSE_DEBUFF = 6;
     
     public ShadowSoul()
     {
@@ -37,8 +37,8 @@ public class ShadowSoul extends Soul
     }
 
     public void passive(Entity other) {
-        other.defense = Math.max(other.defense -= DEFENSE_DEBUFF * levelModifier, -20);
-        other.attack = Math.max(other.attack -= ATTACK_DEBUFF * levelModifier, 3);
+        other.defense = Math.max((int)(other.defense - DEFENSE_DEBUFF * levelModifier), -20);
+        other.attack = Math.max((int)(other.attack - ATTACK_DEBUFF * levelModifier), 3);
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {

@@ -37,6 +37,7 @@ public class SusSpirit extends Spirit
     public void attack(Entity other) {
         if (Greenfoot.getRandomNumber(100) < attackChance) {
             super.attack(other);
+            attackChance = 0;
         } else {
             BattleScreen.getInstance().actionStack.add(new Action("The attack didn't trigger.", () -> {}));
         }
