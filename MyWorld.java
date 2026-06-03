@@ -8,11 +8,12 @@ enum States {
 
 public class MyWorld extends World {
     
-    final static int MAX_ENTITIES = 5;
+    final static int MAX_ENTITIES = 2;
     ArrayList<Entity> player1Entities;
     ArrayList<Entity> player2Entities;
 
     int playerNum = 1;
+    static int worldTime = 0;
     States currentState = States.CHOOSING;
 
     
@@ -38,6 +39,8 @@ public class MyWorld extends World {
 
     public void act() {
         
+        worldTime ++;
+
         if (currentState == States.CHOOSING) {
 
             if (!screenCreated) {

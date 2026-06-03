@@ -84,11 +84,26 @@ abstract public class Entity
         //apply burn damage and decrease burn duration
         if(this.burningDuration > 0)
         {
-            BattleScreen.getInstance().actionStack.add(new Action(
-                "> " + this.name + " took " + this.burningDamage + " burning damage.",
+            BattleScreen screenInstance = BattleScreen.getInstance();
+
+            screenInstance.actionStack.add(new Action(
+                // "> " + this.name + " took " + this.burningDamage + " burning damage.",
+                "",
                 () -> {
                     this.health -= this.burningDamage;
                     this.burningDuration--;
+                    screenInstance.animationStack.add(new AnimationTask(
+                        MyWorld.worldTime+2, 
+                        () -> {
+                            screenInstance.p1Entity.image.setTransparency(100);
+                        }
+                    ));
+                    screenInstance.animationStack.add(new AnimationTask(
+                        MyWorld.worldTime+12, 
+                        () -> {
+                            screenInstance.p1Entity.image.setTransparency(255);
+                        }
+                    ));
                 }
             ));
             

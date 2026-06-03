@@ -49,6 +49,7 @@ public class BattleScreen extends Actor
     DialogueBox infoBox;
 
     ArrayList<Action> actionStack;
+    ArrayList<AnimationTask> animationStack;
 
     GreenfootImage backgroundImage;
 
@@ -76,6 +77,7 @@ public class BattleScreen extends Actor
         this.world = world;
 
         actionStack = new ArrayList<Action>();
+        animationStack = new ArrayList<AnimationTask>();
         statusEffectsDisplay1 = new ArrayList<ImageDisplay>();
         statusEffectsDisplay2 = new ArrayList<ImageDisplay>();
         
@@ -115,6 +117,12 @@ public class BattleScreen extends Actor
             // Player 1 wins
             System.out.println("Player 1 wins!");
         }
+        for (ImageDisplay display : statusEffectsDisplay1) {
+            world.removeObject(display);
+        }
+        for (ImageDisplay display : statusEffectsDisplay2) {
+            world.removeObject(display);
+        }
         world.removeObject(attackButton);
         world.removeObject(passiveButton);
         world.removeObject(chooseNewButton);
@@ -125,6 +133,7 @@ public class BattleScreen extends Actor
         world.currentState = States.CHOOSING;
         world.screenCreated = false;
         world.removeObject(this);
+
     }
 
     private void playerAction()
@@ -140,6 +149,8 @@ public class BattleScreen extends Actor
         ArrayList<Entity> opponentEntities = turnNumber % 2 == 0 ? player1Entities : player2Entities;
 
         int turn = 2 - turnNumber % 2;
+
+        runAnimation();
 
         if (actionStack.size() > 0) {
             nextAction(currentEntity);
@@ -159,16 +170,46 @@ public class BattleScreen extends Actor
             displayHoverText(currentEntity);
             return;
         }
+
         Action action = actionStack.get(0);
-        dialogueBox.setText(action.text);
 
         if (!action.isCompleted && action.func != null) {
             action.func.run();
         }
 
+        if (action.text.isEmpty()) {
+            actionStack.remove(0);
+            return;
+        }
+
+        dialogueBox.setText(action.text);
+
         if (Greenfoot.mouseClicked(null)) {
             actionStack.remove(0);
         }
+    }
+
+    private void runAnimation() {
+        
+        if (animationStack.size() <= 0) {
+            return;
+        }
+
+        for (int i = animationStack.size() - 1; i >= 0; i --) {
+
+            AnimationTask task = animationStack.get(i);
+
+            if (task.executionTime == MyWorld.worldTime && task.func != null) {
+                task.func.run();
+                animationStack.remove(i);
+
+            } else if (task.executionTime < MyWorld.worldTime && task.func != null) {
+                task.func.run();
+                animationStack.remove(i);
+                System.out.println("Warning: this animation was skipped");
+            }
+        }
+
     }
 
     private void buttonActionLogic(Entity currentEntity, Entity opponentEntity, ArrayList<Entity> currentEntities, ArrayList<Entity> opponentEntities, int turn) {
