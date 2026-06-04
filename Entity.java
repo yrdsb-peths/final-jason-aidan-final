@@ -187,10 +187,19 @@ abstract public class Entity
     }
 
     public int effectiveDamage(double damage, Entity other) {
+        if(other instanceof BoulderSoul soul && soul.intangibilityLeft != 0)
+        {
+            return 0;
+        }
         return (int) Math.max(damage - other.defense, 0);
     }
 
     public int effectiveDamage(int damage, Entity other) {
+
+        if(other instanceof BoulderSoul soul && soul.intangibilityLeft != 0)
+        {
+            return 0;
+        }
         return (int) Math.max(damage - other.defense, 0);
     }
     public void attack(Entity other) {
