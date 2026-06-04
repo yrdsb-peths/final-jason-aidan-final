@@ -38,7 +38,7 @@ public class RockSpirit extends Spirit
     }
 
     public Soul getUpgraded() {
-        return null;
+        return new BoulderSoul();
     }
 
 
