@@ -36,14 +36,14 @@ public class BattleScreen extends Actor
     Entity p1Entity;
     Entity p2Entity;
 
+    ArrayList<Entity> player1Entities;
+    ArrayList<Entity> player2Entities;
+
     ImageDisplay p1EntityDisplay;
     ImageDisplay p2EntityDisplay;
     
     int turnNumber;
     
-    ArrayList<Entity> player1Entities;
-    ArrayList<Entity> player2Entities;
-
     DialogueBox dialogueBox;
 
     DialogueBox infoBox;
@@ -74,16 +74,20 @@ public class BattleScreen extends Actor
         this.player1Entities = player1Entities;
         this.player2Entities = player2Entities;
 
+        this.p1Entity = player1Entities.get(0);
+        this.p2Entity = player2Entities.get(0);
+
         this.world = world;
 
         actionStack = new ArrayList<Action>();
         animationStack = new ArrayList<AnimationTask>();
         statusEffectsDisplay1 = new ArrayList<ImageDisplay>();
         statusEffectsDisplay2 = new ArrayList<ImageDisplay>();
+
+        setEntityLocations();
         
         initButtons();
         initEntityDisplay();
-
 
         initBackground();
 
@@ -138,36 +142,54 @@ public class BattleScreen extends Actor
 
     private void playerAction()
     {
-
         p1Entity = player1Entities.get(0);
         p2Entity = player2Entities.get(0);
         
-        Entity currentEntity = turnNumber % 2 == 1 ? p1Entity : p2Entity;
-        Entity opponentEntity = turnNumber % 2 == 0 ? p1Entity : p2Entity;
-
-        ArrayList<Entity> currentEntities = turnNumber % 2 == 1 ? player1Entities : player2Entities;
-        ArrayList<Entity> opponentEntities = turnNumber % 2 == 0 ? player1Entities : player2Entities;
 
         int turn = 2 - turnNumber % 2;
 
+        updateEntityImage();
         runAnimation();
 
         if (actionStack.size() > 0) {
-            nextAction(currentEntity);
+            nextAction();
             return;
         }
 
-        buttonActionLogic(currentEntity, opponentEntity, currentEntities, opponentEntities, turn);
- 
+        buttonActionLogic(turn);
     }
 
-    private void nextAction(Entity currentEntity) {
+    public Entity getCurrentEntity() {
+        return turnNumber % 2 == 1 ? p1Entity : p2Entity;
+    }
+
+    public Entity getOpponentEntity() {
+        return turnNumber % 2 == 0 ? p1Entity : p2Entity;
+    }
+
+    public ImageDisplay getCurrentEntityDisplay() {
+        return turnNumber % 2 == 1 ? p1EntityDisplay : p2EntityDisplay;
+    }
+
+    public ImageDisplay getOpponentEntityDisplay() {
+        return turnNumber % 2 == 0 ? p1EntityDisplay : p2EntityDisplay;
+    }
+
+    public ArrayList<Entity> getCurrentEntities() {
+        return turnNumber % 2 == 1 ? player1Entities : player2Entities;
+    }
+
+    public ArrayList<Entity> getOpponentEntities() {
+        return turnNumber % 2 == 0 ? player1Entities : player2Entities;
+    }
+
+    private void nextAction() {
         dialogueBox.show();
         infoBox.hide();
         hideButtons();
 
         if (isHovering()) {
-            displayHoverText(currentEntity);
+            displayHoverText();
             return;
         }
 
@@ -203,21 +225,25 @@ public class BattleScreen extends Actor
                 task.func.run();
                 animationStack.remove(i);
 
+                updateAllVisuals();
+
             } else if (task.executionTime < MyWorld.worldTime && task.func != null) {
                 task.func.run();
                 animationStack.remove(i);
-                System.out.println("Warning: this animation was skipped");
+                // System.out.println("Warning: this animation was skipped");
+
+                updateAllVisuals();
             }
         }
 
     }
 
-    private void buttonActionLogic(Entity currentEntity, Entity opponentEntity, ArrayList<Entity> currentEntities, ArrayList<Entity> opponentEntities, int turn) {
+    private void buttonActionLogic(int turn) {
         dialogueBox.hide();
         infoBox.show();
 
         showPlayerButtons();
-        updateEntityImage();
+        
 
         if (attackButton.getImage() != null)
         {
@@ -228,29 +254,29 @@ public class BattleScreen extends Actor
         }
         
         if (isHovering()) {
-            displayHoverText(currentEntity);
+            displayHoverText();
         } else {
             infoBox.setText("Player "+turn+"'s turn");
         }
 
-        if (currentEntity.stunDuration > 0) {
-            currentEntity.stunDuration --;
-            actionStack.add(new Action(currentEntity.name + " is stunned.", () -> endAction()));
+        if (getCurrentEntity().stunDuration > 0) {
+            getCurrentEntity().stunDuration --;
+            actionStack.add(new Action(getCurrentEntity().name + " is stunned.", () -> endAction()));
         }
 
 
         if (attackButton.isPressed) {
             attackButton.isPressed = false;
-            currentEntity.attack(opponentEntity);
+            getCurrentEntity().attack(getOpponentEntity());
             attachToActions(() -> endAction());
 
         } else if (passiveButton.isPressed) {
             passiveButton.isPressed = false;
-            // don't ever use 'passive' like currentEntity.passive(opponentEntity);
-            if (currentEntity.passiveCooldownLeft > 0) {
+            // don't ever use 'passive' like getCurrentEntity().passive(getOpponentEntity());
+            if (getCurrentEntity().passiveCooldownLeft > 0) {
                 return;
             }
-            currentEntity.applyPassive(opponentEntity);
+            getCurrentEntity().applyPassive(getOpponentEntity());
             attachToActions(() -> endAction());
 
         } else if (chooseNewButton.isPressed) {
@@ -261,9 +287,9 @@ public class BattleScreen extends Actor
             
         } else if (ultButton.isPressed) {
             ultButton.isPressed = false;
-            if (currentEntity instanceof Soul soul && !soul.ultimateUsed) {
+            if (getCurrentEntity() instanceof Soul soul && !soul.ultimateUsed) {
                 
-                soul.applyUltimate(currentEntities, opponentEntities);
+                soul.applyUltimate(getCurrentEntities(), getOpponentEntities());
                 attachToActions(() -> endAction());
             }
         }
@@ -303,11 +329,12 @@ public class BattleScreen extends Actor
     {
         if (p1Entity.health <= 0)
         {
-            
+            // System.out.println("hello");
             actionStack.add(new Action(
                 p1Entity.name + " has fainted!",
                 () -> {
-                    p1Entity = player1Entities.remove(0); 
+                    player1Entities.remove(0); 
+                    updateEntityImage();
                     if (player1Entities.size() == 0) {
                         gameOver();
                     } else {
@@ -322,8 +349,10 @@ public class BattleScreen extends Actor
         {
             actionStack.add(new Action(
                 p2Entity.name + " has fainted!",
+                
                 () -> {
-                    p2Entity = player2Entities.remove(0);
+                    player2Entities.remove(0);
+                    updateEntityImage();
                     if (player2Entities.size() == 0) {
                         gameOver();
                     } else {
@@ -341,17 +370,17 @@ public class BattleScreen extends Actor
         return attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
     }
 
-    private void displayHoverText(Entity currentEntity) {
+    private void displayHoverText() {
 
         
         if (attackButton.isHovering) {
-            infoBox.setText(currentEntity.getAttackDetails());
+            infoBox.setText(getCurrentEntity().getAttackDetails());
             if (attackButton.getImage() != null)
             {
                 attackButton.getImage().setTransparency(200);
             }
         } else if (passiveButton.isHovering) {
-            infoBox.setText(currentEntity.getPassiveDetails());
+            infoBox.setText(getCurrentEntity().getPassiveDetails());
             if (passiveButton.getImage() != null)
             {
                 passiveButton.getImage().setTransparency(200);
@@ -362,7 +391,7 @@ public class BattleScreen extends Actor
                 chooseNewButton.getImage().setTransparency(200);
             }
         } else if (ultButton.isHovering) {
-            infoBox.setText(currentEntity.getUltimateDetails());
+            infoBox.setText(getCurrentEntity().getUltimateDetails());
             if (ultButton.getImage() != null)
             {
                 passiveButton.getImage().setTransparency(200);
@@ -433,7 +462,11 @@ public class BattleScreen extends Actor
         
         world.addObject(p1EntityDisplay, MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
         world.addObject(p2EntityDisplay, MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
+
+        p1Entity.setLocation(MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
+        p2Entity.setLocation(MyWorld.WIDTH/7 * 6, MyWorld.HEIGHT/5);
     }
+
     private void updateEntityImage()
     {
         
@@ -444,11 +477,16 @@ public class BattleScreen extends Actor
         GreenfootImage p1Image = new GreenfootImage(p1Entity.image);
         GreenfootImage p2Image = new GreenfootImage(p2Entity.image);
 
+        
+
         p1Image.scale(scaleX, scaleY);
         p2Image.scale(scaleX, scaleY);
 
         p1EntityDisplay.setImage(p1Image);
         p2EntityDisplay.setImage(p2Image);
+
+        p1EntityDisplay.setLocation(p1Entity.x, p1Entity.y);
+        p2EntityDisplay.setLocation(p2Entity.x, p2Entity.y);
 
     }
 
@@ -572,6 +610,16 @@ public class BattleScreen extends Actor
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
             x2 += gap;          
+        }
+    }
+
+    private void setEntityLocations() {
+        for (Entity entity : player1Entities) {
+            entity.setLocation(MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
+        }
+
+        for (Entity entity : player2Entities) {
+            entity.setLocation(MyWorld.WIDTH*6/7, MyWorld.HEIGHT/5);
         }
     }
 

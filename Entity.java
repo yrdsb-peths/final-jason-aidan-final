@@ -30,6 +30,8 @@ abstract public class Entity
     double evasion;
     int passiveCooldown; // # of turns until passive can be used again
     int passiveCooldownLeft; // # of turns left until passive can be used again
+    int x;
+    int y;
     // number from 0-1 representing chance to dodge an attack
     
     Element type;
@@ -87,23 +89,12 @@ abstract public class Entity
             BattleScreen screenInstance = BattleScreen.getInstance();
 
             screenInstance.actionStack.add(new Action(
-                // "> " + this.name + " took " + this.burningDamage + " burning damage.",
-                "",
+                "> " + this.name + " took " + this.burningDamage + " burning damage.",
+                // "",
                 () -> {
                     this.health -= this.burningDamage;
                     this.burningDuration--;
-                    screenInstance.animationStack.add(new AnimationTask(
-                        MyWorld.worldTime+2, 
-                        () -> {
-                            screenInstance.p1Entity.image.setTransparency(100);
-                        }
-                    ));
-                    screenInstance.animationStack.add(new AnimationTask(
-                        MyWorld.worldTime+12, 
-                        () -> {
-                            screenInstance.p1Entity.image.setTransparency(255);
-                        }
-                    ));
+                    AnimationTask.addFlashAnimation(this, 10, 100);
                 }
             ));
             
@@ -112,12 +103,15 @@ abstract public class Entity
         if(this.poisonedDuration > 0)
         {
             
+            BattleScreen screenInstance = BattleScreen.getInstance();
+
             int damage = (int)(this.health * this.poisonedPercentage);
-            BattleScreen.getInstance().actionStack.add(new Action(
+            screenInstance.actionStack.add(new Action(
                 "> " + this.name + " took " + damage + " (" + (this.poisonedPercentage*100) + "% of health) poison damage.",
                 () -> {
                     this.health -= damage;
                     this.poisonedDuration--;
+                    AnimationTask.addFlashAnimation(this, 10, 100);
                 }
             ));
 
@@ -150,6 +144,11 @@ abstract public class Entity
     public void updateModifier() {
         // 10% increase in stats per level
         levelModifier = Math.sqrt(1.0 + (double) level / 10);
+    }
+
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public void fixLevel() {
@@ -191,83 +190,159 @@ abstract public class Entity
         return (int) Math.max(damage - other.defense, 0);
     }
 
-    public int effectiveDamage(int damage) {
-        return (int) Math.max(damage - this.defense, 0);
+    public int effectiveDamage(int damage, Entity other) {
+        return (int) Math.max(damage - other.defense, 0);
     }
-
     public void attack(Entity other) {
+        
+        BattleScreen screenInstance = BattleScreen.getInstance();
 
-        BattleScreen.getInstance().actionStack.add(new Action("> " + name + " used " + attackName + "."));
+        screenInstance.actionStack.add(new Action("> " + name + " used " + attackName + "."));
 
         System.out.println(other.evasion);
 
         if (Greenfoot.getRandomNumber(100) <= 100*other.evasion) {
-            BattleScreen.getInstance().actionStack.add(new Action("> The attack was evaded!", () -> {}));
+            screenInstance.actionStack.add(new Action("> The attack was evaded!", () -> {}));
             return;
         }
 
+        int outputDmg = attack;
+        boolean missed = false;
+        String messageString = "";
+
         int effectiveness = comparedTo(other);
 
-        if (effectiveness == 0) {
-            int rand = Greenfoot.getRandomNumber(100);
-            if (rand <= 10) {
-                
-                BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
-            } else if (rand > 10 && rand <= 90) {
-                double outputDmg = attack;
-                BattleScreen.getInstance().actionStack.add(new Action(
-                    "> It dealt " + effectiveDamage(outputDmg, other) + " damage!",
-                    () -> {
-                        other.takeDamage((int)outputDmg);
-                    }
-                ));
-            } else if (rand > 90) {
-                double outputDmg = 1.5*attack;
+        int luck = Greenfoot.getRandomNumber(100);
 
-                BattleScreen.getInstance().actionStack.add(new Action(
-                    "> It was a critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!",
-                    () -> {
-                        other.takeDamage((int)outputDmg);
-                    }
-                ));
+        if (effectiveness == 0) {
+            
+            if (luck <= 10) {
+                messageString = "> It missed!";
+                missed = true;
+
+            } else if (luck > 10 && luck <= 90) {
+                outputDmg = attack;
+                messageString = "> It dealt " + effectiveDamage(outputDmg, other) + " damage!";
+
+            } else if (luck > 90) {
+                outputDmg = (int)(1.5*attack);
+                messageString = "> It was a critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!";
+                
             }
         } else if (effectiveness > 0) {
-            int randCrit = Greenfoot.getRandomNumber(100);
-            if (randCrit < 10) {
-                double outputDmg = 3*attack;
+            if (luck < 10) {
+                outputDmg = 3*attack;
+                messageString = "> Critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!";
 
-                BattleScreen.getInstance().actionStack.add(new Action(
-                    "> Critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!",
-                    () -> {
-                        other.takeDamage((int)outputDmg);
-                    }
-                ));
             } else { 
-                double outputDmg = 1.5*attack;
-
-                BattleScreen.getInstance().actionStack.add(new Action(
-                    "> Super effective, dealing " + effectiveDamage(outputDmg, other) + " damage!",
-                    () -> {
-                        other.takeDamage((int)outputDmg);
-                    }
-                ));
+                outputDmg = (int)(1.5*attack);
+                messageString = "> Super effective, dealing " + effectiveDamage(outputDmg, other) + " damage!";
             }
         } else if (effectiveness < 0) {
-            int randMiss = Greenfoot.getRandomNumber(100);
-            if (randMiss < 10) {
-                BattleScreen.getInstance().actionStack.add(new Action("> It missed!", () -> {}));
-            } else { 
-                double outputDmg = 0.5*attack;
 
-                BattleScreen.getInstance().actionStack.add(new Action(
-                    "> Not very effective, dealing " + effectiveDamage(outputDmg, other) + " damage.",
-                    () -> {
-                        other.takeDamage((int)outputDmg);
-                    }
-                ));
+            if (luck < 10) {
+                messageString = "> It missed!";
+                missed = true;
+
+            } else { 
+                outputDmg = (int)(0.5*attack);
+                messageString = "> Not very effective, dealing " + effectiveDamage(outputDmg, other) + " damage.";
             }
         }
+
+        final int finalDamage = outputDmg;
+        final boolean finalMissed = missed;
+        final String finalString = messageString;
+
+        screenInstance.actionStack.add(new Action(
+            finalString,
+            () -> {
+                if (!finalMissed) {
+                   other.takeDamage((int)finalDamage);
+                   AnimationTask.addShakeAnimation(screenInstance.getOpponentEntity(), 3, 7, 2);
+                }
+            }
+        ));
+
     }
+    // public void attack(Entity other) {
+
+    //     BattleScreen screenInstance = BattleScreen.getInstance();
+
+    //     screenInstance.actionStack.add(new Action("> " + name + " used " + attackName + "."));
+
+    //     System.out.println(other.evasion);
+
+    //     if (Greenfoot.getRandomNumber(100) <= 100*other.evasion) {
+    //         screenInstance.actionStack.add(new Action("> The attack was evaded!", () -> {}));
+    //         return;
+    //     }
+
+    //     int effectiveness = comparedTo(other);
+
+    //     if (effectiveness == 0) {
+    //         int rand = Greenfoot.getRandomNumber(100);
+            
+    //         if (rand <= 10) {
+    //             screenInstance.actionStack.add(new Action("> It missed!", () -> {}));
+
+    //         } else if (rand > 10 && rand <= 90) {
+    //             double outputDmg = attack;
+    //             screenInstance.actionStack.add(new Action(
+    //                 "> It dealt " + effectiveDamage(outputDmg, other) + " damage!",
+    //                 () -> {
+    //                     other.takeDamage((int)outputDmg);
+    //                 }
+    //             ));
+                
+    //         } else if (rand > 90) {
+    //             double outputDmg = 1.5*attack;
+
+    //             screenInstance.actionStack.add(new Action(
+    //                 "> It was a critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!",
+    //                 () -> {
+    //                     other.takeDamage((int)outputDmg);
+    //                 }
+    //             ));
+                
+    //         }
+    //     } else if (effectiveness > 0) {
+    //         int randCrit = Greenfoot.getRandomNumber(100);
+    //         if (randCrit < 10) {
+    //             double outputDmg = 3*attack;
+
+    //             screenInstance.actionStack.add(new Action(
+    //                 "> Critical hit, dealing " + effectiveDamage(outputDmg, other) + " damage!",
+    //                 () -> {
+    //                     other.takeDamage((int)outputDmg);
+    //                 }
+    //             ));
+    //         } else { 
+    //             double outputDmg = 1.5*attack;
+
+    //             screenInstance.actionStack.add(new Action(
+    //                 "> Super effective, dealing " + effectiveDamage(outputDmg, other) + " damage!",
+    //                 () -> {
+    //                     other.takeDamage((int)outputDmg);
+    //                 }
+    //             ));
+    //         }
+    //     } else if (effectiveness < 0) {
+    //         int randMiss = Greenfoot.getRandomNumber(100);
+    //         if (randMiss < 10) {
+    //             screenInstance.actionStack.add(new Action("> It missed!", () -> {}));
+    //         } else { 
+    //             double outputDmg = 0.5*attack;
+
+    //             screenInstance.actionStack.add(new Action(
+    //                 "> Not very effective, dealing " + effectiveDamage(outputDmg, other) + " damage.",
+    //                 () -> {
+    //                     other.takeDamage((int)outputDmg);
+    //                 }
+    //             ));
+    //         }
+    //     }
+    // }
 
     // basically a wrapper
     public void applyPassive(Entity other) {
