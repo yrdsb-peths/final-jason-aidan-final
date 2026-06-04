@@ -51,7 +51,10 @@ public class BoulderSoul extends Soul
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         defense = (int) (MAX_DEFENSE *  levelModifier);
         intangibilityLeft = INTANGIBILITY_DURATION;
-        
+        BattleScreen.getInstance().actionStack.add(
+            new Action("Boulder have become intangible for _ turns",() -> {
+            }
+            ));
     }
     
     public void applyStatusEffects()
@@ -74,24 +77,6 @@ public class BoulderSoul extends Soul
         if(intangibilityLeft == 0)
         {
             this.health -= (int) Math.max(damage - this.defense, 0);
-        }
-    }
-    
-    public int effectiveDamage(double damage, Entity other) {
-        if(intangibilityLeft == 0)
-        {
-            return (int) Math.max(damage - other.defense, 0);
-        } else {
-            return 0;
-        }
-    }
-
-    public int effectiveDamage(int damage) {
-        if(intangibilityLeft == 0)
-        {
-            return (int) Math.max(damage - this.defense, 0);
-        } else {
-            return 0;
         }
     }
     
