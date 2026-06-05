@@ -12,7 +12,7 @@ public class SusSpirit extends Spirit
      * Act - do whatever the SusSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    static GreenfootImage costume = new GreenfootImage("sus.png");
+    static GreenfootImage costume = new GreenfootImage("tree.png");
     static final String NAME = "Sus Spirit";
     static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 1000;

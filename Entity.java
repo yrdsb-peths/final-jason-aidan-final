@@ -180,10 +180,14 @@ abstract public class Entity
 
     public void takeDamage(int damage) {
         this.health -= Math.max(damage - this.defense, 0);
+        AnimationTask.addShakeAnimation(BattleScreen.getInstance().getOpponentEntity(), 3, damage / 2, 2);
+
     }
 
     public void takeDamage(double damage) {
+        
         this.health -= (int) Math.max(damage - this.defense, 0);
+        AnimationTask.addShakeAnimation(BattleScreen.getInstance().getOpponentEntity(), 3, (int) (damage / 2), 2);
     }
 
     public int effectiveDamage(double damage, Entity other) {
@@ -268,7 +272,6 @@ abstract public class Entity
             () -> {
                 if (!finalMissed) {
                    other.takeDamage((int)finalDamage);
-                   AnimationTask.addShakeAnimation(screenInstance.getOpponentEntity(), 3, 7, 2);
                 }
             }
         ));

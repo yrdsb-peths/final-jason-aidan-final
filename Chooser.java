@@ -48,6 +48,31 @@ public class Chooser extends Actor
         }
     }
 
+    public Chooser(GreenfootImage[] options, int maxOptions, int spacing, int spiritsPerRow, int imageScale)
+    {
+        this.spacing = spacing;
+        this.options = options;
+        this.maxOptions = maxOptions;
+        this.selectedNumber = 0;
+        this.spiritsPerRow = spiritsPerRow;
+        switches = new Switch[options.length];
+        selectedIndices = new ArrayList<Integer>();
+
+        for (int i = 0; i < options.length; i++) {
+                                
+            GreenfootImage small = new GreenfootImage(options[i]);
+            small.scale(imageScale, imageScale);
+
+            GreenfootImage large = new GreenfootImage(options[i]);
+            large.scale(imageScale + 10, imageScale + 10);
+
+
+            Switch switch_ = new Switch(large, small, i, this);   
+            
+            switches[i] = switch_;
+        }
+    }
+
     public void act()
     {
         // can't use getWorld() in the constructor, so we create the switches here

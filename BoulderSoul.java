@@ -9,8 +9,6 @@ import greenfoot.GreenfootImage;
  */
 public class BoulderSoul extends Soul 
 {
-    // instance variables - replace the example below with your own
-    private int x;
 
     /**
      * Constructor for objects of class BoulderSoul
@@ -69,14 +67,14 @@ public class BoulderSoul extends Soul
     public void takeDamage(int damage) {
         if(intangibilityLeft == 0)
         {
-            this.health -= Math.max(damage - this.defense, 0);            
+            super.takeDamage(damage);         
         }
     }
 
     public void takeDamage(double damage) {
         if(intangibilityLeft == 0)
         {
-            this.health -= (int) Math.max(damage - this.defense, 0);
+            super.takeDamage(damage);
         }
     }
     

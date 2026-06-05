@@ -55,6 +55,10 @@ public class BattleScreen extends Actor
 
     ArrayList<ImageDisplay> statusEffectsDisplay1;
     ArrayList<ImageDisplay> statusEffectsDisplay2;
+
+    Boolean isSwapping;
+
+    Chooser swapper;
     
     private static BattleScreen instance;
 
@@ -78,6 +82,8 @@ public class BattleScreen extends Actor
         this.p2Entity = player2Entities.get(0);
 
         this.world = world;
+
+        this.isSwapping = false;
 
         actionStack = new ArrayList<Action>();
         animationStack = new ArrayList<AnimationTask>();
@@ -111,44 +117,22 @@ public class BattleScreen extends Actor
         }
     }
 
-    private void gameOver()
-    {
-        if(player1Entities.size() == 0)
-        {
-            // Player 2 wins
-            System.out.println("Player 2 wins!");
-        } else if(player2Entities.size() == 0) {
-            // Player 1 wins
-            System.out.println("Player 1 wins!");
-        }
-        for (ImageDisplay display : statusEffectsDisplay1) {
-            world.removeObject(display);
-        }
-        for (ImageDisplay display : statusEffectsDisplay2) {
-            world.removeObject(display);
-        }
-        world.removeObject(attackButton);
-        world.removeObject(passiveButton);
-        world.removeObject(chooseNewButton);
-        world.removeObject(ultButton);
-        world.removeObject(p1EntityDisplay);
-        world.removeObject(p2EntityDisplay);
-        world.removeObject(dialogueBox);
-        world.currentState = States.CHOOSING;
-        world.screenCreated = false;
-        world.removeObject(this);
 
-    }
 
     private void playerAction()
     {
         p1Entity = player1Entities.get(0);
         p2Entity = player2Entities.get(0);
-        
 
         int turn = 2 - turnNumber % 2;
 
         updateEntityImage();
+
+        if (isSwapping) {
+            swappingLogic();
+            return;
+        }
+
         runAnimation();
 
         if (actionStack.size() > 0) {
@@ -159,28 +143,41 @@ public class BattleScreen extends Actor
         buttonActionLogic(turn);
     }
 
-    public Entity getCurrentEntity() {
-        return turnNumber % 2 == 1 ? p1Entity : p2Entity;
-    }
+    private void swappingLogic() {
+        infoBox.hide();
+        dialogueBox.hide();
+        hideButtons();
+        world.setBackground(new GreenfootImage(backgroundImage));
+        p1EntityDisplay.setImage((GreenfootImage)null);
+        p2EntityDisplay.setImage((GreenfootImage)null);
 
-    public Entity getOpponentEntity() {
-        return turnNumber % 2 == 0 ? p1Entity : p2Entity;
-    }
+        int spacing = 100;
+        int scale = 80;
 
-    public ImageDisplay getCurrentEntityDisplay() {
-        return turnNumber % 2 == 1 ? p1EntityDisplay : p2EntityDisplay;
-    }
+        if (swapper == null) {
+            int length = getOpponentEntities().size();
+            GreenfootImage[] costumes = new GreenfootImage[length];
+            for (int i = 0; i < length; i++) {
+                costumes[i] = new GreenfootImage(getOpponentEntities().get(i).image);
+            }
+            swapper = new Chooser(costumes, 1, spacing, 5, scale);
+            world.addObject(swapper, MyWorld.WIDTH/2 - (spacing) * length/2 + 45, MyWorld.HEIGHT/2);
 
-    public ImageDisplay getOpponentEntityDisplay() {
-        return turnNumber % 2 == 0 ? p1EntityDisplay : p2EntityDisplay;
-    }
+        }
+        
+        if (swapper.selectedNumber == 1) {
+            int targetInd = swapper.selectedIndices.get(0);
+            Entity temp = getOpponentEntity();
+            getOpponentEntities().set(0, getOpponentEntities().get(targetInd));
+            getOpponentEntities().set(targetInd, temp);
+            swapper.remove();
+            swapper = null;
+            isSwapping = false;
+            updateAllVisuals();
 
-    public ArrayList<Entity> getCurrentEntities() {
-        return turnNumber % 2 == 1 ? player1Entities : player2Entities;
-    }
+        }
 
-    public ArrayList<Entity> getOpponentEntities() {
-        return turnNumber % 2 == 0 ? player1Entities : player2Entities;
+        return;
     }
 
     private void nextAction() {
@@ -281,6 +278,8 @@ public class BattleScreen extends Actor
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
+            isSwapping = true;
+            endAction();
             //show player list
             //allow for player to click and swap spirits
             //spirits keep stats upon swaping
@@ -295,7 +294,6 @@ public class BattleScreen extends Actor
         }
     }
 
-    
     private void endAction()
     {
         int previousStackSize = actionStack.size();
@@ -315,16 +313,8 @@ public class BattleScreen extends Actor
             turnNumber++;
         }
     }
-    // attaches a func to last action without creates a new one
-    private void attachToActions(Runnable func) {
-        if (actionStack.size() > 0) {
-            Action modifiedAction = new Action(actionStack.getLast(), () -> func.run());
-            actionStack.set(actionStack.size()-1, modifiedAction);
-        } else {
-            func.run();
-        }
-    }
-    
+    // attaches a func to last action without creating a new one
+
     private void checkIfFainted()
     {
         if (p1Entity.health <= 0)
@@ -366,6 +356,44 @@ public class BattleScreen extends Actor
         }
     }
 
+    private void gameOver()
+    {
+        if(player1Entities.size() == 0)
+        {
+            // Player 2 wins
+            System.out.println("Player 2 wins!");
+        } else if(player2Entities.size() == 0) {
+            // Player 1 wins
+            System.out.println("Player 1 wins!");
+        }
+        for (ImageDisplay display : statusEffectsDisplay1) {
+            world.removeObject(display);
+        }
+        for (ImageDisplay display : statusEffectsDisplay2) {
+            world.removeObject(display);
+        }
+        world.removeObject(attackButton);
+        world.removeObject(passiveButton);
+        world.removeObject(chooseNewButton);
+        world.removeObject(ultButton);
+        world.removeObject(p1EntityDisplay);
+        world.removeObject(p2EntityDisplay);
+        world.removeObject(dialogueBox);
+        world.currentState = States.CHOOSING;
+        world.screenCreated = false;
+        world.removeObject(this);
+
+    }
+
+    private void attachToActions(Runnable func) {
+        if (actionStack.size() > 0) {
+            Action modifiedAction = new Action(actionStack.getLast(), () -> func.run());
+            actionStack.set(actionStack.size()-1, modifiedAction);
+        } else {
+            func.run();
+        }
+    }
+
     private boolean isHovering() {
         return attackButton.isHovering || passiveButton.isHovering || chooseNewButton.isHovering || ultButton.isHovering;
     }
@@ -386,6 +414,7 @@ public class BattleScreen extends Actor
                 passiveButton.getImage().setTransparency(200);
             }
         } else if (chooseNewButton.isHovering) {
+            infoBox.setText("Swap to a new spirit. Costs a turn.");
             if (chooseNewButton.getImage() != null)
             {
                 chooseNewButton.getImage().setTransparency(200);
@@ -477,8 +506,6 @@ public class BattleScreen extends Actor
         GreenfootImage p1Image = new GreenfootImage(p1Entity.image);
         GreenfootImage p2Image = new GreenfootImage(p2Entity.image);
 
-        
-
         p1Image.scale(scaleX, scaleY);
         p2Image.scale(scaleX, scaleY);
 
@@ -547,7 +574,6 @@ public class BattleScreen extends Actor
 
         world.setBackground(tempBackground);
 
-        world.setBackground(tempBackground);
     }
 
     private void updateStatusEffectDisplay() {
@@ -621,6 +647,22 @@ public class BattleScreen extends Actor
         for (Entity entity : player2Entities) {
             entity.setLocation(MyWorld.WIDTH*6/7, MyWorld.HEIGHT/5);
         }
+    }
+
+    public Entity getCurrentEntity() {
+        return turnNumber % 2 == 1 ? p1Entity : p2Entity;
+    }
+
+    public Entity getOpponentEntity() {
+        return turnNumber % 2 == 0 ? p1Entity : p2Entity;
+    }
+
+    public ArrayList<Entity> getCurrentEntities() {
+        return turnNumber % 2 == 1 ? player1Entities : player2Entities;
+    }
+
+    public ArrayList<Entity> getOpponentEntities() {
+        return turnNumber % 2 == 0 ? player1Entities : player2Entities;
     }
 
 }
