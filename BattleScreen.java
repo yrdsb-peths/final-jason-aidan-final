@@ -279,7 +279,7 @@ public class BattleScreen extends Actor
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
             isSwapping = true;
-            endAction();
+            turnNumber++;
             //show player list
             //allow for player to click and swap spirits
             //spirits keep stats upon swaping
