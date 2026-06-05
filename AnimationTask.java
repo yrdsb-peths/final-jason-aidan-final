@@ -55,6 +55,8 @@ public class AnimationTask
             entity.setLocation(originalX, originalY);
         }));
     }
+    
+    
 
     public AnimationTask(int executionTime, Runnable func)
     {

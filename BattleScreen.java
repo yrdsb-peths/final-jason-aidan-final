@@ -60,7 +60,9 @@ public class BattleScreen extends Actor
 
     Chooser swapper;
 
-
+    ImageDisplay critDisplay;
+    ImageDisplay missDisplay;
+    
     int p1SwapCooldownLeft;
     int p2SwapCooldownLeft;
     
@@ -78,7 +80,7 @@ public class BattleScreen extends Actor
     private BattleScreen(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
         
         setImage((GreenfootImage)null);
-
+        
         this.player1Entities = player1Entities;
         this.player2Entities = player2Entities;
 
@@ -93,7 +95,7 @@ public class BattleScreen extends Actor
         animationStack = new ArrayList<AnimationTask>();
         statusEffectsDisplay1 = new ArrayList<ImageDisplay>();
         statusEffectsDisplay2 = new ArrayList<ImageDisplay>();
-
+        
         p1SwapCooldownLeft = 0;
         p2SwapCooldownLeft = 0;
 
@@ -110,6 +112,9 @@ public class BattleScreen extends Actor
 
         
         turnNumber = 1;
+        
+        initCritImage();
+        initMissImage();
         
     }
 
@@ -613,15 +618,17 @@ public class BattleScreen extends Actor
 
         removeStatusEffectDisplay();
 
-        int gap = 40;
+        int gap = 0;
+        int sc = 100;
 
-        int x1 = 30;
-        int x2 = 460;
+        int x1 = p1Entity.x;
+        int x2 = p2Entity.x;
 
-        int y = 220;
+        int y = p1Entity.y;
 
         if (p1Entity.burningDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("burning.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
             x1 += gap;
@@ -629,6 +636,7 @@ public class BattleScreen extends Actor
         }
         if (p2Entity.burningDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("burning.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
             x2 += gap;
@@ -636,24 +644,28 @@ public class BattleScreen extends Actor
         }
         if (p1Entity.poisonedDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("poisoned.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
             x1 += gap;
         }
         if (p2Entity.poisonedDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("poisoned.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
             x2 += gap;
         }
         if (p1Entity.healingDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
             x1 += gap;        
         }
         if (p2Entity.healingDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
             x2 += gap;          
@@ -703,6 +715,19 @@ public class BattleScreen extends Actor
         return turnNumber % 2 == 0 ? player1Entities : player2Entities;
     }
 
+    public void initCritImage(){
+        critDisplay = new ImageDisplay(new GreenfootImage("criticalHit.png"));
+        int critScale = 100;
+        critDisplay.getImage().scale(critScale, critScale);
+        critDisplay.getImage().setTransparency(0);
+        world.addObject(critDisplay,0,0);
+    }
     
-
+    public void initMissImage(){
+        missDisplay = new ImageDisplay(new GreenfootImage("miss.png"));
+        int missScale = 100;
+        missDisplay.getImage().scale(missScale, missScale);
+        missDisplay.getImage().setTransparency(0);
+        world.addObject(missDisplay,0,0);
+    }
 }
