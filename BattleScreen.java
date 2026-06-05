@@ -107,6 +107,8 @@ public class BattleScreen extends Actor
         initDialogueBox();
         initInfoBox();
         drawStatsBars();
+
+        
         turnNumber = 1;
         
     }

@@ -32,6 +32,10 @@ public class ChooseScreen extends Actor
     int player1points;
     int player2points;
 
+    Label player1pointsLabel;
+    Label player2pointsLabel;
+
+
     static int MAX_CHOOSE_POINTS = 20;
 
 
@@ -61,6 +65,8 @@ public class ChooseScreen extends Actor
 
         player1points = MAX_CHOOSE_POINTS;
         player2points = MAX_CHOOSE_POINTS;
+
+        initPointsLabel();
     }   
 
     public void act()
@@ -97,6 +103,8 @@ public class ChooseScreen extends Actor
                 removeDisplays();
                 world.currentState = States.BATTLE;
                 world.screenCreated = false;
+                world.removeObject(player1pointsLabel);
+                world.removeObject(player2pointsLabel);
                 world.removeObject(this);
             }
             
@@ -218,6 +226,18 @@ public class ChooseScreen extends Actor
         }
     }
 
+    private void initPointsLabel() {
+        player1pointsLabel = new Label("" + player1points, 25);
+        player2pointsLabel = new Label("" + player2points, 25);
+        world.addObject(player1pointsLabel, 30, MyWorld.HEIGHT-50);
+        world.addObject(player2pointsLabel, MyWorld.WIDTH-40, MyWorld.HEIGHT-50);
+    }
+
+    private void updatePointsLabel() {
+        player1pointsLabel.setValue(" " + player1points);
+        player2pointsLabel.setValue(" " + player2points);
+    }
+
     public void checkLevelUp() {
         Button[] displays;
         int points;
@@ -255,6 +275,7 @@ public class ChooseScreen extends Actor
                         }
                         
                     }
+                    updatePointsLabel();
                     updateDisplay();
                     displays[i].isPressed = false;
                 }
