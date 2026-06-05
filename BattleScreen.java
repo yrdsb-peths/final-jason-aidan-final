@@ -21,7 +21,7 @@ public class BattleScreen extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
 
-
+    static final int SWAP_COOLDOWN = 2;
     
     MyWorld world;
     
@@ -59,6 +59,10 @@ public class BattleScreen extends Actor
     Boolean isSwapping;
 
     Chooser swapper;
+
+
+    int p1SwapCooldownLeft;
+    int p2SwapCooldownLeft;
     
     private static BattleScreen instance;
 
@@ -89,6 +93,9 @@ public class BattleScreen extends Actor
         animationStack = new ArrayList<AnimationTask>();
         statusEffectsDisplay1 = new ArrayList<ImageDisplay>();
         statusEffectsDisplay2 = new ArrayList<ImageDisplay>();
+
+        p1SwapCooldownLeft = 0;
+        p2SwapCooldownLeft = 0;
 
         setEntityLocations();
         
@@ -148,8 +155,15 @@ public class BattleScreen extends Actor
         dialogueBox.hide();
         hideButtons();
         world.setBackground(new GreenfootImage(backgroundImage));
+        removeStatusEffectDisplay();
         p1EntityDisplay.setImage((GreenfootImage)null);
         p2EntityDisplay.setImage((GreenfootImage)null);
+
+        if (turnNumber % 2 == 0) {
+            p2SwapCooldownLeft = SWAP_COOLDOWN;
+        } else {
+            p1SwapCooldownLeft = SWAP_COOLDOWN;
+        }
 
         int spacing = 100;
         int scale = 80;
@@ -173,6 +187,8 @@ public class BattleScreen extends Actor
             swapper.remove();
             swapper = null;
             isSwapping = false;
+            p1Entity = player1Entities.get(0);
+            p2Entity = player2Entities.get(0);
             updateAllVisuals();
 
         }
@@ -278,8 +294,11 @@ public class BattleScreen extends Actor
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
-            isSwapping = true;
-            turnNumber++;
+            if (swappable()) {
+                
+                isSwapping = true;
+                turnNumber++;
+            }
             //show player list
             //allow for player to click and swap spirits
             //spirits keep stats upon swaping
@@ -300,6 +319,14 @@ public class BattleScreen extends Actor
 
         p1Entity.applyStatusEffects();
         p2Entity.applyStatusEffects();
+
+        if (p1SwapCooldownLeft > 0) {
+            p1SwapCooldownLeft --;
+        }
+
+        if (p2SwapCooldownLeft > 0) {
+            p2SwapCooldownLeft --;
+        }
 
         if (actionStack.size() > previousStackSize) {
 
@@ -360,18 +387,12 @@ public class BattleScreen extends Actor
     {
         if(player1Entities.size() == 0)
         {
-            // Player 2 wins
             System.out.println("Player 2 wins!");
         } else if(player2Entities.size() == 0) {
-            // Player 1 wins
             System.out.println("Player 1 wins!");
         }
-        for (ImageDisplay display : statusEffectsDisplay1) {
-            world.removeObject(display);
-        }
-        for (ImageDisplay display : statusEffectsDisplay2) {
-            world.removeObject(display);
-        }
+        removeStatusEffectDisplay();
+
         world.removeObject(attackButton);
         world.removeObject(passiveButton);
         world.removeObject(chooseNewButton);
@@ -414,6 +435,10 @@ public class BattleScreen extends Actor
                 passiveButton.getImage().setTransparency(200);
             }
         } else if (chooseNewButton.isHovering) {
+            if (!swappable()) {
+                infoBox.setText("Swapping is on cooldown.");
+                return;
+            }
             infoBox.setText("Swap to a new spirit. Costs a turn.");
             if (chooseNewButton.getImage() != null)
             {
@@ -432,6 +457,7 @@ public class BattleScreen extends Actor
         updateEntityImage();
         drawStatsBars();
         updateStatusEffectDisplay();
+        
     }
 
     private void initInfoBox() {
@@ -530,10 +556,6 @@ public class BattleScreen extends Actor
         backgroundImage = new GreenfootImage("background"+(i+1)+".png");
         backgroundImage.scale(600, 400);
 
-        int borderWidth = 2;
-        backgroundImage.setColor(Color.BLACK);
-        backgroundImage.fillRect(190 - borderWidth, 285 - borderWidth, 220 + 2 * borderWidth, 110 + 2 * borderWidth);
-        world.setBackground(new GreenfootImage(backgroundImage));
         
     }
 
@@ -542,12 +564,18 @@ public class BattleScreen extends Actor
         if (player1Entities.size() == 0 || player2Entities.size() == 0) {
             return;
         }
-        
+
+
         int borderWidth = 2;
+
+        
         int health1 = player1Entities.get(0).health;
         int health2 = player2Entities.get(0).health;
 
         GreenfootImage tempBackground = new GreenfootImage(backgroundImage);
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(190 - borderWidth, 285 - borderWidth, 220 + 2 * borderWidth, 110 + 2 * borderWidth);
 
         tempBackground.setColor(Color.BLACK);
         tempBackground.fillRect(20 - borderWidth, 150 - borderWidth, health1 + 2 * borderWidth, 15 + 2 * borderWidth);
@@ -577,20 +605,11 @@ public class BattleScreen extends Actor
     }
 
     private void updateStatusEffectDisplay() {
-        if (p1Entity == null && p2Entity == null) {
+        if (p1Entity == null || p2Entity == null) {
             return;
         }
 
-        for (ImageDisplay display : statusEffectsDisplay1) {
-            world.removeObject(display);
-        }
-
-        for (ImageDisplay display : statusEffectsDisplay2) {
-            world.removeObject(display);
-        }
-
-        statusEffectsDisplay1.clear();
-        statusEffectsDisplay2.clear();
+        removeStatusEffectDisplay();
 
         int gap = 40;
 
@@ -639,6 +658,19 @@ public class BattleScreen extends Actor
         }
     }
 
+    private void removeStatusEffectDisplay() {
+        for (ImageDisplay display : statusEffectsDisplay1) {
+            world.removeObject(display);
+        }
+
+        for (ImageDisplay display : statusEffectsDisplay2) {
+            world.removeObject(display);
+        }
+
+        statusEffectsDisplay1.clear();
+        statusEffectsDisplay2.clear();
+    }
+
     private void setEntityLocations() {
         for (Entity entity : player1Entities) {
             entity.setLocation(MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
@@ -647,6 +679,10 @@ public class BattleScreen extends Actor
         for (Entity entity : player2Entities) {
             entity.setLocation(MyWorld.WIDTH*6/7, MyWorld.HEIGHT/5);
         }
+    }
+
+    private boolean swappable() {
+        return (turnNumber % 2 == 1 ? p2SwapCooldownLeft : p1SwapCooldownLeft) == 0;
     }
 
     public Entity getCurrentEntity() {
@@ -664,5 +700,7 @@ public class BattleScreen extends Actor
     public ArrayList<Entity> getOpponentEntities() {
         return turnNumber % 2 == 0 ? player1Entities : player2Entities;
     }
+
+    
 
 }
