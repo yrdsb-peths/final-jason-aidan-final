@@ -17,7 +17,7 @@ public class BoulderSoul extends Soul
     static final GreenfootImage COSTUME = new GreenfootImage("boulder.png");
     static final String NAME = "Boulder Soul";
     static final int BASE_HEALTH = 80;
-    static final int BASE_ATTACK = 25;
+    static final int BASE_ATTACK = 30;
     static final String ATTACK_NAME = "Crumble";
     static final String PASSIVE_NAME = "Boulder Shell";
 
@@ -26,10 +26,10 @@ public class BoulderSoul extends Soul
 
     static final String PASSIVE_DETAILS = "Reduce the damage taken";
     
-    static final int MAX_DEFENSE = 15;
     static final int INTANGIBILITY_DURATION = 4;
     int intangibilityLeft = 0;
-    static final int DEFENSE_INCREASE = 5;
+    static final int DEFENSE_INCREASE = 8;
+    static final int MAX_DEFENSE = 4 * DEFENSE_INCREASE;
     static final int PASSIVE_COOLDOWN = 4;
     
     public BoulderSoul()

@@ -15,8 +15,8 @@ public class TideSoul extends Soul
      */
     static final GreenfootImage COSTUME = new GreenfootImage("tide.png");
     static final String NAME = "Tide Soul";
-    static final int BASE_HEALTH = 150;
-    static final int BASE_ATTACK = 25;
+    static final int BASE_HEALTH = 120;
+    static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Wave";
     static final String PASSIVE_NAME = "Cleanse";
 

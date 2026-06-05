@@ -182,7 +182,7 @@ public class BattleScreen extends Actor
                 costumes[i] = new GreenfootImage(getOpponentEntities().get(i).image);
             }
             swapper = new Chooser(costumes, 1, spacing, 5, scale);
-            world.addObject(swapper, MyWorld.WIDTH/2 - (spacing) * length/2 + 45, MyWorld.HEIGHT/2);
+            world.addObject(swapper, MyWorld.WIDTH/2 - (spacing) * Math.min(5, length)/2 + 45, MyWorld.HEIGHT/2);
 
         }
         
@@ -685,7 +685,7 @@ public class BattleScreen extends Actor
         statusEffectsDisplay2.clear();
     }
 
-    private void setEntityLocations() {
+    public void setEntityLocations() {
         for (Entity entity : player1Entities) {
             entity.setLocation(MyWorld.WIDTH/7, MyWorld.HEIGHT/5);
         }

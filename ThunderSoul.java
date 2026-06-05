@@ -16,7 +16,7 @@ public class ThunderSoul extends Soul
     static GreenfootImage costume = new GreenfootImage("thunder.png");
     static final String NAME = "Electric Spirit";
     static final int BASE_HEALTH = 120;
-    static final int BASE_ATTACK = 30;
+    static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Shock";
     static final String PASSIVE_NAME = "Charge";
     static final String PASSIVE_DETAILS = "Do increased damaged & double the stun chance (base 25%)";
@@ -49,7 +49,7 @@ public class ThunderSoul extends Soul
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
 
-        int damage = (int)((30 + attack * (charge + 1) / 10) * levelModifier);
+        int damage = (int)((30 + attack * (charge + 1) / 5) * levelModifier);
         // Logic to hit additional enemies based on charge can be implemented here
 
         for (int i = 0; i < Math.min(charge+1, others.size()); i++) {

@@ -16,9 +16,11 @@ public class OrdinarySpirit extends Spirit
     static final String NAME = "Ordinary Spirit";
     static final int BASE_HEALTH = 50;
     static final int BASE_ATTACK = 10;
-    static final String ATTACK_NAME = "Thing";
-    static final String PASSIVE_NAME = "Transformation";
-    static final String PASSIVE_DETAILS = "You'll find out soon...";
+    static final String ATTACK_NAME = "Protest";
+    static final String PASSIVE_NAME = "Numerical Advantage";
+
+    static final int PASSIVE_COOLDOWN = 8;
+
     
     public OrdinarySpirit()
     {
@@ -27,7 +29,11 @@ public class OrdinarySpirit extends Spirit
     }
 
     public void passive(Entity other) {
+        BattleScreen instance = BattleScreen.getInstance();
+        invite();
+        invite();
         
+        instance.setEntityLocations();
     }
 
     public Soul getUpgraded() {
@@ -40,6 +46,15 @@ public class OrdinarySpirit extends Spirit
     }
 
     public String unwrappedGetPassiveDetails() {
-        return "Transformation has an unknown effect.";
+        return "Numerical Advantage: Invite 2 more people";
+    }
+
+    private void invite() {
+        BattleScreen instance = BattleScreen.getInstance();
+        OrdinarySpirit newOrdinary = new OrdinarySpirit();
+        newOrdinary.level = this.level;
+        newOrdinary.updateModifier();
+        newOrdinary.fixLevel();
+        instance.getCurrentEntities().add(newOrdinary);
     }
 }
