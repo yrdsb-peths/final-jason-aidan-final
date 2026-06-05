@@ -60,7 +60,9 @@ public class BattleScreen extends Actor
 
     Chooser swapper;
 
-
+    ImageDisplay critDisplay;
+    ImageDisplay missDisplay;
+    
     int p1SwapCooldownLeft;
     int p2SwapCooldownLeft;
     
@@ -78,7 +80,7 @@ public class BattleScreen extends Actor
     private BattleScreen(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
         
         setImage((GreenfootImage)null);
-
+        
         this.player1Entities = player1Entities;
         this.player2Entities = player2Entities;
 
@@ -93,7 +95,7 @@ public class BattleScreen extends Actor
         animationStack = new ArrayList<AnimationTask>();
         statusEffectsDisplay1 = new ArrayList<ImageDisplay>();
         statusEffectsDisplay2 = new ArrayList<ImageDisplay>();
-
+        
         p1SwapCooldownLeft = 0;
         p2SwapCooldownLeft = 0;
 
@@ -108,6 +110,9 @@ public class BattleScreen extends Actor
         initInfoBox();
         drawStatsBars();
         turnNumber = 1;
+        
+        initCritImage();
+        initMissImage();
         
     }
 
@@ -701,6 +706,19 @@ public class BattleScreen extends Actor
         return turnNumber % 2 == 0 ? player1Entities : player2Entities;
     }
 
+    public void initCritImage(){
+        critDisplay = new ImageDisplay(new GreenfootImage("criticalHit.png"));
+        int critScale = 100;
+        critDisplay.getImage().scale(critScale, critScale);
+        critDisplay.getImage().setTransparency(0);
+        world.addObject(critDisplay,0,0);
+    }
     
-
+    public void initMissImage(){
+        missDisplay = new ImageDisplay(new GreenfootImage("miss.png"));
+        int missScale = 100;
+        missDisplay.getImage().scale(missScale, missScale);
+        missDisplay.getImage().setTransparency(0);
+        world.addObject(missDisplay,0,0);
+    }
 }
