@@ -155,7 +155,6 @@ abstract public class Entity
         
         this.health = (int) (this.health * levelModifier);
         this.attack = (int) (this.attack * levelModifier);
-        System.out.println(this.health + " " + levelModifier);
     }
 
     public double effectivenessMultiplier(Entity defender) {
@@ -211,8 +210,6 @@ abstract public class Entity
         BattleScreen screenInstance = BattleScreen.getInstance();
 
         screenInstance.actionStack.add(new Action("> " + name + " used " + attackName + "."));
-
-        System.out.println(other.evasion);
 
         if (Greenfoot.getRandomNumber(100) <= 100*other.evasion) {
             screenInstance.actionStack.add(new Action("> The attack was evaded!", () -> {}));

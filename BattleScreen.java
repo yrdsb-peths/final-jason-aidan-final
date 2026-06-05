@@ -616,15 +616,17 @@ public class BattleScreen extends Actor
 
         removeStatusEffectDisplay();
 
-        int gap = 40;
+        int gap = 0;
+        int sc = 100;
 
-        int x1 = 30;
-        int x2 = 460;
+        int x1 = p1Entity.x;
+        int x2 = p2Entity.x;
 
-        int y = 220;
+        int y = p1Entity.y;
 
         if (p1Entity.burningDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("burning.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
             x1 += gap;
@@ -632,6 +634,7 @@ public class BattleScreen extends Actor
         }
         if (p2Entity.burningDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("burning.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
             x2 += gap;
@@ -639,24 +642,28 @@ public class BattleScreen extends Actor
         }
         if (p1Entity.poisonedDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("poisoned.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
             x1 += gap;
         }
         if (p2Entity.poisonedDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("poisoned.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
             x2 += gap;
         }
         if (p1Entity.healingDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
             x1 += gap;        
         }
         if (p2Entity.healingDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
+            image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
             x2 += gap;          
