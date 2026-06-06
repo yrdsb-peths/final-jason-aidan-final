@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
@@ -6,31 +8,30 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class BigSpirit extends Spirit
+public class GiantSoul extends Soul
 {
     /**
      * Act - do whatever the BigSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     
-    static GreenfootImage costume = new GreenfootImage("big.png");
-    static final String NAME = "Big Spirit";
-    static final int BASE_HEALTH = 100;
-    static final int BASE_ATTACK = 20;
+    static GreenfootImage costume = new GreenfootImage("giant.png");
+    static final String NAME = "Giant Soul";
+    static final int BASE_HEALTH = 130;
+    static final int BASE_ATTACK = 25;
     static final String ATTACK_NAME = "Stomp";
     static final String PASSIVE_NAME = "Grow";
-    static final String PASSIVE_DETAILS = "Increase your damage output by 10 damage";
+    static final String ULTIMATE_NAME = "Giant";
 
-    static final int ATTACK_INCREASE = 4;
-    static final int HEALTH_INCREASE = 7;
+    static final int ATTACK_INCREASE = 6;
+    static final int HEALTH_INCREASE = 10;
 
     int imageScale = 100;
     
-    public BigSpirit()
+    public GiantSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.big, ATTACK_NAME, PASSIVE_NAME, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.big, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, costume);
         image.scale(imageScale, imageScale);
-
     }
 
     public void passive(Entity other) {
@@ -40,15 +41,23 @@ public class BigSpirit extends Spirit
         image.scale(imageScale, imageScale);
     }
 
-    public Soul getUpgraded() {
-        return new GiantSoul();
-    }
-
     public String getAttackDetails() {
         return "Stomp: deals " + attack + " damage.";
     }
 
     public String unwrappedGetPassiveDetails() {
         return "Grow: adds " + (int)(ATTACK_INCREASE*levelModifier) + " attack & " + (int)(HEALTH_INCREASE*levelModifier) + " health.";
+    }
+
+    public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
+        canSwap = false;
+        imageScale *= 1.3;
+        image.scale(imageScale, imageScale);
+        attack *= 1.5;
+        health *= 1.5;
+    }
+
+    public String unwrappedGetUltimateDetails() {
+        return "Giant: increases attack & health by 50%. Loses the ability to swap.";
     }
 }

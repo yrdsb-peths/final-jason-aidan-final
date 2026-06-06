@@ -15,7 +15,7 @@ public class ThunderSoul extends Soul
      */
     static GreenfootImage costume = new GreenfootImage("thunder.png");
     static final String NAME = "Electric Spirit";
-    static final int BASE_HEALTH = 120;
+    static final int BASE_HEALTH = 130;
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Shock";
     static final String PASSIVE_NAME = "Charge";

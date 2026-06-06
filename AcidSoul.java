@@ -20,6 +20,7 @@ public class AcidSoul extends Soul
     static final String ATTACK_NAME = "Toxin";
     static final String PASSIVE_NAME = "Corrosive Acid";
     static final String ULTIMATE_NAME = "Life-curse";
+    static final int PASSIVE_COOLDOWN = 4;
 
     static final int CURSE_EXECUTION_TIME = 8;
 
@@ -28,7 +29,7 @@ public class AcidSoul extends Soul
     
     public AcidSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.poison, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.poison, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, costume);
         curseTarget = null;
 
     }
@@ -63,7 +64,9 @@ public class AcidSoul extends Soul
         if (screenInstance.turnNumber - curseTime >= (int)(CURSE_EXECUTION_TIME / levelModifier) && curseTarget.health > 0) {
             screenInstance.actionStack.add(
                 new Action("> " + curseTarget.name + " has died from the curse!",
-                () -> {curseTarget.health = -10;}
+                () -> {
+                    curseTarget.health = -10;
+                }
             ));
         } else {
             addCurseCheck();

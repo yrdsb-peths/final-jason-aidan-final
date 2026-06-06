@@ -301,7 +301,7 @@ public class BattleScreen extends Actor
 
         } else if (chooseNewButton.isPressed) {
             chooseNewButton.isPressed = false;
-            if (swappable()) {
+            if (swappable() && getCurrentEntity().canSwap) {
                 
                 isSwapping = true;
                 turnNumber++;
@@ -442,6 +442,10 @@ public class BattleScreen extends Actor
                 passiveButton.getImage().setTransparency(200);
             }
         } else if (chooseNewButton.isHovering) {
+            if (!getCurrentEntity().canSwap) {
+                infoBox.setText("This entity cannot be swapped currently.");
+                return;
+            }
             if (!swappable()) {
                 infoBox.setText("Swapping is on cooldown.");
                 return;
@@ -531,16 +535,10 @@ public class BattleScreen extends Actor
 
     private void updateEntityImage()
     {
-        
-        int scaleX = 100;
-        int scaleY = 100;
 
         // create new copy
         GreenfootImage p1Image = new GreenfootImage(p1Entity.image);
         GreenfootImage p2Image = new GreenfootImage(p2Entity.image);
-
-        p1Image.scale(scaleX, scaleY);
-        p2Image.scale(scaleX, scaleY);
 
         p1EntityDisplay.setImage(p1Image);
         p2EntityDisplay.setImage(p2Image);

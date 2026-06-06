@@ -35,7 +35,7 @@ public class BlazeSoul extends Soul
     }
 
     public void passive(Entity other) {
-        other.burningDamage = (int) (15 * this.levelModifier);
+        other.burningDamage = (int) (10 * this.levelModifier);
         other.burningDuration = 6;
         // Any additional initialization code for FireSpirit can go here
     }
@@ -56,10 +56,10 @@ public class BlazeSoul extends Soul
     }
 
     public String unwrappedGetPassiveDetails() {
-        return "FlameThrower: burns enemy for " + (int)(15 * this.levelModifier) + " damage over 6 turns. Does not stack.";
+        return "FlameThrower: burns enemy for " + (int)(10 * this.levelModifier) + " damage over 6 turns. Does not stack.";
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "Firestorm: deals " + (int)(attack * 2 * this.levelModifier) + " fire damage and burns the target.";
+        return "Firestorm: deals " + (int)(attack * 3 * this.levelModifier) + " fire damage and burns the target.";
     }
 }
