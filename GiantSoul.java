@@ -17,13 +17,13 @@ public class GiantSoul extends Soul
     
     static GreenfootImage costume = new GreenfootImage("giant.png");
     static final String NAME = "Giant Soul";
-    static final int BASE_HEALTH = 130;
+    static final int BASE_HEALTH = 120;
     static final int BASE_ATTACK = 25;
     static final String ATTACK_NAME = "Stomp";
     static final String PASSIVE_NAME = "Grow";
     static final String ULTIMATE_NAME = "Giant";
 
-    static final int ATTACK_INCREASE = 6;
+    static final int ATTACK_INCREASE = 7;
     static final int HEALTH_INCREASE = 10;
 
     int imageScale = 100;

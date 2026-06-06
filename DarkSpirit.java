@@ -33,8 +33,8 @@ public class DarkSpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        other.defense = Math.max(other.defense - (int)(DEFENSE_DEBUFF * levelModifier), -20);
-        other.attack = Math.max(other.attack - (int)(ATTACK_DEBUFF * levelModifier), 3);
+        other.defense = Math.max(other.defense - (int)(DEFENSE_DEBUFF * levelModifier), -50);
+        other.attack = Math.max(other.attack - (int)(ATTACK_DEBUFF * levelModifier), 0);
     }
 
     public Soul getUpgraded() {

@@ -126,8 +126,10 @@ public class BattleScreen extends Actor
         {
             playerAction();
             
-        } else {
-            gameOver();
+        }
+        else 
+        {
+            nextAction();
         }
     }
 
@@ -360,7 +362,11 @@ public class BattleScreen extends Actor
                     player1Entities.remove(0); 
                     updateEntityImage();
                     if (player1Entities.size() == 0) {
-                        gameOver();
+                        actionStack.add(new Action(
+                            "Player 2 has won!",
+                            () -> {actionStack.add(new Action("", () -> gameOver()));}
+                        ));
+                        
                     } else {
                         p1Entity = player1Entities.get(0);
                         checkIfFainted();
@@ -378,7 +384,10 @@ public class BattleScreen extends Actor
                     player2Entities.remove(0);
                     updateEntityImage();
                     if (player2Entities.size() == 0) {
-                        gameOver();
+                        actionStack.add(new Action(
+                            "Player 1 has won!",
+                            () -> {actionStack.add(new Action("", () -> gameOver()));}
+                        ));
                     } else {
                         p2Entity = player2Entities.get(0);
                         checkIfFainted();
@@ -392,12 +401,7 @@ public class BattleScreen extends Actor
 
     private void gameOver()
     {
-        if(player1Entities.size() == 0)
-        {
-            System.out.println("Player 2 wins!");
-        } else if(player2Entities.size() == 0) {
-            System.out.println("Player 1 wins!");
-        }
+
         removeStatusEffectDisplay();
 
         world.removeObject(attackButton);
@@ -465,6 +469,9 @@ public class BattleScreen extends Actor
     }
 
     public void updateAllVisuals() {
+        if (world.currentState == States.CHOOSING) {
+            return;
+        }
         updateEntityImage();
         drawStatsBars();
         updateStatusEffectDisplay();
@@ -570,40 +577,84 @@ public class BattleScreen extends Actor
             return;
         }
 
-
         int borderWidth = 2;
-
         
-        int health1 = player1Entities.get(0).health;
-        int health2 = player2Entities.get(0).health;
+
 
         GreenfootImage tempBackground = new GreenfootImage(backgroundImage);
 
-        tempBackground.setColor(Color.BLACK);
-        tempBackground.fillRect(190 - borderWidth, 285 - borderWidth, 220 + 2 * borderWidth, 110 + 2 * borderWidth);
+        int leftBarX = 20;
+        int rightBarX = 420;
 
-        tempBackground.setColor(Color.BLACK);
-        tempBackground.fillRect(20 - borderWidth, 150 - borderWidth, health1 + 2 * borderWidth, 15 + 2 * borderWidth);
-        tempBackground.setColor(Color.GREEN);
-        tempBackground.fillRect(20, 150, health1, 15);
+        int barHeight = 15;
 
-        tempBackground.setColor(Color.BLACK);
-        tempBackground.fillRect(450 - borderWidth, 150 - borderWidth, health2 + 2 * borderWidth, 15 + 2 * borderWidth);
-        tempBackground.setColor(Color.GREEN);
-        tempBackground.fillRect(450, 150, health2, 15);
+        int healthbarY = 150;
+        int attackbarY = 185;
 
         int attack1 = player1Entities.get(0).attack;
         int attack2 = player2Entities.get(0).attack;
 
         tempBackground.setColor(Color.BLACK);
-        tempBackground.fillRect(20 - borderWidth, 180 - borderWidth, attack1 + 2 * borderWidth, 15 + 2 * borderWidth);
+        tempBackground.fillRect(leftBarX - borderWidth, attackbarY - borderWidth, attack1 + 2 * borderWidth, barHeight + 2 * borderWidth);
         tempBackground.setColor(Color.RED);
-        tempBackground.fillRect(20, 180, attack1, 15);
+        tempBackground.fillRect(leftBarX, attackbarY, attack1, 15);
 
         tempBackground.setColor(Color.BLACK);
-        tempBackground.fillRect(450 - borderWidth, 180 - borderWidth, attack2 + 2 * borderWidth, 15 + 2 * borderWidth);
+        tempBackground.fillRect(rightBarX - borderWidth, attackbarY - borderWidth, attack2 + 2 * borderWidth, barHeight + 2 * borderWidth);
         tempBackground.setColor(Color.RED);
-        tempBackground.fillRect(450, 180, attack2, 15);
+        tempBackground.fillRect(rightBarX, attackbarY, attack2, 15);
+
+        int defense1 = player1Entities.get(0).defense;
+        int defense2 = player2Entities.get(0).defense;
+
+        Color defenseColor1 = Color.GRAY;
+        Color defenseColor2 = Color.GRAY;
+
+        int height = 8;
+
+        if (defense1 < 0) {
+            defenseColor1 = Color.BLACK;
+            defense1 = -defense1;
+        }
+
+        if (defense2 < 0) {
+            defenseColor2 = Color.BLACK;
+            defense2 = -defense2;
+        }
+
+        if (defense1 > 0) {
+
+            tempBackground.setColor(Color.BLACK);
+            tempBackground.fillRect(leftBarX - borderWidth, healthbarY + barHeight/2 + height - borderWidth, 2 * defense1 + 2 * borderWidth, height + 2 * borderWidth);
+            tempBackground.setColor(defenseColor1);
+            tempBackground.fillRect(leftBarX, healthbarY + barHeight/2 + height, 2 * defense1, height);
+        }
+
+        if (defense2 > 0) {
+
+            tempBackground.setColor(Color.BLACK);
+            tempBackground.fillRect(rightBarX - borderWidth, healthbarY + barHeight/2 + height - borderWidth, 2 * defense2 + 2 * borderWidth, height + 2 * borderWidth);
+            tempBackground.setColor(defenseColor2);
+            tempBackground.fillRect(rightBarX, healthbarY + barHeight/2 + height, 2 * defense2, height);
+        }
+
+        int health1 = player1Entities.get(0).health;
+        int health2 = player2Entities.get(0).health;
+
+
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(leftBarX - borderWidth, healthbarY - borderWidth, health1 + 2 * borderWidth, barHeight + 2 * borderWidth);
+        tempBackground.setColor(Color.GREEN);
+        tempBackground.fillRect(leftBarX, healthbarY, health1, 15);
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(rightBarX - borderWidth, healthbarY - borderWidth, health2 + 2 * borderWidth, barHeight + 2 * borderWidth);
+        tempBackground.setColor(Color.GREEN);
+        tempBackground.fillRect(rightBarX, healthbarY, health2, 15);
+
+        tempBackground.setColor(Color.BLACK);
+        tempBackground.fillRect(190 - borderWidth, 285 - borderWidth, 220 + 2 * borderWidth, 110 + 2 * borderWidth);
 
         world.setBackground(tempBackground);
 

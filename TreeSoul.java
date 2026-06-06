@@ -20,7 +20,7 @@ public class TreeSoul extends Soul {
     static final int HEALING_DURATION = 6;
 
     static final int ATTACK_INCREASE = 5;
-    static final int DEFENSE_INCREASE = 2;
+    static final int DEFENSE_INCREASE = 3;
     static final int DEFENSE_CAP = 4 * DEFENSE_INCREASE;
     static final int ATTACK_CAP = BASE_ATTACK + 4 * ATTACK_INCREASE;
     
@@ -41,12 +41,12 @@ public class TreeSoul extends Soul {
 
         if (attack > ATTACK_CAP) {
             attack = ATTACK_CAP;
-            BattleScreen.getInstance().actionStack.add(new Action("The maximum attack of " + ATTACK_CAP + " has been reached.", () -> {}));
+            BattleScreen.getInstance().actionStack.add(new Action("Cannot increase attack further.", () -> {}));
         }
 
         if (defense > DEFENSE_CAP) {
             defense = DEFENSE_CAP;
-            BattleScreen.getInstance().actionStack.add(new Action("The maximum attack of " + DEFENSE_CAP + " has been reached.", () -> {}));
+            BattleScreen.getInstance().actionStack.add(new Action("Cannot increase defense further.", () -> {}));
         }
     }
 
@@ -89,7 +89,7 @@ public class TreeSoul extends Soul {
     }
 
     public String unwrappedGetPassiveDetails() {
-        return "Grow: Improves health & defense, regenerates.";
+        return "Grow: Improves attack & defense, regenerates.";
     }
 
     public String unwrappedGetUltimateDetails() {
