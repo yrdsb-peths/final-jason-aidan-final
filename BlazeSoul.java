@@ -35,7 +35,7 @@ public class BlazeSoul extends Soul
     }
 
     public void passive(Entity other) {
-        other.burningDamage = (int) (10 * this.levelModifier);
+        other.burningDamage = (int) (15 * this.levelModifier);
         other.burningDuration = 6;
         // Any additional initialization code for FireSpirit can go here
     }
@@ -45,7 +45,7 @@ public class BlazeSoul extends Soul
         this.burningDamage = (int) (3 * this.levelModifier);
         this.burningDuration = 3;
 
-        others.get(0).health -= (int)(effectivenessMultiplier(others.get(0)) * (int)(attack * BURST_MULTIPLIER * this.levelModifier));
+        others.get(0).takeDamage((int)(effectivenessMultiplier(others.get(0)) * (int)(attack * BURST_MULTIPLIER * this.levelModifier)));
         others.get(0).burningDamage = (int) (15 * this.levelModifier);
         others.get(0).burningDuration += 6;
     }

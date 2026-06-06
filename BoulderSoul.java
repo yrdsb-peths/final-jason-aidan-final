@@ -34,7 +34,7 @@ public class BoulderSoul extends Soul
     
     public BoulderSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
 
     }
     
@@ -52,7 +52,7 @@ public class BoulderSoul extends Soul
         BattleScreen.getInstance().actionStack.add(
             new Action("Boulder have become intangible for _ turns",() -> {
             }
-            ));
+        ));
     }
     
     public void applyStatusEffects()

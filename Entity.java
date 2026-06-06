@@ -160,9 +160,9 @@ abstract public class Entity
     public double effectivenessMultiplier(Entity defender) {
         int effectiveness = this.type.comparedTo(defender.type);
         if (effectiveness > 0) {
-            return 1.5;
+            return 1.3;
         } else if (effectiveness < 0) {
-            return 0.5;
+            return 0.75;
         }
         return 1;
     }

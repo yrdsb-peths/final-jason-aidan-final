@@ -8,7 +8,7 @@ enum States {
 
 public class MyWorld extends World {
     
-    final static int MAX_ENTITIES = 5;
+    final static int MAX_ENTITIES = 2;
     ArrayList<Entity> player1Entities;
     ArrayList<Entity> player2Entities;
 
@@ -47,7 +47,7 @@ public class MyWorld extends World {
                 addObject(new ChooseScreen(player1Entities, player2Entities, this), WIDTH/2, HEIGHT/2);
                 screenCreated = true;
                 image = new GreenfootImage("backgroundStarter.png");
-                image.scale(600,400);
+                image.scale(600, 400);
                 setBackground(image);
             }
 

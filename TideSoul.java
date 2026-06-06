@@ -42,18 +42,18 @@ public class TideSoul extends Soul
     }   
 
     public void passive(Entity other) {
-        if (other.stunDuration > 0) {
+        if (stunDuration > 0) {
             floodStacks++;
         }
-        if (other.burningDuration > 0) {
+        if (burningDuration > 0) {
             floodStacks++;
         }
-        if (other.poisonedDuration > 0) {
+        if (poisonedDuration > 0) {
             floodStacks++;
         }
-        other.stunDuration = 0;
-        other.burningDuration = 0;
-        other.poisonedDuration = 0;
+        this.stunDuration = 0;
+        this.burningDuration = 0;
+        this.poisonedDuration = 0;
         this.defense = Math.max(this.defense, 0);
         this.attack = Math.max(this.attack, BASE_ATTACK);
         this.health += (int)(HEALING_AMOUNT * levelModifier);
