@@ -1,19 +1,9 @@
-import java.lang.reflect.InvocationTargetException;
+import greenfoot.*;  // Requires Actor, World, GreenfootImage, Greenfoot, Color, etc.
 import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
-/**
- * Write a description of class ChoseScreen here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-
-
-public class ChooseScreen extends Actor
+public class ChooseScreenAI extends Actor
 {
-
     MyWorld world;
     
     Button[] player1Displays;
@@ -22,8 +12,7 @@ public class ChooseScreen extends Actor
     ArrayList<Entity> player1Entities;
     ArrayList<Entity> player2Entities;
 
-    Chooser chooser1;
-    Chooser chooser2;
+    Chooser chooser1; // Removed chooser2 as the AI doesn't need physical controls
 
     Button submitButton;
 
@@ -35,16 +24,9 @@ public class ChooseScreen extends Actor
     Label player1pointsLabel;
     Label player2pointsLabel;
 
-
     static int MAX_CHOOSE_POINTS = 20;
 
-
-    /**
-     * Act - do whatever the ChoseScreen wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-
-    public ChooseScreen(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
+    public ChooseScreenAI(ArrayList<Entity> player1Entities, ArrayList<Entity> player2Entities, MyWorld world) {
         this.player1Entities = player1Entities;
         this.player2Entities = player2Entities;
         
@@ -60,23 +42,25 @@ public class ChooseScreen extends Actor
 
         initSelectedDisplay();
         
+        // Player 1 uses physical chooser controls
         chooser1 = createSpiritChooser(45, 50, 60);
-        chooser2 = createSpiritChooser(375, 50, 60);
 
         player1points = MAX_CHOOSE_POINTS;
         player2points = MAX_CHOOSE_POINTS;
 
+        // Draft the AI's team automatically upon creation
+        generateAIEntities();
+        updateDisplay();
     }   
 
     public void act()
     {
-
         if (this.state == 0) {
-            chooseSpirit(chooser1, chooser2);
+            chooseSpirit(chooser1);
             updateDisplay();
 
-            boolean finishedChoosing = player1Entities.size() == MyWorld.MAX_ENTITIES && player2Entities.size() == MyWorld.MAX_ENTITIES;
-
+            // AI's team size is already MAX_ENTITIES, so we only wait for the human player
+            boolean finishedChoosing = player1Entities.size() == MyWorld.MAX_ENTITIES;
 
             if (finishedChoosing && submitButton.isPressed) {
                 initPointsLabel();
@@ -84,10 +68,14 @@ public class ChooseScreen extends Actor
                 submitButton.isPressed = false;
                 submitButton.setImage("submit_button.png");
                 submitButton.getImage().scale(150, 150);
+                
+                // AI automatically spends all its points instantly as we enter State 1
+                aiLevelUp();
             }
 
         } else if (this.state == 1) {
 
+            // Only handles manual player clicks
             checkLevelUp();
 
             if (submitButton.isPressed) {
@@ -98,7 +86,6 @@ public class ChooseScreen extends Actor
                     entity.fixLevel();
                 }
                 chooser1.remove();
-                chooser2.remove();
                 submitButton.remove();
                 removeDisplays();
                 world.currentState = States.BATTLE;
@@ -107,42 +94,56 @@ public class ChooseScreen extends Actor
                 world.removeObject(player2pointsLabel);
                 world.removeObject(this);
             }
-            
-            
         }
     }
 
     public void initSelectedDisplay() {
-
         player1Displays = new Button[MyWorld.MAX_ENTITIES];
         player2Displays = new Button[MyWorld.MAX_ENTITIES];
 
         for (int i = 0; i < MyWorld.MAX_ENTITIES; i++) {
-            
             player1Displays[i] = new Button(null, 10);
             world.addObject(player1Displays[i], 20 + 40 * i, 300);
         
-        
             player2Displays[i] = new Button(null, 10);
             world.addObject(player2Displays[i], 420 + 40 * i, 300);
-            
         }
     }
 
-    public void chooseSpirit(Chooser chooser1, Chooser chooser2) { 
+    /**
+     * AI team generation logic. Selects a random lineup from all available spirit classes.
+     */
+    private void generateAIEntities() {
+        player2Entities.clear();
+        int spiritCount = Spirit.spiritTypes.size();
+        if (spiritCount == 0) return;
 
-        if (chooser1 == null || chooser2 == null) {
+        for (int i = 0; i < MyWorld.MAX_ENTITIES; i++) {
+            int randomIndex = Greenfoot.getRandomNumber(spiritCount);
+            try {
+                Class<? extends Spirit> spiritClass = Spirit.spiritTypes.get(randomIndex);
+                player2Entities.add(spiritClass.getDeclaredConstructor().newInstance());
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Standard human selection logic mapped from the physical chooser UI.
+     */
+    public void chooseSpirit(Chooser chooser1) { 
+        if (chooser1 == null) {
             System.out.println("Error creating chooser");
             return;
         }
 
-        if (chooser1.selectedIndices == null || chooser2.selectedIndices == null) {
+        if (chooser1.selectedIndices == null) {
             System.out.println("Error: selectedIndices is null");
             return;
         }
 
         player1Entities.clear();
-        player2Entities.clear();
         
         for (int index : chooser1.selectedIndices) {
             try {
@@ -151,19 +152,9 @@ public class ChooseScreen extends Actor
                 e.printStackTrace();
             }
         }
-
-        for (int index : chooser2.selectedIndices) {
-            try {
-                player2Entities.add(Spirit.spiritTypes.get(index).getDeclaredConstructor().newInstance());
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 
     public void updateDisplay() {
-        
         for (int i = 0; i < MyWorld.MAX_ENTITIES; i++) {
             if (player1Displays[i] == null || player2Displays[i] == null) {
                 continue;
@@ -171,16 +162,15 @@ public class ChooseScreen extends Actor
 
             if (i < player1Entities.size()) {
                 GreenfootImage image = new GreenfootImage(player1Entities.get(i).image);
-
                 int size = player1Entities.get(i).level;
                 image.scale(size + 40, size + 40);
                 player1Displays[i].setImage(image);
             } else {
                 player1Displays[i].setImage((GreenfootImage)null);
             }
+
             if (i < player2Entities.size()) {
                 GreenfootImage image = new GreenfootImage(player2Entities.get(i).image);
-
                 int size = player2Entities.get(i).level;
                 image.scale(size + 40, size + 40);
                 player2Displays[i].setImage(image);
@@ -191,13 +181,10 @@ public class ChooseScreen extends Actor
     }
 
     public Chooser createSpiritChooser(int x, int y, int spacing){
-        // Code to display the player's entitys on the screen
-
-        try{
+        try {
             GreenfootImage[] costumeList = new GreenfootImage[Spirit.spiritTypes.size()];
             int i = 0;
             for (Class<? extends Spirit> spiritClass : Spirit.spiritTypes) {
-
                 Spirit spirit = spiritClass.getDeclaredConstructor().newInstance();
                 costumeList[i] = new GreenfootImage(spirit.image);
                 costumeList[i].scale(50, 50);
@@ -205,16 +192,11 @@ public class ChooseScreen extends Actor
             }
 
             Chooser chooser = new Chooser(costumeList, MyWorld.MAX_ENTITIES, spacing, 4);
-
-            // chooser.switches[0].status 
-
             world.addObject(chooser, x, y);
-
             return chooser;
 
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
-
             return null;
         }
     }
@@ -229,8 +211,6 @@ public class ChooseScreen extends Actor
     private void initPointsLabel() {
         player1pointsLabel = new Label("Upgrade points: " + player1points, 20);
         player2pointsLabel = new Label("Upgrade points: " + player2points, 20);
-        // player1pointsLabel.setLineColor(Color.WHITE);
-        // player2pointsLabel.setLineColor(Color.WHITE);
         player1pointsLabel.setLineColor((Color)null);
         player2pointsLabel.setLineColor((Color)null);
         world.addObject(player1pointsLabel, 100, MyWorld.HEIGHT-50);
@@ -242,50 +222,57 @@ public class ChooseScreen extends Actor
         player2pointsLabel.setValue("Upgrade points: " + player2points);
     }
 
+    /**
+     * Handles manual leveling up when Player 1 clicks on their team icons.
+     */
     public void checkLevelUp() {
-        Button[] displays;
-        int points;
-        ArrayList<Entity> entities;
+        for (int i = 0; i < player1Displays.length; i++) {
+            if (player1Displays[i].isPressed) {
 
-        for (int j = 0; j < 2; j++ ) {
-            if (j == 0) {
-                displays = player1Displays;
-                points = player1points;
-                entities = player1Entities;
-            } else {
-                displays = player2Displays;
-                points = player2points;
-                entities = player2Entities;
-            }
-
-            for (int i = 0; i < displays.length; i++) {
-                if (displays[i].isPressed) {
-
-                    if (points == 0) { continue; }
-
-                    // primitives aren't pass by copy
-                    if (j == 0) {
-                        player1points --;
-                    } else {
-                        player2points --;
-                    }
-
-                    entities.get(i).levelUp();
-
-                    if (entities.get(i).level > 5 && entities.get(i) instanceof Spirit level1) {
-                        Soul upgrade = level1.getUpgraded();
-                        if (upgrade != null) {
-                            entities.set(i, upgrade); 
-                        }
-                        
-                    }
-                    updatePointsLabel();
-                    updateDisplay();
-                    displays[i].isPressed = false;
+                if (player1points == 0) { 
+                    player1Displays[i].isPressed = false;
+                    continue; 
                 }
+
+                player1points--;
+                player1Entities.get(i).levelUp();
+
+                if (player1Entities.get(i).level > 5 && player1Entities.get(i) instanceof Spirit level1) {
+                    Soul upgrade = level1.getUpgraded();
+                    if (upgrade != null) {
+                        player1Entities.set(i, upgrade); 
+                    }
+                }
+                updatePointsLabel();
+                updateDisplay();
+                player1Displays[i].isPressed = false;
             }
         }
     }
 
-    
+    /**
+     * AI level up logic. Automatically distributes all MAX_CHOOSE_POINTS randomly 
+     * among its drafted entities.
+     */
+    private void aiLevelUp() {
+        int spiritCount = player2Entities.size();
+        if (spiritCount == 0) return;
+
+        while (player2points > 0) {
+            int randomIndex = Greenfoot.getRandomNumber(spiritCount);
+            Entity entity = player2Entities.get(randomIndex);
+            
+            entity.levelUp();
+
+            if (entity.level > 5 && entity instanceof Spirit level1) {
+                Soul upgrade = level1.getUpgraded();
+                if (upgrade != null) {
+                    player2Entities.set(randomIndex, upgrade); 
+                }
+            }
+            player2points--;
+        }
+        updatePointsLabel();
+        updateDisplay();
+    }
 }

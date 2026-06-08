@@ -13,26 +13,37 @@ public class TitleScreen extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     final String pvpInstructionsString = "Instructions: Both players pick 5 spirits, then click on the level up button, then upgrade the spirits by clicking on them.";
+    final String aiInstructionsString = "Instructions: Pick 5 spirits, confirm by pressing the level up button, then upgrade the spirits by clicking on them.";
 
     MyWorld world;
     Button pvpButton;
+    Button aiButton;
 
     Label title;
     DialogueBox instructions;
 
     public TitleScreen(MyWorld world) {
         this.world = world;
-        GreenfootImage image = new GreenfootImage("submit_button.png");
-        image.scale(100, 100);
-        pvpButton = new Button(image, 20);
+
+        GreenfootImage image1 = new GreenfootImage("submit_button.png");
+        image1.scale(100, 100);
+        pvpButton = new Button(image1, 20);
         setImage((GreenfootImage)null);
-        world.addObject(pvpButton, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
+        world.addObject(pvpButton, MyWorld.WIDTH/2 - 50, MyWorld.HEIGHT/2);
+
+        GreenfootImage image2 = new GreenfootImage("lvlUp.png");
+        image2.scale(100, 100);
+        aiButton = new Button(image2, 20);
+        setImage((GreenfootImage)null);
+        world.addObject(aiButton, MyWorld.WIDTH/2 + 50, MyWorld.HEIGHT/2);
 
 
         title = new Label("Turn-based game", 30);
         title.setLineColor(null);
         title.setFillColor(Color.BLACK);
         world.addObject(title, MyWorld.WIDTH/2, MyWorld.HEIGHT/4);
+
+        
 
 
         instructions = new DialogueBox(400, 300, Color.WHITE, "", Color.BLACK, new Font(15));
@@ -47,16 +58,33 @@ public class TitleScreen extends Actor
         
         if (pvpButton.isPressed) {
             world.currentState = States.CHOOSING;
-            world.screenCreated = false;
-            world.removeObject(pvpButton);
-            world.removeObject(instructions);
-            world.removeObject(title);
-            world.removeObject(this);
+            
+            remove();
+
+        }
+
+        if (aiButton.isPressed) {
+            world.currentState = States.CHOOSINGAI;
+            remove();
         }
 
         if (pvpButton.isHovering) {
             instructions.setText(pvpInstructionsString);
         }
+
+        if (aiButton.isHovering) {
+            instructions.setText(aiInstructionsString);
+        }
+    }
+
+    public void remove() {
+
+        world.screenCreated = false;
+        world.removeObject(aiButton);
+        world.removeObject(pvpButton);
+        world.removeObject(instructions);
+        world.removeObject(title);
+        world.removeObject(this);
     }
 
 }

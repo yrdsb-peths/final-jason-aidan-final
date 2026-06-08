@@ -4,6 +4,7 @@ import java.util.ArrayList;
 enum States {
     TITLE,
     CHOOSING,
+    CHOOSINGAI,
     BATTLE
 }
 
@@ -16,6 +17,7 @@ public class MyWorld extends World {
     int playerNum = 1;
     static int worldTime = 0;
     States currentState = States.TITLE;
+    
 
     
     static int WIDTH = 600;
@@ -53,13 +55,23 @@ public class MyWorld extends World {
         } else if (currentState == States.CHOOSING) {
 
             if (!screenCreated) {
-                addObject(new ChooseScreen(player1Entities, player2Entities, this), WIDTH/2, HEIGHT/2);
+                addObject(new ChooseScreenPVP(player1Entities, player2Entities, this), WIDTH/2, HEIGHT/2);
                 screenCreated = true;
                 image = new GreenfootImage("backgroundStarter.png");
                 image.scale(600, 400);
                 setBackground(image);
             }
 
+        } else if (currentState == States.CHOOSINGAI) {
+            
+            if (!screenCreated) {
+                addObject(new ChooseScreenAI(player1Entities, player2Entities, this), WIDTH/2, HEIGHT/2);
+                screenCreated = true;
+                image = new GreenfootImage("backgroundStarter.png");
+                image.scale(600, 400);
+                setBackground(image);
+            }
+            
         } else if (currentState == States.BATTLE) {
 
             if (!screenCreated) {
