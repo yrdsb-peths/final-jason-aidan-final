@@ -280,7 +280,7 @@ abstract public class Entity
                     }
                     ));
                         BattleScreen.getInstance().animationStack.add(new AnimationTask(
-                        MyWorld.worldTime + 10, 
+                        MyWorld.worldTime + 20, 
                     () -> {
                         screenInstance.missDisplay.getImage().setTransparency(0);
                     }
@@ -296,7 +296,7 @@ abstract public class Entity
                     }
                     ));
                         BattleScreen.getInstance().animationStack.add(new AnimationTask(
-                        MyWorld.worldTime + 10, 
+                        MyWorld.worldTime + 20, 
                     () -> {
                         screenInstance.critDisplay.getImage().setTransparency(0);
                     }

@@ -559,11 +559,19 @@ public class BattleScreen extends Actor
 
     private void initBackground()
     {
-        int i = Greenfoot.getRandomNumber(4);
-        backgroundImage = new GreenfootImage("background"+(i+1)+".png");
-        backgroundImage.scale(600, 400);
+        int j = Greenfoot.getRandomNumber(100);
+        if(j <= 20)
+        {
+            backgroundImage = new GreenfootImage("background5.png");
+            backgroundImage.scale(600, 400);
+        }
+        else
+        {
+            int i = Greenfoot.getRandomNumber(4);
+            backgroundImage = new GreenfootImage("background"+(i+1)+".png");
+            backgroundImage.scale(600, 400);
+        }   
 
-        
     }
 
     private void drawStatsBars()
