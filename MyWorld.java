@@ -2,6 +2,7 @@ import greenfoot.*;
 import java.util.ArrayList;
 
 enum States {
+    TITLE,
     CHOOSING,
     BATTLE
 }
@@ -14,7 +15,7 @@ public class MyWorld extends World {
 
     int playerNum = 1;
     static int worldTime = 0;
-    States currentState = States.CHOOSING;
+    States currentState = States.TITLE;
 
     
     static int WIDTH = 600;
@@ -41,7 +42,15 @@ public class MyWorld extends World {
         
         worldTime ++;
 
-        if (currentState == States.CHOOSING) {
+        if (currentState == States.TITLE) {
+            if (!screenCreated) {
+                screenCreated = true;
+                addObject(new TitleScreen(this), WIDTH/2, HEIGHT/2);
+            }
+
+
+
+        } else if (currentState == States.CHOOSING) {
 
             if (!screenCreated) {
                 addObject(new ChooseScreen(player1Entities, player2Entities, this), WIDTH/2, HEIGHT/2);
