@@ -20,19 +20,30 @@ public class OrdinarySpirit extends Spirit
     static final String PASSIVE_NAME = "Numerical Advantage";
 
     static final int PASSIVE_COOLDOWN = 8;
+    static int MAXIMUM_COUNT = 6;
+
+    static int totalPeopleLeft = -1;
 
     
     public OrdinarySpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, ATTACK_NAME, PASSIVE_NAME, costume);
-
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
+        MAXIMUM_COUNT *= levelModifier;
+        if (totalPeopleLeft == -1) {
+            totalPeopleLeft = MAXIMUM_COUNT;
+        }
     }
 
     public void passive(Entity other) {
         BattleScreen instance = BattleScreen.getInstance();
         invite();
         invite();
-        
+        if (totalPeopleLeft <= 0) {
+            BattleScreen.getInstance().actionStack.add(new Action(
+                "Everyone has been invited.",
+                () -> {}
+            ));
+        }
         instance.setEntityLocations();
     }
 
@@ -50,11 +61,16 @@ public class OrdinarySpirit extends Spirit
     }
 
     private void invite() {
-        BattleScreen instance = BattleScreen.getInstance();
-        OrdinarySpirit newOrdinary = new OrdinarySpirit();
-        newOrdinary.level = this.level;
-        newOrdinary.updateModifier();
-        newOrdinary.fixLevel();
-        instance.getCurrentEntities().add(newOrdinary);
+        if (totalPeopleLeft > 0) {
+            totalPeopleLeft --;
+            BattleScreen instance = BattleScreen.getInstance();
+            OrdinarySpirit newOrdinary = new OrdinarySpirit();
+            newOrdinary.level = this.level;
+            newOrdinary.updateModifier();
+            newOrdinary.fixLevel();
+            instance.getCurrentEntities().add(newOrdinary);
+        }
+
+
     }
 }

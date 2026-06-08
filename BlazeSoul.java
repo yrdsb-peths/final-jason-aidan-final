@@ -45,7 +45,7 @@ public class BlazeSoul extends Soul
         this.burningDamage = (int) (3 * this.levelModifier);
         this.burningDuration = 3;
 
-        others.get(0).health -= (int)(effectivenessMultiplier(others.get(0)) * (int)(attack * BURST_MULTIPLIER * this.levelModifier));
+        others.get(0).takeDamage((int)(effectivenessMultiplier(others.get(0)) * (int)(attack * BURST_MULTIPLIER * this.levelModifier)));
         others.get(0).burningDamage = (int) (15 * this.levelModifier);
         others.get(0).burningDuration += 6;
     }
@@ -56,10 +56,10 @@ public class BlazeSoul extends Soul
     }
 
     public String unwrappedGetPassiveDetails() {
-        return "FlameThrower: burns enemy for " + (int)(15 * this.levelModifier) + " damage over 6 turns. Does not stack.";
+        return "FlameThrower: burns enemy for " + (int)(10 * this.levelModifier) + " damage over 6 turns. Does not stack.";
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "Firestorm: deals " + (int)(attack * 2 * this.levelModifier) + " fire damage and burns the target.";
+        return "Firestorm: deals " + (int)(attack * 3 * this.levelModifier) + " fire damage and burns the target.";
     }
 }

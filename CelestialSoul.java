@@ -16,11 +16,11 @@ public class CelestialSoul extends Soul
      */
     static GreenfootImage costume = new GreenfootImage("star.png");
     static final String NAME = "Celestial Soul";
-    static final int BASE_HEALTH = 80;
+    static final int BASE_HEALTH = 120;
     static final int BASE_ATTACK = 25;
     static final String ATTACK_NAME = "Flare";
     static final String PASSIVE_NAME = "Meteor Shower";
-    static final String ULTIMATE_NAME = "idk";
+    static final String ULTIMATE_NAME = "Supernovae";
     static final String PASSIVE_DETAILS = "Successive meteor strikes with a chance to hit each strike";
 
     static final int MAX_METEOR_STRIKES = 10;
@@ -29,13 +29,36 @@ public class CelestialSoul extends Soul
     static final int METEOR_BURNING_DAMAGE = 3;
 
     static final int PASSIVE_COOLDOWN = 6;
+
+    int supernovaeDuration;
+    boolean supernovaeStarted;
     
     public CelestialSoul()
     {
         super(NAME, BASE_HEALTH, BASE_ATTACK, Element.star, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, costume);
+        supernovaeDuration = 6;
+        supernovaeStarted = false;
     }
 
+    public void applyStatusEffects() {
+        super.applyStatusEffects();
+        if (supernovaeStarted) {
+            if (supernovaeDuration <= 0) {
+                BattleScreen.getInstance().actionStack.add(new Action(
+                    "The supernovae has triggered!",
+                    () -> {
+                        BattleScreen.getInstance().getOpponentEntity().takeDamage(3 * attack);
+                        this.health = -10;
+                    }
+                ));
+                
 
+            } else {
+                supernovaeDuration --;
+                this.attack += 3 * levelModifier;
+            }
+        }
+    }
 
     public void passive(Entity other) {
     }
@@ -43,7 +66,6 @@ public class CelestialSoul extends Soul
     // overriding applyPassive to add successive meteor strikes with a chance to hit each strike
     public void applyPassive(Entity other) {
         
-        // Any additional initialization code for FireSpirit can go here
         super.applyPassive(other);
         other.burningDamage = Math.max(other.burningDamage, (int)(METEOR_BURNING_DAMAGE * levelModifier));
         int j = 1;
@@ -61,30 +83,24 @@ public class CelestialSoul extends Soul
                     }
                 ));
                 j ++;
-
             }
-            
         }
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
-
+        supernovaeStarted = true;
+        canSwap = false;
     }
-
-    public Soul getUpgraded() {
-        return null;
-    }
-
 
     public String getAttackDetails() {
         return "Flare: deals " + attack + " star damage.";
     }
 
     public String unwrappedGetPassiveDetails() {
-        return "Meteor Shower: successively deals " + (int)(attack * levelModifier / METEOR_STRIKE_DAMAGE_DIVISOR) + " meteor damage and applies a small burn.";
+        return "Meteor Shower: successive meteor strikes dealing " + (int)(attack * levelModifier / METEOR_STRIKE_DAMAGE_DIVISOR) + " damage.";
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "";
+        return "Supernovae: Gradually gets stronger over 6 turns before exploding. Cannot swap during this process.";
     }
 }

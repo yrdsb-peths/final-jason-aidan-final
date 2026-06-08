@@ -21,12 +21,11 @@ public class BoulderSoul extends Soul
     static final String ATTACK_NAME = "Crumble";
     static final String PASSIVE_NAME = "Boulder Shell";
 
-    static final String ULTIMATE_NAME = "Earthquake";
-    static final String ULTIMATE_DETAILS = "High damage + burning, self-damaging.";
+    static final String ULTIMATE_NAME = "Iron Ball";
 
     static final String PASSIVE_DETAILS = "Reduce the damage taken";
     
-    static final int INTANGIBILITY_DURATION = 4;
+    static final int INTANGIBILITY_DURATION = 6;
     int intangibilityLeft = 0;
     static final int DEFENSE_INCREASE = 8;
     static final int MAX_DEFENSE = 4 * DEFENSE_INCREASE;
@@ -34,7 +33,7 @@ public class BoulderSoul extends Soul
     
     public BoulderSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.rock, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
 
     }
     
@@ -52,15 +51,17 @@ public class BoulderSoul extends Soul
         BattleScreen.getInstance().actionStack.add(
             new Action("Boulder have become intangible for _ turns",() -> {
             }
-            ));
+        ));
     }
     
     public void applyStatusEffects()
     {
-        super.applyStatusEffects();
+        
         if(intangibilityLeft > 0)
         {
             intangibilityLeft--;
+        } else {
+            super.applyStatusEffects();
         }
     }
     
@@ -87,6 +88,6 @@ public class BoulderSoul extends Soul
     }
     
     public String unwrappedGetUltimateDetails() {
-        return "Earthquake: becomes intangible";
+        return "Iron Ball: becomes invulnerable for " + INTANGIBILITY_DURATION + " turns.";
     }
 }

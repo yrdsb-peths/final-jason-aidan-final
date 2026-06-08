@@ -32,6 +32,7 @@ abstract public class Entity
     int passiveCooldownLeft; // # of turns left until passive can be used again
     int x;
     int y;
+    boolean canSwap;
     // number from 0-1 representing chance to dodge an attack
     
     Element type;
@@ -56,6 +57,7 @@ abstract public class Entity
         stunDuration = 0;
         passiveCooldown = 0;
         passiveCooldownLeft = 0;
+        canSwap = true;
         this.health = health;
         this.attack = attack;
         this.type = type;
@@ -64,6 +66,7 @@ abstract public class Entity
         this.image = image;
         this.name = name;
         updateModifier();
+        scaleImage();
     }
 
     public Entity(String name, int health, int attack, Element type, String attackName, String passiveName, int passiveCooldown, GreenfootImage image)
@@ -142,7 +145,6 @@ abstract public class Entity
     }
 
     public void updateModifier() {
-        // 10% increase in stats per level
         levelModifier = Math.sqrt(1.0 + (double) level / 10);
     }
 
@@ -160,9 +162,9 @@ abstract public class Entity
     public double effectivenessMultiplier(Entity defender) {
         int effectiveness = this.type.comparedTo(defender.type);
         if (effectiveness > 0) {
-            return 1.5;
+            return 1.3;
         } else if (effectiveness < 0) {
-            return 0.5;
+            return 0.75;
         }
         return 1;
     }
@@ -319,6 +321,13 @@ abstract public class Entity
             return passiveName + " is on cooldown.";
         }
         return unwrappedGetPassiveDetails();
+    }
+
+    public void scaleImage() {
+        int scaleX = 100;
+        int scaleY = 100;
+
+        image.scale(scaleX, scaleY);
     }
 
     abstract public void passive(Entity other);

@@ -27,7 +27,7 @@ public class ShadowSoul extends Soul
 
     static final double EVASION_INCREASE = 0.2;
     static final int ATTACK_DEBUFF = 4;
-    static final int DEFENSE_DEBUFF = 6;
+    static final int DEFENSE_DEBUFF = 7;
     
     public ShadowSoul()
     {
@@ -37,8 +37,8 @@ public class ShadowSoul extends Soul
     }
 
     public void passive(Entity other) {
-        other.defense = Math.max((int)(other.defense - DEFENSE_DEBUFF * levelModifier), -20);
-        other.attack = Math.max((int)(other.attack - ATTACK_DEBUFF * levelModifier), 3);
+        other.defense = Math.max((int)(other.defense - DEFENSE_DEBUFF * levelModifier), -50);
+        other.attack = Math.max((int)(other.attack - ATTACK_DEBUFF * levelModifier), 0);
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {

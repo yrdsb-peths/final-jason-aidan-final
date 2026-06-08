@@ -33,7 +33,7 @@ public class PoisonSpirit extends Spirit
     }
 
     public Soul getUpgraded() {
-        return null;
+        return new AcidSoul();
     }
 
 

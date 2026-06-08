@@ -65,7 +65,7 @@ public class StarSpirit extends Spirit
     }
 
     public Soul getUpgraded() {
-        return null;
+        return new CelestialSoul();
     }
 
 
@@ -74,6 +74,6 @@ public class StarSpirit extends Spirit
     }
 
     public String unwrappedGetPassiveDetails() {
-        return "Meteor Shower: successively deals " + (int)(attack * levelModifier / METEOR_STRIKE_DAMAGE_DIVISOR) + " meteor damage and applies a small burn.";
+        return "Meteor Shower: successive meteor strikes dealing " + (int)(attack * levelModifier / METEOR_STRIKE_DAMAGE_DIVISOR) + " damage.";
     }
 }

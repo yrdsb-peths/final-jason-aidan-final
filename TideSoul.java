@@ -15,7 +15,7 @@ public class TideSoul extends Soul
      */
     static final GreenfootImage COSTUME = new GreenfootImage("tide.png");
     static final String NAME = "Tide Soul";
-    static final int BASE_HEALTH = 120;
+    static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Wave";
     static final String PASSIVE_NAME = "Cleanse";
@@ -25,8 +25,8 @@ public class TideSoul extends Soul
 
     static final String PASSIVE_DETAILS = "Remove effects and heal. Increased stacks from stuns, burns, and poisons.";
 
-    static final int HEALING_AMOUNT = 40;
-    static final int PASSIVE_COOLDOWN = 6;
+    static final int HEALING_AMOUNT = 30;
+    static final int PASSIVE_COOLDOWN = 4;
 
     int floodStacks;
     
@@ -42,18 +42,18 @@ public class TideSoul extends Soul
     }   
 
     public void passive(Entity other) {
-        if (other.stunDuration > 0) {
+        if (stunDuration > 0) {
             floodStacks++;
         }
-        if (other.burningDuration > 0) {
+        if (burningDuration > 0) {
             floodStacks++;
         }
-        if (other.poisonedDuration > 0) {
+        if (poisonedDuration > 0) {
             floodStacks++;
         }
-        other.stunDuration = 0;
-        other.burningDuration = 0;
-        other.poisonedDuration = 0;
+        this.stunDuration = 0;
+        this.burningDuration = 0;
+        this.poisonedDuration = 0;
         this.defense = Math.max(this.defense, 0);
         this.attack = Math.max(this.attack, BASE_ATTACK);
         this.health += (int)(HEALING_AMOUNT * levelModifier);

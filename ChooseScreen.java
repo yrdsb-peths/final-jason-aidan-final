@@ -66,7 +66,6 @@ public class ChooseScreen extends Actor
         player1points = MAX_CHOOSE_POINTS;
         player2points = MAX_CHOOSE_POINTS;
 
-        initPointsLabel();
     }   
 
     public void act()
@@ -80,6 +79,7 @@ public class ChooseScreen extends Actor
 
 
             if (finishedChoosing && submitButton.isPressed) {
+                initPointsLabel();
                 this.state = 1;
                 submitButton.isPressed = false;
                 submitButton.setImage("submit_button.png");
@@ -227,15 +227,19 @@ public class ChooseScreen extends Actor
     }
 
     private void initPointsLabel() {
-        player1pointsLabel = new Label("" + player1points, 25);
-        player2pointsLabel = new Label("" + player2points, 25);
-        world.addObject(player1pointsLabel, 30, MyWorld.HEIGHT-50);
-        world.addObject(player2pointsLabel, MyWorld.WIDTH-40, MyWorld.HEIGHT-50);
+        player1pointsLabel = new Label("Upgrade points: " + player1points, 20);
+        player2pointsLabel = new Label("Upgrade points: " + player2points, 20);
+        // player1pointsLabel.setLineColor(Color.WHITE);
+        // player2pointsLabel.setLineColor(Color.WHITE);
+        player1pointsLabel.setLineColor((Color)null);
+        player2pointsLabel.setLineColor((Color)null);
+        world.addObject(player1pointsLabel, 100, MyWorld.HEIGHT-50);
+        world.addObject(player2pointsLabel, MyWorld.WIDTH-110, MyWorld.HEIGHT-50);
     }
 
     private void updatePointsLabel() {
-        player1pointsLabel.setValue(" " + player1points);
-        player2pointsLabel.setValue(" " + player2points);
+        player1pointsLabel.setValue("Upgrade points: " + player1points);
+        player2pointsLabel.setValue("Upgrade points: " + player2points);
     }
 
     public void checkLevelUp() {
