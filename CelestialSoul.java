@@ -14,7 +14,7 @@ public class CelestialSoul extends Soul
      * Act - do whatever the StarSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    static GreenfootImage costume = new GreenfootImage("star.png");
+    static GreenfootImage costume = new GreenfootImage("celestial.png");
     static final String NAME = "Celestial Soul";
     static final int BASE_HEALTH = 120;
     static final int BASE_ATTACK = 25;
