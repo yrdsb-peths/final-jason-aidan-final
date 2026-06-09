@@ -46,10 +46,9 @@ public class BoulderSoul extends Soul
     }
     
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
-        defense = (int) (MAX_DEFENSE *  levelModifier);
         intangibilityLeft = INTANGIBILITY_DURATION;
         BattleScreen.getInstance().actionStack.add(
-            new Action("Boulder have become intangible for _ turns",() -> {
+            new Action("Boulder is now invulnerable",() -> {
             }
         ));
     }
