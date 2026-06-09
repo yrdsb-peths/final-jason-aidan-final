@@ -37,6 +37,8 @@ public class ChooseScreen extends Actor
 
 
     static int MAX_CHOOSE_POINTS = 20;
+    
+    GreenfootSound lobbyMusic;
 
 
     /**
@@ -65,12 +67,19 @@ public class ChooseScreen extends Actor
 
         player1points = MAX_CHOOSE_POINTS;
         player2points = MAX_CHOOSE_POINTS;
-
+        
+        lobbyMusic = new GreenfootSound("lobby-start-M.wav");
+        lobbyMusic.play();
     }   
 
     public void act()
     {
-
+        if(!lobbyMusic.isPlaying())
+        {
+            lobbyMusic = new GreenfootSound("lobby-loop-M.wav");
+            lobbyMusic.playLoop();
+        }
+        
         if (this.state == 0) {
             chooseSpirit(chooser1, chooser2);
             updateDisplay();
