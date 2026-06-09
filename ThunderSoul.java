@@ -13,9 +13,14 @@ public class ThunderSoul extends Soul
      * Act - do whatever the ElectricSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    static final GreenfootSound ELECTRIC_STRIKE = new GreenfootSound("electric-strike.mp3");
+    static final GreenfootSound ELECTRIC_CHARGE = new GreenfootSound("electric-charge.mp3");
+
+    static final GreenfootSound THUNDERSTORM = new GreenfootSound("thunderstorm_louder.mp3");
+
     static GreenfootImage costume = new GreenfootImage("thunder.png");
-    static final String NAME = "Electric Spirit";
-    static final int BASE_HEALTH = 130;
+    static final String NAME = "Electric Soul";
+    static final int BASE_HEALTH = 100;
     static final int BASE_ATTACK = 20;
     static final String ATTACK_NAME = "Shock";
     static final String PASSIVE_NAME = "Charge";
@@ -27,12 +32,13 @@ public class ThunderSoul extends Soul
     
     public ThunderSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, costume, ELECTRIC_STRIKE);
         charge = 0;
 
     }
     
     public void passive(Entity other) {
+        ELECTRIC_CHARGE.play();
         charge ++;
     }
 
@@ -47,8 +53,7 @@ public class ThunderSoul extends Soul
         charge = 0;
     }
 
-    public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
-
+    public void applyUltimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
         int damage = (int)((30 + attack * (charge + 1) / 5) * levelModifier);
         // Logic to hit additional enemies based on charge can be implemented here
 
@@ -58,13 +63,23 @@ public class ThunderSoul extends Soul
             final double effectiveDamage = effectivenessMultiplier(others.get(index)) * damage;
             BattleScreen.getInstance().actionStack.add(
                 new Action("Thunderstorm hits " + others.get(index).name + " for " + (int)effectiveDamage + " damage" + effectivenessTag(others.get(index)) + "!",
+                
                 () -> {
+                    
+                    if (index == 0) {
+                        THUNDERSTORM.play();
+                    }
+
                     others.get(index).takeDamage(effectiveDamage);
                 }
             ));
         }
-
         charge = 0;
+    }
+
+    public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
+
+        
         
     }
 

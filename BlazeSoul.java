@@ -15,8 +15,8 @@ public class BlazeSoul extends Soul
     /**
      * Constructor for objects of class Blaze
      */
-    static final GreenfootSound INFERNO_SOUND = new GreenfootSound("fire-inferno.mp3");
-    static final GreenfootSound FIRE_SOUND = new GreenfootSound("fire-whoosh.mp3");
+    static final GreenfootSound INFERNO_SOUND = new GreenfootSound("fire-attack.mp3");
+    static final GreenfootSound LIGHT_MATCH = new GreenfootSound("ignite.mp3");
 
     static final GreenfootImage COSTUME = new GreenfootImage("blaze.png");
     static final String NAME = "Blaze Soul";
@@ -34,10 +34,11 @@ public class BlazeSoul extends Soul
 
     public BlazeSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME, FIRE_SOUND);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME, BURN_SOUND);
     }
 
     public void passive(Entity other) {
+        LIGHT_MATCH.play();
         other.burningDamage = (int) (10 * this.levelModifier);
         other.burningDuration = 6;
         // Any additional initialization code for FireSpirit can go here

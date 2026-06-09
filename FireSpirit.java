@@ -12,6 +12,9 @@ public class FireSpirit extends Spirit
      * Act - do whatever the FireSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    static final GreenfootSound BURN_SOUND = new GreenfootSound("fire-attack.mp3");
+    static final GreenfootSound LIGHT_MATCH = new GreenfootSound("ignite.mp3");
+
     static GreenfootImage costume = new GreenfootImage("fire.png");
     static final String NAME = "Fire Spirit";
     static final int BASE_HEALTH = 50;
@@ -22,11 +25,12 @@ public class FireSpirit extends Spirit
     static final int PASSIVE_COOLDOWN = 4;
     public FireSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume, BURN_SOUND);
 
     }
 
     public void passive(Entity other) {
+        LIGHT_MATCH.play();
         other.burningDamage = Math.max(other.burningDamage, (int)(7 * levelModifier));
         other.burningDuration = Math.max(other.burningDuration, 4);
 

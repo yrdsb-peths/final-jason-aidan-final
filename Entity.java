@@ -12,8 +12,9 @@ abstract public class Entity
      * Act - do whatever the Spirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-
-    static final GreenfootSound DEFAULT_ATTACK_SOUND = new GreenfootSound("fire-whoosh.mp3");
+    static final GreenfootSound DEFAULT_ATTACK_SOUND = new GreenfootSound("default-attack.mp3");
+    static final GreenfootSound BURN_SOUND = new GreenfootSound("burn-louder.mp3");
+    static final GreenfootSound HEAL = new GreenfootSound("heal-short.mp3");
     
     int level;
 
@@ -112,6 +113,7 @@ abstract public class Entity
                 "> " + this.name + " took " + this.burningDamage + " burning damage.",
                 // "",
                 () -> {
+                    BURN_SOUND.play();
                     this.health -= this.burningDamage;
                     this.burningDuration--;
                     AnimationTask.addFlashAnimation(this, 10, 100);
@@ -143,6 +145,7 @@ abstract public class Entity
             BattleScreen.getInstance().actionStack.add(new Action(
                 "> " + this.name + " healed " + this.healingAmount + " HP.",
                 () -> {
+                    HEAL.play();
                     this.health += this.healingAmount;
                     this.healingDuration--;
                 }
@@ -230,7 +233,7 @@ abstract public class Entity
 
         screenInstance.actionStack.add(new Action("> " + name + " used " + attackName + "."));
 
-        if (Greenfoot.getRandomNumber(100) <= 100*other.evasion) {
+        if (Greenfoot.getRandomNumber(100) < 100*other.evasion) {
             screenInstance.actionStack.add(new Action("> The attack was evaded!", () -> {}));
             return;
         }

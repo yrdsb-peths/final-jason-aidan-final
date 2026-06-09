@@ -12,7 +12,8 @@ public class WaterSpirit extends Spirit
      * Act - do whatever the WaterSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-
+    static final GreenfootSound SPLASH = new GreenfootSound("splash.mp3");
+    static final GreenfootSound WATER_HEAL = new GreenfootSound("water-heal.mp3");
     static GreenfootImage costume = new GreenfootImage("water.png");
     static final String NAME = "Water Spirit";
     static final int BASE_HEALTH = 70;
@@ -26,11 +27,12 @@ public class WaterSpirit extends Spirit
     
     public WaterSpirit()
     {
-        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
+        super(NAME,BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume, SPLASH);
 
     }
 
     public void passive(Entity other) {
+        WATER_HEAL.play();
         this.stunDuration = 0;
         this.burningDuration = 0;
         this.poisonedDuration = 0;

@@ -1,4 +1,6 @@
 import greenfoot.GreenfootImage;
+import greenfoot.GreenfootSound;
+
 import java.util.ArrayList;
 
 /**
@@ -13,6 +15,9 @@ public class TideSoul extends Soul
     /**
      * Constructor for objects of class Blaze
      */
+    static final GreenfootSound SPLASH = new GreenfootSound("splash.mp3");
+    static final GreenfootSound WATER_HEAL = new GreenfootSound("water-heal.mp3");
+    static final GreenfootSound TSUNAMI = new GreenfootSound("tsunami.mp3");
     static final GreenfootImage COSTUME = new GreenfootImage("tide.png");
     static final String NAME = "Tide Soul";
     static final int BASE_HEALTH = 100;
@@ -32,7 +37,7 @@ public class TideSoul extends Soul
     
     public TideSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.water, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME, SPLASH);
         this.floodStacks = 2;
     }
 
@@ -42,6 +47,7 @@ public class TideSoul extends Soul
     }   
 
     public void passive(Entity other) {
+        WATER_HEAL.play();
         if (stunDuration > 0) {
             floodStacks++;
         }
@@ -61,6 +67,7 @@ public class TideSoul extends Soul
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
+        TSUNAMI.play();
         this.health += floodStacks * 5 * levelModifier;
 
         double effectiveDamage = effectivenessMultiplier(others.get(0)) * (int)(floodStacks * levelModifier) * 10;

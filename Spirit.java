@@ -46,6 +46,15 @@ abstract public class Spirit extends Entity
         super(name, health, attack, type, attackName, passiveName, image);
     }
 
+    public Spirit(String name, int health, int attack, Element type, String attackName, String passiveName, int passiveCooldown, GreenfootImage image, GreenfootSound attackSound)
+    {
+        super(name, health, attack, type, attackName, passiveName, passiveCooldown, image, attackSound);
+    }
+    
+    public Spirit(String name, int health, int attack, Element type, String attackName, String passiveName, GreenfootImage image, GreenfootSound attackSound)
+    {
+        super(name, health, attack, type, attackName, passiveName, image, attackSound);
+    }
 
     abstract public Soul getUpgraded();
 

@@ -22,23 +22,34 @@ public class OrdinarySpirit extends Spirit
     static final int PASSIVE_COOLDOWN = 8;
     static int MAXIMUM_COUNT = 6;
 
-    static int totalPeopleLeft = -1;
+    static int totalPeopleLeft1 = -1;
+    static int totalPeopleLeft2 = -1;
 
     
     public OrdinarySpirit()
     {
         super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
-        MAXIMUM_COUNT *= levelModifier;
-        if (totalPeopleLeft == -1) {
-            totalPeopleLeft = MAXIMUM_COUNT;
+        MAXIMUM_COUNT = (int) (levelModifier*MAXIMUM_COUNT);
+        if (totalPeopleLeft1 == -1) {
+            totalPeopleLeft1 = MAXIMUM_COUNT;
+        }
+        if (totalPeopleLeft2 == -1) {
+            totalPeopleLeft2 = MAXIMUM_COUNT;
         }
     }
 
     public void passive(Entity other) {
+        System.out.println(totalPeopleLeft1 + " " + totalPeopleLeft2);
         BattleScreen instance = BattleScreen.getInstance();
         invite();
         invite();
-        if (totalPeopleLeft <= 0) {
+        if (totalPeopleLeft1 <= 0 && instance.turnNumber % 2 == 1) {
+            BattleScreen.getInstance().actionStack.add(new Action(
+                "Everyone has been invited.",
+                () -> {}
+            ));
+        }
+        if (totalPeopleLeft2 <= 0 && instance.turnNumber % 2 == 0) {
             BattleScreen.getInstance().actionStack.add(new Action(
                 "Everyone has been invited.",
                 () -> {}
@@ -61,16 +72,27 @@ public class OrdinarySpirit extends Spirit
     }
 
     private void invite() {
-        if (totalPeopleLeft > 0) {
-            totalPeopleLeft --;
-            BattleScreen instance = BattleScreen.getInstance();
-            OrdinarySpirit newOrdinary = new OrdinarySpirit();
-            newOrdinary.level = this.level;
-            newOrdinary.updateModifier();
-            newOrdinary.fixLevel();
-            instance.getCurrentEntities().add(newOrdinary);
+        BattleScreen instance = BattleScreen.getInstance();
+        if (totalPeopleLeft1 > 0 && instance.turnNumber % 2 == 1) {
+            totalPeopleLeft1 --;
+            add();
         }
 
+        if (totalPeopleLeft2 > 0 && instance.turnNumber % 2 == 0) {
+            totalPeopleLeft2 --;
+            add();
+        }
+        
 
+
+    }
+
+    public void add() {
+        BattleScreen instance = BattleScreen.getInstance();
+        OrdinarySpirit newOrdinary = new OrdinarySpirit();
+        newOrdinary.level = this.level;
+        newOrdinary.updateModifier();
+        newOrdinary.fixLevel();
+        instance.getCurrentEntities().add(newOrdinary);
     }
 }

@@ -12,6 +12,8 @@ public class GrassSpirit extends Spirit
      * Act - do whatever the GrassSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    static final GreenfootSound HEAL = new GreenfootSound("heal-short.mp3");
+
     static GreenfootImage costume = new GreenfootImage("grass.png");
     static final String NAME = "Grass Spirit";
     static final int BASE_HEALTH = 60;
@@ -31,6 +33,7 @@ public class GrassSpirit extends Spirit
     }
 
     public void passive(Entity other) {
+        HEAL.play();
         this.healingAmount = (int) (HEALING_AMOUNT * this.levelModifier);
         this.healingDuration = HEALING_DURATION;
         

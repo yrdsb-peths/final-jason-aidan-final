@@ -565,7 +565,7 @@ public class BattleScreen extends Actor
     private void initBackgroundAndMusic()
     {
         int j = Greenfoot.getRandomNumber(100);
-        if(j <= 20)
+        if(j <= 10)
         {
             backgroundImage = new GreenfootImage("background5.png");
             backgroundImage.scale(600, 400);

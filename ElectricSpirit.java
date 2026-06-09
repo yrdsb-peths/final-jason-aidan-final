@@ -12,6 +12,10 @@ public class ElectricSpirit extends Spirit
      * Act - do whatever the ElectricSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    static final GreenfootSound ELECTRIC_STRIKE = new GreenfootSound("electric-strike.mp3");
+    static final GreenfootSound ELECTRIC_CHARGE = new GreenfootSound("electric-charge.mp3");
+
+
     static GreenfootImage costume = new GreenfootImage("electric.png");
     static final String NAME = "Electric Spirit";
     static final int BASE_HEALTH = 70;
@@ -24,16 +28,18 @@ public class ElectricSpirit extends Spirit
     
     public ElectricSpirit()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, costume);
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.electric, ATTACK_NAME, PASSIVE_NAME, costume, ELECTRIC_STRIKE);
         charge = 0;
 
     }
     
     public void passive(Entity other) {
         charge ++;
+        ELECTRIC_CHARGE.play();
     }
 
     public void attack(Entity other) {
+        
         attack = attack * (charge + 1);
         super.attack(other);
         attack = attack / (charge + 1);

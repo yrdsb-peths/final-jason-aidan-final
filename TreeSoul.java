@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 
 import greenfoot.GreenfootImage;
+import greenfoot.GreenfootSound;
 
 public class TreeSoul extends Soul {
     /**
      * Constructor for objects of class Blaze
      */
+    static final GreenfootSound HEAL = new GreenfootSound("heal-short.mp3");
     static final GreenfootImage COSTUME = new GreenfootImage("tree.png");
     static final String NAME = "Tree Soul";
     static final int BASE_HEALTH = 90;
@@ -34,6 +36,7 @@ public class TreeSoul extends Soul {
     }   
 
     public void passive(Entity other) {
+        HEAL.play();
         this.healingAmount = (int) (HEALING_AMOUNT * this.levelModifier);
         this.healingDuration = HEALING_DURATION;
         this.attack += (int)(ATTACK_INCREASE * this.levelModifier);
