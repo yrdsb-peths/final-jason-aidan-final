@@ -9,7 +9,8 @@ enum States {
 
 public class MyWorld extends World {
     
-    final static int MAX_ENTITIES = 2;
+    static int MAX_ENTITIES = 2;
+    static int POINTS_PER_PLAYER = 20;
     ArrayList<Entity> player1Entities;
     ArrayList<Entity> player2Entities;
 

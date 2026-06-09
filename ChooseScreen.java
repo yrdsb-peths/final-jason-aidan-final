@@ -34,9 +34,6 @@ public class ChooseScreen extends Actor
 
     Label player1pointsLabel;
     Label player2pointsLabel;
-
-
-    static int MAX_CHOOSE_POINTS = 20;
     
     GreenfootSound lobbyMusic;
 
@@ -65,8 +62,8 @@ public class ChooseScreen extends Actor
         chooser1 = createSpiritChooser(45, 50, 60);
         chooser2 = createSpiritChooser(375, 50, 60);
 
-        player1points = MAX_CHOOSE_POINTS;
-        player2points = MAX_CHOOSE_POINTS;
+        player1points = MyWorld.POINTS_PER_PLAYER;
+        player2points = MyWorld.POINTS_PER_PLAYER;
         
         lobbyMusic = new GreenfootSound("lobby-start-M.wav");
         lobbyMusic.play();
