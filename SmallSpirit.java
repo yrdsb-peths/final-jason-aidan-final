@@ -16,12 +16,13 @@ public class SmallSpirit extends Spirit
     static GreenfootImage costume = new GreenfootImage("small.png");
     static final String NAME = "Small Spirit";
     static final int BASE_HEALTH = 70;
-    static final int BASE_ATTACK = 15;
+    static final int BASE_ATTACK = 25;
     static final String ATTACK_NAME = "Bite";
     static final String PASSIVE_NAME = "Shrink";
     static final String PASSIVE_DETAILS = "Your opponent now has a change to miss!";
 
-    static final double HIT_CHANCE_CHANGE = 0.5;
+    static final double MAX_EVASION_CHANCE = 0.7;
+    static final double HIT_CHANCE_CHANGE = 0.7;
     static final int STATS_CHANGE_DIVISOR = 10;
     
     public SmallSpirit()
@@ -37,10 +38,10 @@ public class SmallSpirit extends Spirit
     public void passive(Entity other) {
 
         this.evasion = 1 - (1 - this.evasion) * HIT_CHANCE_CHANGE;
-        if (this.evasion > 0.8) {
-            this.evasion = 0.8;
+        if (this.evasion > MAX_EVASION_CHANCE) {
+            this.evasion = MAX_EVASION_CHANCE;
             BattleScreen.getInstance().actionStack.add(
-                new Action("Your evasion has reached the max of 80%!", 
+                new Action("Your evasion has reached the max of "+(int)(100 * MAX_EVASION_CHANCE)+"%!", 
                 () -> {
                 }
             ));

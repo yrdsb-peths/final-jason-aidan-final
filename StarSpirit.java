@@ -22,7 +22,7 @@ public class StarSpirit extends Spirit
 
     static final int MAX_METEOR_STRIKES = 7;
     static final double METEOR_STRIKE_CHANCE = 0.5;
-    static final int METEOR_STRIKE_DAMAGE_DIVISOR = 3;
+    static final int METEOR_STRIKE_DAMAGE_DIVISOR = 4;
     static final int METEOR_BURNING_DAMAGE = 2;
 
     static final int PASSIVE_COOLDOWN = 6;
