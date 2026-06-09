@@ -28,7 +28,7 @@ public class TitleScreen extends Actor
     public TitleScreen(MyWorld world) {
         this.world = world;
 
-        GreenfootImage image1 = new GreenfootImage("submit_button.png");
+        GreenfootImage image1 = new GreenfootImage("submit_button_easy.png");
         image1.scale(100, 100);
         pvpButton1 = new Button(image1, 20);
         setImage((GreenfootImage)null);
@@ -40,14 +40,14 @@ public class TitleScreen extends Actor
         setImage((GreenfootImage)null);
         world.addObject(pvpButton2, MyWorld.WIDTH/2, MyWorld.HEIGHT/2);
 
-        GreenfootImage image3 = new GreenfootImage("submit_button.png");
+        GreenfootImage image3 = new GreenfootImage("submit_button_hard.png");
         image3.scale(100, 100);
         pvpButton3 = new Button(image3, 20);
         setImage((GreenfootImage)null);
         world.addObject(pvpButton3, MyWorld.WIDTH/2 + 100, MyWorld.HEIGHT/2);
 
 
-        title = new Label("Turn-based game", 30);
+        title = new Label("Spirits", 60);
         title.setLineColor(null);
         title.setFillColor(Color.BLACK);
         world.addObject(title, MyWorld.WIDTH/2, MyWorld.HEIGHT/4);
