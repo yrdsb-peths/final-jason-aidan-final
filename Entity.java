@@ -12,6 +12,8 @@ abstract public class Entity
      * Act - do whatever the Spirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+
+    static final GreenfootSound DEFAULT_ATTACK_SOUND = new GreenfootSound("fire-whoosh.mp3");
     
     int level;
 
@@ -33,6 +35,7 @@ abstract public class Entity
     int x;
     int y;
     boolean canSwap;
+    GreenfootSound attackSound;
     // number from 0-1 representing chance to dodge an attack
     
     Element type;
@@ -63,8 +66,9 @@ abstract public class Entity
         this.type = type;
         this.attackName = attackName;
         this.passiveName = passiveName;
-        this.image = image;
+        this.image = new GreenfootImage(image);
         this.name = name;
+        this.attackSound = DEFAULT_ATTACK_SOUND;
         updateModifier();
         scaleImage();
     }
@@ -73,6 +77,19 @@ abstract public class Entity
     {
         this(name, health, attack, type, attackName, passiveName, image);
         this.passiveCooldown = passiveCooldown;
+    }
+
+    public Entity(String name, int health, int attack, Element type, String attackName, String passiveName, int passiveCooldown, GreenfootImage image, GreenfootSound attackSound)
+    {
+        this(name, health, attack, type, attackName, passiveName, image);
+        this.passiveCooldown = passiveCooldown;
+        this.attackSound = attackSound;
+    }
+
+    public Entity(String name, int health, int attack, Element type, String attackName, String passiveName, GreenfootImage image, GreenfootSound attackSound)
+    {
+        this(name, health, attack, type, attackName, passiveName, image);
+        this.attackSound = attackSound;
     }
 
     public int comparedTo(Entity other)
@@ -272,13 +289,13 @@ abstract public class Entity
             () -> {
                 if (!finalMissed) {
                    other.takeDamage((int)finalDamage);
+                   attackSound.play();
                 } else {
                     BattleScreen.getInstance().animationStack.add(new AnimationTask(
                         MyWorld.worldTime, 
                     () -> {
                         screenInstance.missDisplay.getImage().setTransparency(255);
                         screenInstance.missDisplay.setLocation(other.x, other.y);
-                        
                     }
                     ));
                         BattleScreen.getInstance().animationStack.add(new AnimationTask(
@@ -294,7 +311,6 @@ abstract public class Entity
                     () -> {
                         screenInstance.critDisplay.getImage().setTransparency(255);
                         screenInstance.critDisplay.setLocation(other.x, other.y);
-                        
                     }
                     ));
                         BattleScreen.getInstance().animationStack.add(new AnimationTask(

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import greenfoot.GreenfootImage;
+import greenfoot.GreenfootSound;
 
 /**
  * Write a description of class Blaze here.
@@ -14,6 +15,9 @@ public class BlazeSoul extends Soul
     /**
      * Constructor for objects of class Blaze
      */
+    static final GreenfootSound INFERNO_SOUND = new GreenfootSound("fire-inferno.mp3");
+    static final GreenfootSound FIRE_SOUND = new GreenfootSound("fire-whoosh.mp3");
+
     static final GreenfootImage COSTUME = new GreenfootImage("blaze.png");
     static final String NAME = "Blaze Soul";
     static final int BASE_HEALTH = 80;
@@ -30,8 +34,7 @@ public class BlazeSoul extends Soul
 
     public BlazeSoul()
     {
-        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME);
-
+        super(NAME, BASE_HEALTH, BASE_ATTACK, Element.fire, ATTACK_NAME, PASSIVE_NAME, ULTIMATE_NAME, PASSIVE_COOLDOWN, COSTUME, FIRE_SOUND);
     }
 
     public void passive(Entity other) {
@@ -41,6 +44,9 @@ public class BlazeSoul extends Soul
     }
 
     public void ultimate(ArrayList<Entity> allies, ArrayList<Entity> others) {
+
+        INFERNO_SOUND.play();
+
         this.health -= 10 * this.levelModifier;
         this.burningDamage = (int) (3 * this.levelModifier);
         this.burningDuration = 3;

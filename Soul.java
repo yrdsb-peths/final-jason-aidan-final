@@ -28,9 +28,23 @@ abstract public class Soul extends Entity
         this.ultimateName = ultimateName;
     }
 
+    public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String ultimateName, GreenfootImage image, GreenfootSound attackSound)
+    {
+        super(name, health, attack, type, attackName, passiveName, image, attackSound);
+        this.ultimateUsed = false;
+        this.ultimateName = ultimateName;
+    }
+
     public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String ultimateName, int passiveCooldown, GreenfootImage image)
     {
         super(name, health, attack, type, attackName, passiveName, passiveCooldown, image);
+        this.ultimateUsed = false;
+        this.ultimateName = ultimateName;
+    }
+
+    public Soul(String name, int health, int attack, Element type, String attackName, String passiveName, String ultimateName, int passiveCooldown, GreenfootImage image, GreenfootSound attackSound)
+    {
+        super(name, health, attack, type, attackName, passiveName, passiveCooldown, image, attackSound);
         this.ultimateUsed = false;
         this.ultimateName = ultimateName;
     }
