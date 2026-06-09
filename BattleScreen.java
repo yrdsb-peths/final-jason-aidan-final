@@ -52,6 +52,7 @@ public class BattleScreen extends Actor
     ArrayList<AnimationTask> animationStack;
 
     GreenfootImage backgroundImage;
+    GreenfootSound music;
 
     ArrayList<ImageDisplay> statusEffectsDisplay1;
     ArrayList<ImageDisplay> statusEffectsDisplay2;
@@ -104,7 +105,7 @@ public class BattleScreen extends Actor
         initButtons();
         initEntityDisplay();
 
-        initBackground();
+        initBackgroundAndMusic();
 
         initDialogueBox();
         initInfoBox();
@@ -115,7 +116,6 @@ public class BattleScreen extends Actor
         
         initCritImage();
         initMissImage();
-        
     }
 
 
@@ -414,7 +414,7 @@ public class BattleScreen extends Actor
         world.currentState = States.CHOOSING;
         world.screenCreated = false;
         world.removeObject(this);
-
+        music.stop();
     }
 
     private void attachToActions(Runnable func) {
@@ -562,19 +562,23 @@ public class BattleScreen extends Actor
         dialogueBox.setText("Player 1's turn");
     }
 
-    private void initBackground()
+    private void initBackgroundAndMusic()
     {
         int j = Greenfoot.getRandomNumber(100);
-        if(j <= 20)
+        if(j <= 100)
         {
             backgroundImage = new GreenfootImage("background5.png");
             backgroundImage.scale(600, 400);
+            music = new GreenfootSound("sus-M.wav");
+            music.playLoop();
         }
         else
         {
             int i = Greenfoot.getRandomNumber(4);
             backgroundImage = new GreenfootImage("background"+(i+1)+".png");
             backgroundImage.scale(600, 400);
+            music = new GreenfootSound("battle" + (i+1) + "-M.wav");
+            music.playLoop();
         }   
 
     }

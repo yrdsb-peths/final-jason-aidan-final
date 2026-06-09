@@ -115,6 +115,7 @@ public class ChooseScreen extends Actor
                 world.removeObject(player1pointsLabel);
                 world.removeObject(player2pointsLabel);
                 world.removeObject(this);
+                lobbyMusic.stop();
             }
             
             
