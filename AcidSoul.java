@@ -48,36 +48,15 @@ public class AcidSoul extends Soul
                 curseTarget = other;
             }
         }
-        // most cursed java code i've written
         screenInstance.actionStack.add(
             new Action("> " + curseTarget.name + " has been cursed!",
             () -> {
-                curseTime = screenInstance.turnNumber;
-                addCurseCheck();
+                curseTarget.curseTime = (int)(CURSE_EXECUTION_TIME / levelModifier);
+                curseTarget.isCursed = true;
+                curseStartRound = screenInstance.turnNumber;
             }
         ));
         
-    }
-
-    private void checkApplyCurse() {
-        BattleScreen screenInstance = BattleScreen.getInstance();
-        if (screenInstance.turnNumber - curseTime >= (int)(CURSE_EXECUTION_TIME / levelModifier) && curseTarget.health > 0) {
-            screenInstance.actionStack.add(
-                new Action("> " + curseTarget.name + " has died from the curse!",
-                () -> {
-                    curseTarget.health = -10;
-                }
-            ));
-        } else {
-            addCurseCheck();
-        }
-    }
-
-    private void addCurseCheck() {
-        BattleScreen.getInstance().animationStack.add(new AnimationTask(
-            MyWorld.worldTime += 10,
-            () -> checkApplyCurse()
-        ));
     }
 
 

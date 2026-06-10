@@ -359,7 +359,9 @@ public class BattleScreen extends Actor
             actionStack.add(new Action(
                 p1Entity.name + " has fainted!",
                 () -> {
-                    player1Entities.remove(0); 
+                    if (player1Entities.size() != 0) {
+                        player1Entities.remove(0); 
+                    }
                     updateEntityImage();
                     if (player1Entities.size() == 0) {
                         actionStack.add(new Action(
@@ -381,7 +383,9 @@ public class BattleScreen extends Actor
                 p2Entity.name + " has fainted!",
                 
                 () -> {
-                    player2Entities.remove(0);
+                    if (player2Entities.size() != 0) {
+                        player2Entities.remove(0);
+                    }
                     updateEntityImage();
                     if (player2Entities.size() == 0) {
                         actionStack.add(new Action(
@@ -680,7 +684,6 @@ public class BattleScreen extends Actor
 
         removeStatusEffectDisplay();
 
-        int gap = 0;
         int sc = 100;
 
         int x1 = p1Entity.x;
@@ -693,7 +696,6 @@ public class BattleScreen extends Actor
             image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
-            x1 += gap;
 
         }
         if (p2Entity.burningDuration > 0) {
@@ -701,7 +703,6 @@ public class BattleScreen extends Actor
             image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
-            x2 += gap;
 
         }
         if (p1Entity.poisonedDuration > 0) {
@@ -709,28 +710,37 @@ public class BattleScreen extends Actor
             image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
-            x1 += gap;
         }
         if (p2Entity.poisonedDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("poisoned.png"));
             image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
-            x2 += gap;
         }
         if (p1Entity.healingDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
             image.getImage().scale(sc,sc);
             statusEffectsDisplay1.add(image);
             world.addObject(image, x1, y);
-            x1 += gap;        
         }
         if (p2Entity.healingDuration > 0) {
             ImageDisplay image = new ImageDisplay(new GreenfootImage("healing.png"));
             image.getImage().scale(sc,sc);
             statusEffectsDisplay2.add(image);
             world.addObject(image, x2, y);
-            x2 += gap;          
+        }
+
+        if (p1Entity.isCursed) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("cursed.png"));
+            image.getImage().scale(sc, sc);
+            statusEffectsDisplay1.add(image);
+            world.addObject(image, x1, y);
+        }
+        if (p2Entity.isCursed) {
+            ImageDisplay image = new ImageDisplay(new GreenfootImage("cursed.png"));
+            image.getImage().scale(sc, sc);
+            statusEffectsDisplay2.add(image);
+            world.addObject(image, x2, y);
         }
     }
 

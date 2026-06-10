@@ -12,6 +12,7 @@ public class StarSpirit extends Spirit
      * Act - do whatever the StarSpirit wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    static final GreenfootSound METEOR_SOUND = new GreenfootSound("default-attack.mp3");
     static GreenfootImage costume = new GreenfootImage("star.png");
     static final String NAME = "Star Spirit";
     static final int BASE_HEALTH = 80;
@@ -53,6 +54,7 @@ public class StarSpirit extends Spirit
                 BattleScreen.getInstance().actionStack.add(
                     new Action("Meteor strike (x" + j + ")" + effectivenessTag(other) + "!", 
                     () -> {
+                        METEOR_SOUND.play();
                         other.takeDamage(effectiveDamage);
                         other.burningDuration ++;
                     }

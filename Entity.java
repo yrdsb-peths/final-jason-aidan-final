@@ -35,6 +35,9 @@ abstract public class Entity
     int passiveCooldownLeft; // # of turns left until passive can be used again
     int x;
     int y;
+    boolean isCursed;
+    int curseStartRound;
+    int curseTime;
     boolean canSwap;
     GreenfootSound attackSound;
     // number from 0-1 representing chance to dodge an attack
@@ -70,6 +73,9 @@ abstract public class Entity
         this.image = new GreenfootImage(image);
         this.name = name;
         this.attackSound = DEFAULT_ATTACK_SOUND;
+        this.isCursed = false;
+        this.curseStartRound = 0;
+        this.curseTime = 0;
         updateModifier();
         scaleImage();
     }
@@ -148,6 +154,16 @@ abstract public class Entity
                     HEAL.play();
                     this.health += this.healingAmount;
                     this.healingDuration--;
+                }
+            ));
+        }
+
+        if (this.isCursed && BattleScreen.getInstance().turnNumber - curseStartRound >= curseTime) {
+            
+            BattleScreen.getInstance().actionStack.add(new Action(
+                "> " + this.name + " has died from the curse!.",
+                () -> {
+                    this.health = -10;
                 }
             ));
         }
