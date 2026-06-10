@@ -366,7 +366,11 @@ public class BattleScreen extends Actor
                     if (player1Entities.size() == 0) {
                         actionStack.add(new Action(
                             "Player 2 has won!",
-                            () -> {actionStack.add(new Action("", () -> gameOver()));}
+                            () -> {
+                                music.stop();
+                                music = new GreenfootSound("win-E.wav");
+                                music.play();
+                                actionStack.add(new Action("", () -> gameOver()));}
                         ));
                         
                     } else {
@@ -390,7 +394,11 @@ public class BattleScreen extends Actor
                     if (player2Entities.size() == 0) {
                         actionStack.add(new Action(
                             "Player 1 has won!",
-                            () -> {actionStack.add(new Action("", () -> gameOver()));}
+                            () -> { 
+                                music.stop();
+                                music = new GreenfootSound("win-E.wav");
+                                music.play();
+                                actionStack.add(new Action("", () -> gameOver()));}
                         ));
                     } else {
                         p2Entity = player2Entities.get(0);
@@ -418,7 +426,6 @@ public class BattleScreen extends Actor
         world.currentState = States.CHOOSING;
         world.screenCreated = false;
         world.removeObject(this);
-        music.stop();
     }
 
     private void attachToActions(Runnable func) {

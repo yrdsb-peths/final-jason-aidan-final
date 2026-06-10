@@ -15,6 +15,8 @@ abstract public class Entity
     static final GreenfootSound DEFAULT_ATTACK_SOUND = new GreenfootSound("default-attack.mp3");
     static final GreenfootSound BURN_SOUND = new GreenfootSound("burn-louder.mp3");
     static final GreenfootSound HEAL = new GreenfootSound("heal-short.mp3");
+    static final GreenfootSound CRIT = new GreenfootSound("criticalHit.mp3");
+    static final GreenfootSound MISS = new GreenfootSound("miss.mp3");
     
     int level;
 
@@ -315,6 +317,7 @@ abstract public class Entity
                     () -> {
                         screenInstance.missDisplay.getImage().setTransparency(255);
                         screenInstance.missDisplay.setLocation(other.x, other.y);
+                        MISS.play();
                     }
                     ));
                         BattleScreen.getInstance().animationStack.add(new AnimationTask(
@@ -325,11 +328,12 @@ abstract public class Entity
                     ));
                 }
                 if(finalHasCrit){
-                        BattleScreen.getInstance().animationStack.add(new AnimationTask(
-                        MyWorld.worldTime, 
+                    BattleScreen.getInstance().animationStack.add(new AnimationTask(
+                    MyWorld.worldTime, 
                     () -> {
                         screenInstance.critDisplay.getImage().setTransparency(255);
                         screenInstance.critDisplay.setLocation(other.x, other.y);
+                        CRIT.play();
                     }
                     ));
                         BattleScreen.getInstance().animationStack.add(new AnimationTask(
