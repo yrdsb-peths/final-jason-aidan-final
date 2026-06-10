@@ -39,7 +39,6 @@ public class OrdinarySpirit extends Spirit
     }
 
     public void passive(Entity other) {
-        System.out.println(totalPeopleLeft1 + " " + totalPeopleLeft2);
         BattleScreen instance = BattleScreen.getInstance();
         invite();
         invite();
