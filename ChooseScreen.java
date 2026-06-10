@@ -67,6 +67,7 @@ public class ChooseScreen extends Actor
         
         lobbyMusic = new GreenfootSound("lobby-start-M.wav");
         lobbyMusic.play();
+        lobbyMusic.setVolume(50);
     }   
 
     public void act()
@@ -75,7 +76,7 @@ public class ChooseScreen extends Actor
         {
             lobbyMusic = new GreenfootSound("lobby-loop-M.wav");
             lobbyMusic.playLoop();
-            lobbyMusic.setVolume(50);
+            
         }
         
         if (this.state == 0) {
