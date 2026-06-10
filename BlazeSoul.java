@@ -15,8 +15,10 @@ public class BlazeSoul extends Soul
     /**
      * Constructor for objects of class Blaze
      */
-    static final GreenfootSound INFERNO_SOUND = new GreenfootSound("fire-attack.mp3");
+    static final GreenfootSound INFERNO_SOUND = new GreenfootSound("fire-inferno.mp3");
     static final GreenfootSound LIGHT_MATCH = new GreenfootSound("ignite.mp3");
+
+    static final GreenfootSound BURN_SOUND = new GreenfootSound("fire-attack.mp3");
 
     static final GreenfootImage COSTUME = new GreenfootImage("blaze.png");
     static final String NAME = "Blaze Soul";

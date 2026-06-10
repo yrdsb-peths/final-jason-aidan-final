@@ -579,7 +579,8 @@ public class BattleScreen extends Actor
             backgroundImage.scale(600, 400);
             music = new GreenfootSound("battle" + (i+1) + "-M.wav");
             music.playLoop();
-        }   
+        }
+        music.setVolume(50);
 
     }
 
