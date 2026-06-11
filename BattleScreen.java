@@ -432,7 +432,7 @@ public class BattleScreen extends Actor
 
     private void attachToActions(Runnable func) {
         if (actionStack.size() > 0) {
-            Action modifiedAction = new Action(actionStack.getLast(), () -> func.run());
+            Action modifiedAction = new Action(actionStack.get(actionStack.size()-1), () -> func.run());
             actionStack.set(actionStack.size()-1, modifiedAction);
         } else {
             func.run();
