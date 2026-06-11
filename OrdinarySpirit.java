@@ -20,22 +20,15 @@ public class OrdinarySpirit extends Spirit
     static final String PASSIVE_NAME = "Numerical Advantage";
 
     static final int PASSIVE_COOLDOWN = 8;
-    static int MAXIMUM_COUNT = 6;
+    static final int MAXIMUM_COUNT = 6;
 
-    static int totalPeopleLeft1 = -1;
-    static int totalPeopleLeft2 = -1;
+    static int totalPeopleLeft1 = MAXIMUM_COUNT;
+    static int totalPeopleLeft2 = MAXIMUM_COUNT;
 
     
     public OrdinarySpirit()
     {
         super(NAME,BASE_HEALTH, BASE_ATTACK, Element.ordinary, ATTACK_NAME, PASSIVE_NAME, PASSIVE_COOLDOWN, costume);
-        MAXIMUM_COUNT = (int) (levelModifier*MAXIMUM_COUNT);
-        if (totalPeopleLeft1 == -1) {
-            totalPeopleLeft1 = MAXIMUM_COUNT;
-        }
-        if (totalPeopleLeft2 == -1) {
-            totalPeopleLeft2 = MAXIMUM_COUNT;
-        }
     }
 
     public void passive(Entity other) {
@@ -67,7 +60,26 @@ public class OrdinarySpirit extends Spirit
     }
 
     public String unwrappedGetPassiveDetails() {
+
         return "Numerical Advantage: Invite 2 more people";
+    }
+
+    public String getPassiveDetails() {
+        
+        BattleScreen instance = BattleScreen.getInstance();
+
+        if ((totalPeopleLeft1 <= 0 && instance.turnNumber % 2 == 1) || (totalPeopleLeft2 <= 0 && instance.turnNumber % 2 == 0)) {
+
+            this.passiveCooldownLeft = 10;
+        }
+
+        if ((totalPeopleLeft1 <= 0 && instance.turnNumber % 2 == 1) || (totalPeopleLeft2 <= 0 && instance.turnNumber % 2 == 0)) {
+            return "Everyone is invited. Can't invite more.";
+        }
+        if (passiveCooldownLeft > 0) {
+            return passiveName + " is on cooldown.";
+        }
+        return unwrappedGetPassiveDetails();
     }
 
     private void invite() {
@@ -81,9 +93,6 @@ public class OrdinarySpirit extends Spirit
             totalPeopleLeft2 --;
             add();
         }
-        
-
-
     }
 
     public void add() {

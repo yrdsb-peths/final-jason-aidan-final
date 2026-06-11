@@ -26,8 +26,8 @@ public class ShadowSoul extends Soul
     static final int PASSIVE_COOLDOWN = 4;
 
     static final double EVASION_INCREASE = 0.2;
-    static final int ATTACK_DEBUFF = 4;
-    static final int DEFENSE_DEBUFF = 7;
+    static final int ATTACK_DEBUFF = 3;
+    static final int DEFENSE_DEBUFF = 6;
     
     public ShadowSoul()
     {

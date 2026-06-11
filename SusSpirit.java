@@ -20,7 +20,7 @@ public class SusSpirit extends Spirit
     static final String PASSIVE_NAME = "sus";
     static final String PASSIVE_DETAILS = "sus";
 
-    static final double MISS_CHANCE_CHANGE = 0.9;
+    static final double MISS_CHANCE_CHANGE = 0.8;
 
     int attackChance = 0;
     

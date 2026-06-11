@@ -85,6 +85,6 @@ public class TideSoul extends Soul
     }
 
     public String unwrappedGetUltimateDetails() {
-        return "Tsunami: heals " + (int)(floodStacks * 5 * levelModifier) + " health and does " + (int)(floodStacks * 10 * levelModifier) + " water damage. Based on flood stacks.";
+        return "Tsunami: heals " + (int)(floodStacks * 3 * levelModifier) + " health and does " + (int)(floodStacks * 5 * levelModifier) + " water damage. Based on flood stacks.";
     }
 }

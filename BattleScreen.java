@@ -416,8 +416,8 @@ public class BattleScreen extends Actor
 
         removeStatusEffectDisplay();
 
-        OrdinarySpirit.totalPeopleLeft1 = -1;
-        OrdinarySpirit.totalPeopleLeft2 = -1;
+        OrdinarySpirit.totalPeopleLeft1 = OrdinarySpirit.MAXIMUM_COUNT;
+        OrdinarySpirit.totalPeopleLeft2 = OrdinarySpirit.MAXIMUM_COUNT;
         world.removeObject(attackButton);
         world.removeObject(passiveButton);
         world.removeObject(chooseNewButton);

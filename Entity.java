@@ -252,6 +252,7 @@ abstract public class Entity
         screenInstance.actionStack.add(new Action("> " + name + " used " + attackName + "."));
 
         if (Greenfoot.getRandomNumber(100) < 100*other.evasion) {
+            System.out.println(other.evasion);
             screenInstance.actionStack.add(new Action("> The attack was evaded!", () -> {}));
             return;
         }

@@ -75,6 +75,7 @@ public class ChooseScreen extends Actor
         if(!lobbyMusic.isPlaying())
         {
             lobbyMusic = new GreenfootSound("lobby-loop-M.wav");
+            lobbyMusic.setVolume(50);
             lobbyMusic.playLoop();
             
         }
